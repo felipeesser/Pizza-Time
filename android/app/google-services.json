@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "487168080040",
+    "firebase_url": "https://pizzatime-9f512.firebaseio.com",
+    "project_id": "pizzatime-9f512",
+    "storage_bucket": "pizzatime-9f512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487168080040:android:6e9f443b4c568f78312a9d",
+        "android_client_info": {
+          "package_name": "com.example.pizza_time"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487168080040-l7cul0rhilug0oubcshdci6u71plset6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhPugoKqon3UeKF65p1-pmcz-GsTpxlD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487168080040-l7cul0rhilug0oubcshdci6u71plset6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
