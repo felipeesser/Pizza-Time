@@ -1,6 +1,6 @@
 # pizza_time
 
-A new Flutter application.
+Aplicação delivery com Firebase.
 
 ## Getting Started
 
