@@ -13,7 +13,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(204, 41, 0, 1),
+      drawer: Drawer(
+        child: Container(
+            color: Color.fromRGBO(204, 41, 0, 1),
+        ),
+      ),
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(204, 41, 0, 1),
       ),
       body: Center(
           child: StreamBuilder(
@@ -28,11 +35,13 @@ class _HomeState extends State<Home> {
                   break;
                 default:
                   return Center(
-                    child: ListView(
+                    child: GridView.count(
+                      crossAxisCount: 2,
                       children: snapshot.data.documents.map<Widget>((DocumentSnapshot doc) {
-                        return ListTile(
-                          leading: Icon(Icons.people,size: 52,),
-                          title: Text(doc.data['nome']),
+                        return Card(
+                          child: Center(
+                            child: Text(doc.data['nome']),
+                          ),
                         );
                       }).toList(),
 
