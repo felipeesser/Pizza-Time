@@ -17,10 +17,10 @@ class Usuario {
     Map<String, dynamic> map = {
       "nome" : this.nome,
       "email" : this.email,
-      "nome" : this.endereco,
-      "email" : this.numero,
-      "nome" : this.complemento,
-      "email" : this.telefone
+      "endereco" : this.endereco,
+      "numero" : this.numero,
+      "complemento" : this.complemento,
+      "telefone" : this.telefone
     };
 
     return map;

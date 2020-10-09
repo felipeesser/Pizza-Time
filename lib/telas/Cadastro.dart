@@ -240,7 +240,7 @@ class _CadastroState extends State<Cadastro> {
                 Padding(
                   padding: EdgeInsets.only(top: 8),
                   child: TextField(
-                    controller: _controllerEndereco,
+                    controller: _controllerTelefone,
                     obscureText: true,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20),
