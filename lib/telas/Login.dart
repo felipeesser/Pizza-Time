@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
 
   }
 
-  Future _verificarUsuarioLogado() async {
+  /*Future _verificarUsuarioLogado() async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     //auth.signOut();
@@ -93,17 +93,17 @@ class _LoginState extends State<Login> {
   void initState() {
     _verificarUsuarioLogado();
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(200, 51, 0, 1),
+      backgroundColor: Color.fromRGBO(204, 41, 0, 1),
       body: Column(
           children: <Widget>[
             Expanded(
               child: Image.asset(
-                "Imagens/logo.png",
+                "Imagens/logo2.png",
                 scale: .8,
               ),
             ),
@@ -152,14 +152,16 @@ class _LoginState extends State<Login> {
                         child: FlatButton(
                             child: Text(
                               "Entrar",
-                              style: TextStyle(color: Colors.black, fontSize: 20),
+                              style: TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            color: Color.fromRGBO(255, 204, 0, 1),
+                            color: Color.fromRGBO(204, 41, 0, 1),
                             padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                             shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black,width: 3),
                                 borderRadius: BorderRadius.circular(32)
                             ),
                             onPressed: () {
+                              _validarCampos();
                             }),
                       ),
                       Center(
@@ -168,10 +170,13 @@ class _LoginState extends State<Login> {
                                 "Cadastre-se",
                                 style: TextStyle(color: Colors.black, fontSize: 20),
                               ),
-                              color:  Color.fromRGBO(200, 51, 0, 1),
+                              color:  Colors.white,
                               padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32)
+                                side: BorderSide(color: Colors.black,
+                                width: 3,
+                                ),
+                                  borderRadius: BorderRadius.circular(32),
                               ),
                               onPressed: () {Navigator.push(
                                   context,
