@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import '../../novo_endereco/novo_endereco_route.dart';
 import 'Endereco.dart';
 
@@ -86,11 +87,16 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
       },
       validator: (String opcao) {
         if (opcao == 'Outro endereço...') {
-          Navigator.pushNamed(context, NovoEnderecoRoute.routeName);
+          _navegarMostrarNovoEnderecoRoute();
         }
         return;
       },
     );
   }
 
+  _navegarMostrarNovoEnderecoRoute() {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Navigator.pushNamed(context, NovoEnderecoRoute.routeName);
+    });
+  }
 }
