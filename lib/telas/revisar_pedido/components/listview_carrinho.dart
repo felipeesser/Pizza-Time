@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 import 'Carrinho.dart';
 
 class ListViewCarrinho extends StatefulWidget {
