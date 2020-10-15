@@ -30,6 +30,8 @@ class _NovoEnderecoRouteState extends State<NovoEnderecoRoute> {
                       child: Text('salvar'.toUpperCase()),
                       onPressed: () {
                         _salvarEndereco();
+                        // se salvar endereço ocorreu com sucesso então volte
+                        Navigator.pop(context);
                       }),
                   FlatButton(
                     child: Text('cancelar'.toUpperCase()),
