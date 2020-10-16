@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dialog_edit_item.dart';
 // TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 import 'Carrinho.dart';
 
@@ -47,7 +48,17 @@ class _ListViewCarrinhoState extends State<ListViewCarrinho> {
         '${Carrinho.moeda} ${item.subtotal.toStringAsFixed(2)}',
         textAlign: TextAlign.center,
       ),
-      onTap: () {},
+      onTap: () async {
+        await showDialog(
+          context: context,
+          useSafeArea: true,
+          barrierDismissible: false,
+          builder: (context) => DialogEditarItem(
+            carrinho: carrinho,
+            item: item,
+          ),
+        );
+      },
     );
   }
 }
