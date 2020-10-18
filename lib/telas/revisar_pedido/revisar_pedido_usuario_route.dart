@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'components/listview_carrinho.dart';
-import 'components/panel_resume_carrinho.dart';
+import 'components/listview_pedido_usuario.dart';
+import 'components/panel_resume_pedido_usuario.dart';
 import '../finalizar_pedido/finalizar_pedido_route.dart';
 
 class RevisarPedidoUsuarioRoute extends StatelessWidget {
@@ -18,7 +18,7 @@ class RevisarPedidoUsuarioRoute extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: ListViewCarrinho(),
+                child: ListViewPedidoUsuario(),
               ),
               Divider(
                 thickness: 1.5,

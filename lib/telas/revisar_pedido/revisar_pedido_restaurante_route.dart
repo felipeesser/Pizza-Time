@@ -1,52 +1,29 @@
 import 'package:flutter/material.dart';
-import 'components/listview_carrinho.dart';
-import 'components/panel_resume_carrinho.dart';
-import '../finalizar_pedido/finalizar_pedido_route.dart';
+import 'components/tab_produtos.dart';
+import 'components/tab_detalhes.dart';
 
-class RevisarPedidoRoute extends StatelessWidget {
+class RevisarPedidoRestauranteRoute extends StatelessWidget {
   static final String routeName = '/revisar_pedido_restaurante';
+  final Map<String, Widget> abas = {
+    TabProdutos.tabName: TabProdutos(),
+    TabDetalhes.tabName: TabDetalhes(),
+  };
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(routeName),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListViewCarrinho(),
-              ),
-              Divider(
-                thickness: 1.5,
-              ),
-              PanelResumeCarrinho(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: RaisedButton(
-                  child: Text('finalizar pedido'.toUpperCase()),
-                  onPressed: () {
-                    _apresentarFinalizarPedido(context);
-                  },
-                ),
-              ),
-            ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Revisar Pedido'),
+          bottom: TabBar(
+            tabs: abas.keys.map((String s) => Tab(text: s)).toList(),
           ),
+        ),
+        body: TabBarView(
+          children: abas.values.toList(),
         ),
       ),
     );
-  }
-
-  _apresentarFinalizarPedido(BuildContext context) async {
-    final res = await Navigator.pushNamed(
-      context,
-      FinalizarPedidoRoute.routeName,
-    );
-    if (res is Map<String, dynamic> && res['pedido_realizado']) {
-      Navigator.pop(context);
-    }
   }
 }
