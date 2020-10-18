@@ -3,8 +3,8 @@ import 'components/listview_carrinho.dart';
 import 'components/panel_resume_carrinho.dart';
 import '../finalizar_pedido/finalizar_pedido_route.dart';
 
-class RevisarPedidoRoute extends StatelessWidget {
-  static final String routeName = '/revisar_pedido';
+class RevisarPedidoUsuarioRoute extends StatelessWidget {
+  static final String routeName = '/revisar_pedido_usuario';
 
   @override
   Widget build(BuildContext context) {
