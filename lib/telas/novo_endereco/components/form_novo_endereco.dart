@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Constrói formulário com os campos para cadastro de um endereço.
-/// 
+///
 /// ```dart
 /// ...
 /// child: FormNovoEndereço(),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'components/form_finalizar_pedido.dart';
 
-// preciso do tipo de dados do endereço
-
-class FinalizarPedidoRoute extends StatelessWidget {
-  static const String routeName = '/finalizar_pedido';
+/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+///
+/// ```dart
+/// Navigator.pushNamed(context, [FinalizarPedido.nomeTela]);
+/// ```
+class FinalizarPedido extends StatelessWidget {
+  static const String nomeTela = '/finalizar_pedido';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(routeName),
+        title: Text(nomeTela),
       ),
       body: SafeArea(
         child: Padding(
@@ -34,13 +37,12 @@ class FinalizarPedidoRoute extends StatelessWidget {
     );
   }
 
+  /// Envia o pedido para o banco de dados.
+  ///
+  /// Trata as possíveis excessões e retorna que o pedido foi relizdo com
+  /// sucesso ou não.
   void _enviaPedidoBancoDados(BuildContext context) {
-    _conectaBancoDadosEnviaPedido();
+    // TODO - conectar e tratar das excessões que possam acontecer;
     Navigator.pop(context, <String, dynamic>{'pedido_realizado': true});
-  }
-
-  void _conectaBancoDadosEnviaPedido() {
-    // TODO - conectar e tratar das excessões que possam acontecer
-    return;
   }
 }

@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../../novo_endereco/novo_endereco_route.dart';
+import '../../novo_endereco/novo_endereco.dart';
 import 'Endereco.dart';
 
+/// Constrói um formulário para a finalização da entrega.
+///
+/// Os campos desse formulário são modo de pagamento, e endereço para entrega.
+///
+/// ```dart
+/// ...
+/// child: FormFinalizarPedido(),
+/// ...
+/// ```
 class FormFinalizarPedido extends StatefulWidget {
   @override
   _FormFinalizarPedidoState createState() => _FormFinalizarPedidoState();
@@ -47,6 +56,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
     );
   }
 
+  /// Contrói o campo para seleção do método de pagamento.
   _selecionarFormaPagamento() {
     return DropdownButtonFormField<String>(
       value: formaPagamento,
@@ -63,6 +73,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
     );
   }
 
+  /// Contrói o campo para seleção do endereço de entrega.
   _selecionarEnderecoEntrega(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: enderecoEntrega,
@@ -94,9 +105,10 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
     );
   }
 
+  /// Empurra a tela NovoEndereço no Navegador.
   _navegarMostrarNovoEnderecoRoute() {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      Navigator.pushNamed(context, NovoEnderecoRoute.routeName);
+      Navigator.pushNamed(context, NovoEndereco.nomeTela);
     });
   }
 }

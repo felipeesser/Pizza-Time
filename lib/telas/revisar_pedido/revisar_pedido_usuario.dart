@@ -52,7 +52,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
   _apresentarFinalizarPedido(BuildContext context) async {
     final res = await Navigator.pushNamed(
       context,
-      FinalizarPedidoRoute.routeName,
+      FinalizarPedido.nomeTela,
     );
     // REVIEW - confirmar que essa condição está sendo satisfeita após a
     // implementação do backend.
