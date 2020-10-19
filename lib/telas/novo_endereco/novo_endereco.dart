@@ -3,13 +3,18 @@
 import 'package:flutter/material.dart';
 import 'components/form_novo_endereco.dart';
 
-class NovoEnderecoRoute extends StatefulWidget {
-  static const routeName = '/novo_endereco';
+/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+///
+/// ```dart
+/// Navigator.pushNamed(context, [NovoEndereco.nomeTela]);
+/// ```
+class NovoEndereco extends StatefulWidget {
+  static const nomeTela = '/novo_endereco';
   @override
-  _NovoEnderecoRouteState createState() => _NovoEnderecoRouteState();
+  _NovoEnderecoState createState() => _NovoEnderecoState();
 }
 
-class _NovoEnderecoRouteState extends State<NovoEnderecoRoute> {
+class _NovoEnderecoState extends State<NovoEndereco> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +53,10 @@ class _NovoEnderecoRouteState extends State<NovoEnderecoRoute> {
     );
   }
 
+  /// Armazena temporariamente o endereço fornecido.
+  ///
+  /// O endereço fornecido não deve ser ramzenado por tempo indefinido no perfil
+  /// do cliente.
   _salvarEndereco() {
     // TODO - salvar o endereço no banco de dados;
     return;
