@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:pizza_time/telas/Cadastro.dart';
-import 'package:pizza_time/telas/Home.dart';
+import 'package:pizza_time/telas/home_files/Home.dart';
 import 'package:pizza_time/telas/Login.dart';
 
 class RouteGenerator {
