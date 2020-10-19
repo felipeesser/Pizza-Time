@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'dialog_edit_item.dart';
 import 'Carrinho.dart';
 
+/// Constrói cada item da lista de pedido do cliente.
+///
+/// ```dart
+/// ListView.separated(
+///   itemCount: carrinho.length,
+///   itemBuilder: (context, index) {
+///     return ListItemPedidoUsuario(item: carrinho.itensPedido[index]);
+///   },
+///   separatorBuilder: (context, index) => Divider(),
+/// );
+/// ```
 class ListItemPedidoUsuario extends StatefulWidget {
   final ItemPedido item;
 
-  ListItemPedidoUsuario({Key key, @required this.item}): super(key: key);
+  ListItemPedidoUsuario({Key key, @required this.item}) : super(key: key);
 
   @override
   _ListItemPedidoUsuarioState createState() => _ListItemPedidoUsuarioState();
@@ -42,7 +53,10 @@ class _ListItemPedidoUsuarioState extends State<ListItemPedidoUsuario> {
         '${Carrinho.moeda} ${item.subtotal.toStringAsFixed(2)}',
         textAlign: TextAlign.center,
       ),
-      onTap: () async {
+      onTap:
+
+          /// Apresenta a caixa de dialogo para edição do item.
+          () async {
         await showDialog(
           context: context,
           useSafeArea: true,

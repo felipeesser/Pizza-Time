@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 // TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 import 'Carrinho.dart';
 
+/// Edita um item dentro do pedido.
+///
+/// Modifica a quantidade, ou remove da lista de pedido.
 class DialogEditarItem extends StatefulWidget {
-  // final ParametrosDialogEditarItem param;
   final ItemPedido item;
   final Carrinho carrinho;
 
-  // DialogEditarItem({@required this.param});
+  /// Contrói o editor para [item] dentro do [carrinho].
   DialogEditarItem({@required this.carrinho, @required this.item});
 
   @override
@@ -23,8 +25,6 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
   @override
   void initState() {
     super.initState();
-    // item = widget.param.item;
-    // carrinho = widget.param.carrinho;
     item = widget.item;
     carrinho = widget.carrinho;
   }
@@ -105,6 +105,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
     );
   }
 
+  // Contrói a barra de edição da quantidade do item.
   Widget _buildEditorQuantidade(BuildContext context, ItemPedido item) {
     return Table(
       columnWidths: {1: FlexColumnWidth(0.5)},

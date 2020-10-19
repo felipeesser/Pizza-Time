@@ -3,14 +3,19 @@ import 'components/listview_pedido_usuario.dart';
 import 'components/panel_resume_pedido_usuario.dart';
 import '../finalizar_pedido/finalizar_pedido_route.dart';
 
-class RevisarPedidoUsuarioRoute extends StatelessWidget {
-  static final String routeName = '/revisar_pedido_usuario';
+/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+///
+/// ```dart
+/// Navigator.pushNamed(context, [RevisarPedidoUsuario.nomeTela]);
+/// ```
+class RevisarPedidoUsuario extends StatelessWidget {
+  static final String nomeTela = '/revisar_pedido_usuario';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(routeName),
+        title: Text(nomeTela),
       ),
       body: SafeArea(
         child: Padding(
@@ -40,11 +45,17 @@ class RevisarPedidoUsuarioRoute extends StatelessWidget {
     );
   }
 
+  /// Empurra a tela FinalzarPedido no Navegador.
+  ///
+  /// Caso a tela FinalizarPedido retorne que o pedido foi realizado com sucesso
+  /// essa tela será removida do Navegador também.
   _apresentarFinalizarPedido(BuildContext context) async {
     final res = await Navigator.pushNamed(
       context,
       FinalizarPedidoRoute.routeName,
     );
+    // REVIEW - confirmar que essa condição está sendo satisfeita após a
+    // implementação do backend.
     if (res is Map<String, dynamic> && res['pedido_realizado']) {
       Navigator.pop(context);
     }

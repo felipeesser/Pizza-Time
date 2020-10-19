@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 // TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 import 'Carrinho.dart';
 
+/// Apresenta um resumo das informações do pedido do cliente para o restaurante.
+///
+/// As informações em questão são: o total de itens do pedido e o subtotal do
+/// pedido, o endereço para entrega e o status do pedido (pronto para entrega,
+/// a caminho, aceito, etc...).
 class PanelResumePedidoRestaurante extends StatefulWidget {
   @override
-  _PanelResumePedidoRestauranteState createState() => _PanelResumePedidoRestauranteState();
+  _PanelResumePedidoRestauranteState createState() =>
+      _PanelResumePedidoRestauranteState();
 }
 
-class _PanelResumePedidoRestauranteState extends State<PanelResumePedidoRestaurante> {
+class _PanelResumePedidoRestauranteState
+    extends State<PanelResumePedidoRestaurante> {
   Carrinho carrinho;
 
   @override
   void initState() {
-    // REVIEW - will be fetched from database or received on constructor
+    // REVIEW - carrinho será pego do banco de dados ou recebido pelo construtor da classe.
     carrinho = carrinhoTEMP;
     super.initState();
   }

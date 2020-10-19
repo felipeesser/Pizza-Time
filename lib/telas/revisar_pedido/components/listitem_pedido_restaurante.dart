@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'Carrinho.dart';
 
+/// Constrói cada item da lista de pedido do cliente para a visualização do restaurante.
 class ListItemPedidoRestaurante extends StatefulWidget {
   final ItemPedido item;
 
-  ListItemPedidoRestaurante({Key key, @required this.item}): super(key: key);
+  ListItemPedidoRestaurante({Key key, @required this.item}) : super(key: key);
 
   @override
-  _ListItemPedidoRestauranteState createState() => _ListItemPedidoRestauranteState();
+  _ListItemPedidoRestauranteState createState() =>
+      _ListItemPedidoRestauranteState();
 }
 
 class _ListItemPedidoRestauranteState extends State<ListItemPedidoRestaurante> {

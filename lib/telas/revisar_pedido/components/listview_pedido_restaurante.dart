@@ -3,9 +3,11 @@ import 'listitem_pedido_restaurante.dart';
 // TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 import 'Carrinho.dart';
 
+/// Apresenta, como lista, os itens do pedido do cliente para a visualização do restaurante.
 class ListViewPedidoRestaurante extends StatefulWidget {
   @override
-  _ListViewPedidoRestauranteState createState() => _ListViewPedidoRestauranteState();
+  _ListViewPedidoRestauranteState createState() =>
+      _ListViewPedidoRestauranteState();
 }
 
 class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
@@ -21,12 +23,11 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: carrinho.itensPedido.length,
+      itemCount: carrinho.length,
       itemBuilder: (context, index) {
         return ListItemPedidoRestaurante(item: carrinho.itensPedido[index]);
       },
       separatorBuilder: (context, index) => Divider(),
     );
   }
-
 }

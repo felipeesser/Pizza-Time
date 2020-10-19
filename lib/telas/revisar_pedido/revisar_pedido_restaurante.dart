@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'components/tab_produtos.dart';
 import 'components/tab_detalhes.dart';
 
-class RevisarPedidoRestauranteRoute extends StatelessWidget {
-  static final String routeName = '/revisar_pedido_restaurante';
+/// Posiciona os widgets da tela onde o restaurante visualiza o pedido de um cliente.
+///
+/// ```dart
+/// Navigator.pushNamed(context, [RevisarPedidoRestaurante.nomeTela]);
+/// ```
+class RevisarPedidoRestaurante extends StatelessWidget {
+  static final String nomeTela = '/revisar_pedido_restaurante';
   final Map<String, Widget> abas = {
-    TabProdutos.tabName: TabProdutos(),
-    TabDetalhes.tabName: TabDetalhes(),
+    TabProdutos.nomeAba: TabProdutos(),
+    TabDetalhes.nomeAba: TabDetalhes(),
   };
 
   @override
