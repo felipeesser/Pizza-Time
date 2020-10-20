@@ -15,7 +15,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(nomeTela),
+        title: Text('Revisar Pedido'),
       ),
       body: SafeArea(
         child: Padding(
