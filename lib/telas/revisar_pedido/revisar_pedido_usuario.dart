@@ -28,7 +28,10 @@ class RevisarPedidoUsuario extends StatelessWidget {
               Divider(
                 thickness: 1.5,
               ),
-              PanelResumeCarrinho(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: PanelResumePedidoUsuario(),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: RaisedButton(
