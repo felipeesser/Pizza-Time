@@ -29,7 +29,7 @@ class _PanelResumePedidoRestauranteState
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25),
       child: Table(
-        columnWidths: {0: FlexColumnWidth(0.4), 1: FlexColumnWidth()},
+        columnWidths: {0: FlexColumnWidth(0.5), 1: FlexColumnWidth()},
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
           TableRow(
