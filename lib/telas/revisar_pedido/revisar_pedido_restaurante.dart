@@ -20,7 +20,7 @@ class RevisarPedidoRestaurante extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Revisar Pedido'),
+          title: Text('Visualizar Pedido'),
           bottom: TabBar(
             tabs: abas.keys.map((String s) => Tab(text: s)).toList(),
           ),
