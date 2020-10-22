@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
 
   }
 
-  /*Future _verificarUsuarioLogado() async {
+  Future _verificarUsuarioLogado() async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     //auth.signOut();
@@ -93,7 +93,7 @@ class _LoginState extends State<Login> {
   void initState() {
     _verificarUsuarioLogado();
     super.initState();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
