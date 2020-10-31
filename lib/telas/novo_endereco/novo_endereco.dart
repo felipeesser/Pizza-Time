@@ -23,33 +23,28 @@ class _NovoEnderecoState extends State<NovoEndereco> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Column(
-            children: [
-              FormNovoEndereco(),
-              Spacer(),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  RaisedButton(
-                      child: Text('salvar'.toUpperCase()),
-                      onPressed: () {
-                        _salvarEndereco();
-                        // se salvar endereço ocorreu com sucesso então volte
-                        Navigator.pop(context);
-                      }),
-                  FlatButton(
-                    child: Text('cancelar'.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              )
-            ],
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: SingleChildScrollView(
+            child: FormNovoEndereco(),
           ),
         ),
       ),
+      persistentFooterButtons: [
+        RaisedButton(
+          child: Text('salvar'.toUpperCase()),
+          onPressed: () {
+            _salvarEndereco();
+            // se salvar endereço, ocorreu com sucesso então volte
+            Navigator.pop(context);
+          },
+        ),
+        FlatButton(
+          child: Text('cancelar'.toUpperCase()),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
     );
   }
 
@@ -58,6 +53,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   /// O endereço fornecido não deve ser ramzenado por tempo indefinido no perfil
   /// do cliente.
   _salvarEndereco() {
+    // pega valores.
     // TODO - salvar o endereço no banco de dados;
     return;
   }
