@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/telas/Cadastro.dart';
 import 'package:pizza_time/telas/home_files/Home.dart';
 import 'package:pizza_time/telas/Login.dart';
+import 'package:pizza_time/telas/home_files_rest/Home_Rest.dart';
 
-class RouteGenerator {
-
-  static Route<dynamic> generateRoute(RouteSettings settings){
-
-    final args = settings.arguments;
+Route<dynamic> generateRoute(RouteSettings settings){
 
     switch( settings.name ){
-      case "/" :
+      /*case "/" :
         return MaterialPageRoute(
             builder: (_) => Login()
-        );
+           // builder: (_) => Home_Rest()
+        );*/
       case "/login" :
         return MaterialPageRoute(
             builder: (_) => Login()
@@ -26,23 +24,15 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => Home()
         );
+      case "/home_rest" :
+        return MaterialPageRoute(
+            builder: (_) => Home_Rest()
+        );
       default:
-        _erroRota();
+        return MaterialPageRoute(
+            builder: (_) => Home()
+        );
     }
 
   }
 
-  static Route<dynamic> _erroRota(){
-    return MaterialPageRoute(
-        builder: (_){
-          return Scaffold(
-            appBar: AppBar(title: Text("Tela não encontrada!"),),
-            body: Center(
-              child: Text("Tela não encontrada!"),
-            ),
-          );
-        }
-    );
-  }
-
-}
