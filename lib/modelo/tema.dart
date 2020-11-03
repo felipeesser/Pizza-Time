@@ -23,12 +23,18 @@ ThemeData getTemaAplicativo(BuildContext context) {
           borderRadius: BorderRadius.circular(32)),
     ),
 
+    // obsoleto, mas ainda utilizavel na versão do flutter (1.22.2) usado no
+    // build do app (não fica tão organizado usando buttonTheme)
     buttonTheme: ButtonThemeData(
-      padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.black, width: 3),
         borderRadius: BorderRadius.circular(32),
       ),
+      buttonColor: _corPadraoApp,
+      textTheme: ButtonTextTheme.accent,
+    ),
+
     dividerTheme: DividerThemeData(
       space: 2,
       color: Color.fromRGBO(89, 89, 89, 1),
