@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+final _corPadraoApp = Color.fromRGBO(204, 41, 0, 1); // #CC2900FF
+final _corRealceApp = Colors.white; // #FFFFFFFF
+
 ThemeData getTemaAplicativo(BuildContext context) {
   return ThemeData(
     // todo o tema de fontes do aplicativo deriva da fonte MontSerrat
