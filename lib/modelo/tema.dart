@@ -9,9 +9,9 @@ ThemeData getTemaAplicativo(BuildContext context) {
     // todo o tema de fontes do aplicativo deriva da fonte MontSerrat
     textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
 
-    primaryColor: Color.fromRGBO(204, 41, 0, 1),
-    accentColor: Color.fromRGBO(204, 41, 0, 1),
-    appBarTheme: AppBarTheme(color: Color.fromRGBO(204, 41, 0, 1)),
+    // a cor de fundo predominante no app.
+    primaryColor: _corPadraoApp,
+    accentColor: _corRealceApp,
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
