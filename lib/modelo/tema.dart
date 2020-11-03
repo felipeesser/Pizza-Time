@@ -13,11 +13,14 @@ ThemeData getTemaAplicativo(BuildContext context) {
     primaryColor: _corPadraoApp,
     accentColor: _corRealceApp,
 
+    // tema dos campos de input do usuario (formulários)
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
       contentPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32)),
+      border: OutlineInputBorder(
+          borderSide: BorderSide(color: _corPadraoApp, width: 3),
+          borderRadius: BorderRadius.circular(32)),
     ),
 
     buttonTheme: ButtonThemeData(
