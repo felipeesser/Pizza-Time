@@ -40,15 +40,23 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
       autovalidate: true,
       child: Column(
         children: [
-          Align(
+          Container(
             alignment: Alignment.centerLeft,
-            child: Text('Forma de pagamento:'),
+            padding: EdgeInsets.only(bottom: 16),
+            child: Text(
+              'Forma de pagamento:',
+              style: Theme.of(context).textTheme.bodyText1,
+          ),
           ),
           _selecionarFormaPagamento(),
           SizedBox(height: 24),
-          Align(
+          Container(
             alignment: Alignment.centerLeft,
-            child: Text('Endereço para entrega:'),
+            padding: EdgeInsets.only(bottom: 16),
+            child: Text(
+              'Endereço para entrega:',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
           _selecionarEnderecoEntrega(context),
         ],
