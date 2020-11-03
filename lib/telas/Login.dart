@@ -118,6 +118,7 @@ class _LoginState extends State<Login> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(height: 5),
                       Padding(
                         padding: EdgeInsets.only(bottom: 23),
                         child: TextField(
@@ -126,7 +127,7 @@ class _LoginState extends State<Login> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                              hintText: "E-mail",
+                            hintText: "E-mail",
                           ),
                         ),
                       ),
@@ -136,7 +137,8 @@ class _LoginState extends State<Login> {
                         keyboardType: TextInputType.text,
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
-                            hintText: "Senha",
+                          hintText: "Senha",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 23, bottom: 10),
