@@ -29,6 +29,9 @@ ThemeData getTemaAplicativo(BuildContext context) {
         side: BorderSide(color: Colors.black, width: 3),
         borderRadius: BorderRadius.circular(32),
       ),
+    dividerTheme: DividerThemeData(
+      space: 2,
+      color: Color.fromRGBO(89, 89, 89, 1),
     ),
   );
 }
