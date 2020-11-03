@@ -33,5 +33,8 @@ ThemeData getTemaAplicativo(BuildContext context) {
       space: 2,
       color: Color.fromRGBO(89, 89, 89, 1),
     ),
+
+    iconTheme: IconThemeData(color: _corPadraoApp),
+    accentIconTheme: IconThemeData(color: _corPadraoApp),
   );
 }
