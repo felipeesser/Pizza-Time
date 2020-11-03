@@ -46,7 +46,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
             child: Text(
               'Forma de pagamento:',
               style: Theme.of(context).textTheme.bodyText1,
-          ),
+            ),
           ),
           _selecionarFormaPagamento(),
           SizedBox(height: 24),
