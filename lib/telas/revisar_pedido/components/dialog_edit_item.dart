@@ -84,18 +84,32 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             softWrap: false,
           ),
         ),
-        ButtonBar(
-          alignment: MainAxisAlignment.start,
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             RaisedButton(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'ok'.toUpperCase(),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
               ),
               onPressed: () {},
             ),
             FlatButton(
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 'cancelar'.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    .copyWith(color: Colors.black),
+              ),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(32),
               ),
               onPressed: () {
                 Navigator.pop(context);
