@@ -26,7 +26,8 @@ class HomeSearchBar extends StatelessWidget {
           ),
           hintStyle: TextStyle(color: Color.fromRGBO(89, 89, 89, 1),fontWeight: FontWeight.w600),
           hintText: "Procure",
-          fillColor: Colors.white),
+          contentPadding: EdgeInsets.zero
+      ),
     );
   }
 }
