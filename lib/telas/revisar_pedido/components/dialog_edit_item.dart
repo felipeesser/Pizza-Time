@@ -124,7 +124,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
   // Contrói a barra de edição da quantidade do item.
   Widget _buildEditorQuantidade(BuildContext context, ItemPedido item) {
     return Table(
-      columnWidths: {1: FlexColumnWidth(0.5)},
+      columnWidths: {1: FlexColumnWidth(0.4)},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(
