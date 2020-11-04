@@ -131,8 +131,14 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.remove),
+              child: FlatButton(
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.zero,
+                shape: CircleBorder(),
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     item.quantidade--;
@@ -146,8 +152,14 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: Icon(Icons.add),
+              child: FlatButton(
+                padding: EdgeInsets.zero,
+                shape: CircleBorder(),
+                color: Colors.green,
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   setState(() {
                     item.quantidade++;
