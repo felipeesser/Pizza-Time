@@ -34,13 +34,26 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
     return SimpleDialog(
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: 12),
-          child: Text(
-            '${item.nome}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6,
+          padding: EdgeInsets.only(left: 12, bottom: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                '${item.nome}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Spacer(),
+              IconButton(
+                constraints: BoxConstraints.tightFor(),
+                icon: Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                ),
+                onPressed: () {},
+              ),
+            ],
           ),
         ),
         AspectRatio(
@@ -88,19 +101,8 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 Navigator.pop(context);
               },
             ),
-            SizedBox(
-              height: 1,
-            ),
-            // deletar item
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.delete_forever),
-                onPressed: () {},
-              ),
-            ),
           ],
-        )
+        ),
       ],
     );
   }
