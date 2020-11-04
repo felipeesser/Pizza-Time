@@ -9,6 +9,17 @@ import 'package:pizza_time/modelo/Rotas.dart' as router;
 import 'package:google_fonts/google_fonts.dart';
 import './modelo/tema.dart';
 
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        builder: (context) => ItemNotifier(),
+      )
+    ],
+    child: MyApp(),
+  ),
+);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
