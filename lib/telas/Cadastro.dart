@@ -261,9 +261,6 @@ class _CadastroState extends State<Cadastro> {
                         style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
                       color: Colors.white,
-                      padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
                       onPressed: () {
                         _validarCampos();
                       }),

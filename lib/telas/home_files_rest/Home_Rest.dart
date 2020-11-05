@@ -66,7 +66,7 @@ class _Home_RestState extends State<Home_Rest> {
               label: 'Config',
             ),
           ],
-          selectedItemColor: Color.fromRGBO(204, 41, 0, 1),
+          selectedItemColor: Theme.of(context).iconTheme.color,
           onTap:_onItemTapped,
         ),
     );

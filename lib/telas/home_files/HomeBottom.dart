@@ -7,6 +7,7 @@ class HomeBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+        padding: EdgeInsets.symmetric(horizontal: 32),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
         ),

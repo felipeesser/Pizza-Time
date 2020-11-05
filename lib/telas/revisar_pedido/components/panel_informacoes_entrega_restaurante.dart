@@ -14,15 +14,15 @@ class PanelInformacoesEntregaRestaurante extends StatefulWidget {
 class _PanelInformacoesEntregaRestauranteState
     extends State<PanelInformacoesEntregaRestaurante> {
   // TODO - substituir por um enum
-  var status = [
+  var _status = [
     'Na fila',
     'Preparando',
     'Pronto para entrega',
     'A caminho',
     'Entregue'
   ];
+  String _statusAtual;
 
-  String statusAtual;
   @override
   Widget build(BuildContext context) {
     return Table(
@@ -31,7 +31,7 @@ class _PanelInformacoesEntregaRestauranteState
         TableRow(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: 0),
+              padding: EdgeInsets.only(bottom: 16),
               child: Text(
                 'Status do pedido:',
                 style: Theme.of(context).textTheme.bodyText1,
@@ -41,11 +41,11 @@ class _PanelInformacoesEntregaRestauranteState
         ),
         TableRow(
           children: [
-            DropdownButton(
-              value: statusAtual,
+            DropdownButtonFormField(
+              value: _statusAtual,
               hint: Text('Status atual do pedido'),
               isExpanded: true,
-              items: status
+              items: _status
                   .map<DropdownMenuItem<String>>(
                     (String s) => DropdownMenuItem(
                       value: s,
@@ -59,7 +59,7 @@ class _PanelInformacoesEntregaRestauranteState
                   .toList(),
               onChanged: (String selecionado) {
                 setState(() {
-                  statusAtual = selecionado;
+                  _statusAtual = selecionado;
                 });
               },
             ),

@@ -52,7 +52,7 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
         '${Carrinho.moeda} ${item.subtotal.toStringAsFixed(2)}',
         textAlign: TextAlign.center,
       ),
-      onTap: () {},
+      onTap: null,
     );
   }
 }
