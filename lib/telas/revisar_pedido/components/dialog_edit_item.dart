@@ -34,13 +34,26 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
     return SimpleDialog(
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: 12),
-          child: Text(
-            '${item.nome}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6,
+          padding: EdgeInsets.only(left: 12, bottom: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                '${item.nome}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Spacer(),
+              IconButton(
+                constraints: BoxConstraints.tightFor(),
+                icon: Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                ),
+                onPressed: () {},
+              ),
+            ],
           ),
         ),
         AspectRatio(
@@ -71,36 +84,39 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             softWrap: false,
           ),
         ),
-        ButtonBar(
-          alignment: MainAxisAlignment.start,
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             RaisedButton(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'ok'.toUpperCase(),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
               ),
               onPressed: () {},
             ),
             FlatButton(
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 'cancelar'.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    .copyWith(color: Colors.black),
+              ),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(32),
               ),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
-            SizedBox(
-              height: 1,
-            ),
-            // deletar item
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.delete_forever),
-                onPressed: () {},
-              ),
-            ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -108,15 +124,21 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
   // Contrói a barra de edição da quantidade do item.
   Widget _buildEditorQuantidade(BuildContext context, ItemPedido item) {
     return Table(
-      columnWidths: {1: FlexColumnWidth(0.5)},
+      columnWidths: {1: FlexColumnWidth(0.4)},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: Icon(Icons.remove),
+              child: FlatButton(
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.zero,
+                shape: CircleBorder(),
+                color: Colors.red,
                 onPressed: () {
                   setState(() {
                     item.quantidade--;
@@ -130,8 +152,14 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: Icon(Icons.add),
+              child: FlatButton(
+                padding: EdgeInsets.zero,
+                shape: CircleBorder(),
+                color: Colors.green,
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   setState(() {
                     item.quantidade++;

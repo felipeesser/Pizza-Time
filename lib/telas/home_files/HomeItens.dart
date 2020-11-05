@@ -36,11 +36,9 @@ class HomeItens extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Flexible(flex:1,child: Text(_itemNotifier.listaItens[index].nome.toUpperCase(),style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: 12))),
+                        Flexible(flex:1,child: Text(_itemNotifier.listaItens[index].nome.toUpperCase(),overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: 12))),
                         Flexible(flex:2,child: Text('Descricao simplificada do pedido que as vezes pode ser muito grande',maxLines:2,overflow:TextOverflow.ellipsis,style: TextStyle(color: Color.fromRGBO(89, 89, 89, 1),fontSize: 12,))),
-                        Divider(
-                          color: Color.fromRGBO(89, 89, 89, 1),
-                        ),
+                        Divider(),
                         Flexible(flex:1,child: Align(alignment:Alignment.topRight,child: Padding(padding:EdgeInsets.only(right: 5),child: Text('R\$ 45.00',style: TextStyle(color: Colors.black))))),
                       ],
                     ),

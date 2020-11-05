@@ -24,7 +24,7 @@ class _PanelResumePedidoUsuarioState extends State<PanelResumePedidoUsuario> {
   @override
   Widget build(BuildContext context) {
     return Table(
-      columnWidths: {0: FlexColumnWidth(0.4), 1: FlexColumnWidth()},
+      columnWidths: {0: FlexColumnWidth(0.5), 1: FlexColumnWidth()},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(

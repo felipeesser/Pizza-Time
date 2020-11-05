@@ -57,7 +57,7 @@ class _Info_ItemState extends State<Info_Item> {
                             Row(
                               children: <Widget>[
                                 FlatButton(
-                                  //  padding: EdgeInsets.all(15),
+                                    padding: EdgeInsets.zero,
                                     shape: CircleBorder(),
                                     child:Icon(Icons.remove,color: Colors.white,),
                                     color: Colors.red,
@@ -69,7 +69,7 @@ class _Info_ItemState extends State<Info_Item> {
                                 Text('$_cont'),
                                 Flexible(
                                   child: FlatButton(
-                                     // padding: EdgeInsets.all(15),
+                                      padding: EdgeInsets.zero,
                                       shape: CircleBorder(),
                                       child:Icon(Icons.add,color: Colors.white,),
                                       color: Colors.green,
