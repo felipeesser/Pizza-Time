@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
 
   }
 
-  Future _verificarUsuarioLogado() async {
+  /*Future _verificarUsuarioLogado() async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     //auth.signOut();
@@ -93,7 +93,7 @@ class _LoginState extends State<Login> {
   void initState() {
     _verificarUsuarioLogado();
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +118,7 @@ class _LoginState extends State<Login> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(height: 5),
                       Padding(
                         padding: EdgeInsets.only(bottom: 23),
                         child: TextField(
@@ -126,12 +127,8 @@ class _LoginState extends State<Login> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                              hintText: "E-mail",
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32))),
+                            hintText: "E-mail",
+                          ),
                         ),
                       ),
                       TextField(
@@ -140,12 +137,8 @@ class _LoginState extends State<Login> {
                         keyboardType: TextInputType.text,
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                            hintText: "Senha",
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(32))),
+                          hintText: "Senha",
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 23, bottom: 10),
@@ -155,11 +148,6 @@ class _LoginState extends State<Login> {
                               style: TextStyle(color: Colors.white, fontSize: 20),
                             ),
                             color: Color.fromRGBO(204, 41, 0, 1),
-                            padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.black,width: 3),
-                                borderRadius: BorderRadius.circular(32)
-                            ),
                             onPressed: () {
                               _validarCampos();
                             }),
@@ -170,14 +158,7 @@ class _LoginState extends State<Login> {
                                 "Cadastre-se",
                                 style: TextStyle(color: Colors.black, fontSize: 20),
                               ),
-                              color:  Colors.white,
-                              padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.black,
-                                width: 3,
-                                ),
-                                  borderRadius: BorderRadius.circular(32),
-                              ),
+                              color: Colors.white,
                               onPressed: () {Navigator.push(
                                   context,
                                   MaterialPageRoute(
