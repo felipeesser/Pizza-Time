@@ -13,12 +13,12 @@ class HomeDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           ListTile(title: Text('Perfil',style: TextStyle(color: Colors.black),),
-            leading: Icon(Icons.perm_identity,color: Color.fromRGBO(204, 41, 0, 1),),),
+            leading: Icon(Icons.perm_identity,color: Theme.of(context).accentIconTheme.color,),),
           ListTile(title: Text('Carrinho',style: TextStyle(color: Colors.black),),
-            leading: Icon(Icons.shopping_cart,color: Color.fromRGBO(204, 41, 0, 1),),
+            leading: Icon(Icons.shopping_cart, color: Theme.of(context).accentIconTheme.color,),
             subtitle: Text('Pedidos',style: TextStyle(color: Colors.black),),isThreeLine: true,),
           ListTile(title: Text('Chat',style: TextStyle(color: Colors.black),),
-              leading: Icon(Icons.chat,color: Color.fromRGBO(204, 41, 0, 1),)),
+              leading: Icon(Icons.chat,color: Theme.of(context).accentIconTheme.color,),),
         ],
       ),
     );
