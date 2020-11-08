@@ -32,7 +32,7 @@ ThemeData getTemaAplicativo(BuildContext context) {
         borderRadius: BorderRadius.circular(32),
       ),
       buttonColor: _corPadraoApp,
-      textTheme: ButtonTextTheme.accent,
+      textTheme: ButtonTextTheme.normal,
     ),
 
     dividerTheme: DividerThemeData(
