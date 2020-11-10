@@ -13,7 +13,7 @@ void main() => runApp(
   MultiProvider(
     providers: [
       ChangeNotifierProvider(
-        builder: (context) => ItemNotifier(),
+        create: (context) => ItemNotifier(),
       )
     ],
     child: MyApp(),
