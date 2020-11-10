@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pizza_time/telas/Abertura.dart';
+import 'package:pizza_time/telas/home_files_rest/Abertura.dart';
 import 'package:pizza_time/telas/Alteracao.dart';
 import 'package:pizza_time/telas/Cadastro.dart';
 import 'package:pizza_time/telas/Detalhes.dart';
@@ -10,6 +10,8 @@ import 'package:pizza_time/telas/home_files_rest/Home_Rest.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_restaurante.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
 
+import '../telas/home_files_rest/Adicionar.dart';
+
 Route<dynamic> generateRoute(RouteSettings settings){
 
     switch( settings.name ){
@@ -18,6 +20,10 @@ Route<dynamic> generateRoute(RouteSettings settings){
             builder: (_) => Login()
            // builder: (_) => Home_Rest()
         );*/
+      case "/adicionar" :
+        return MaterialPageRoute(
+            builder: (_) => Adicionar()
+        );
       case "/rev_pedido" :
         return MaterialPageRoute(
             builder: (_) => RevisarPedidoUsuario()
