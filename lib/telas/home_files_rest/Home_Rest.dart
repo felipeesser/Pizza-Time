@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
+
+import 'Abertura.dart';
+import 'Adicionar.dart';
 class Home_Rest extends StatefulWidget {
   @override
   _Home_RestState createState() => _Home_RestState();
@@ -15,7 +18,7 @@ class _Home_RestState extends State<Home_Rest> {
       ],
     ),
     Text("Pagina Chat"),
-    Text("Pagina Config"),
+    Adicionar(),
   ];
   int _selectedIndex = 0;
   @override
@@ -44,7 +47,12 @@ class _Home_RestState extends State<Home_Rest> {
               ],
             ),
             actions: [
-              IconButton(icon:Icon(Icons.calendar_today), onPressed:(){})
+              IconButton(
+                  icon:Icon(Icons.calendar_today),
+                  onPressed:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Abertura()));
+                  }
+                  )
             ],
         ),
         body: Center(
