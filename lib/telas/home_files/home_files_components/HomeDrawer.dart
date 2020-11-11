@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pizza_time/telas/home_files/Pedidos_Feitos.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
-import './Alteracao.dart';
-import 'package:pizza_time/telas/Info_Item.dart';
+import '../Alteracao.dart';
+import 'package:pizza_time/telas/home_files/Info_Item.dart';
 import 'dart:io';
-import '../Login.dart';
+import '../../Login.dart';
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -36,6 +37,9 @@ class HomeDrawer extends StatelessWidget {
               Icons.list_alt_rounded,
               color: Theme.of(context).accentIconTheme.color,
             ),
+            onTap: (){
+              Navigator.of(context).pushNamed(Pedidos_Feitos.nomeTela);
+            },
           ),
           ListTile(
             title: Text(
