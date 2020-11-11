@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/telas/home_files/Home.dart';
+import '../Detalhes.dart';
 import 'components/listview_pedido_usuario.dart';
 import 'components/panel_resume_pedido_usuario.dart';
 import '../finalizar_pedido/finalizar_pedido_route.dart';
@@ -59,8 +61,9 @@ class RevisarPedidoUsuario extends StatelessWidget {
     );
     // REVIEW - confirmar que essa condição está sendo satisfeita após a
     // implementação do backend.
-    if (res is Map<String, dynamic> && res['pedido_realizado']) {
-      Navigator.pop(context);
+    if (res is Map<String, dynamic> && res['pedido_realizado']){
+     Navigator.popUntil(context, ModalRoute.withName(Home.nomeTela));
+     Navigator.pushNamed(context, Detalhes.nomeTela);
     }
   }
 }

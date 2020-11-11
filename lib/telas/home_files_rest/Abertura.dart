@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/DiaSemana.dart';
 
 class Abertura extends StatefulWidget {
+  static final nomeTela = "/abertura";
   @override
   _AberturaState createState() => _AberturaState();
 }

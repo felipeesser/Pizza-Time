@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/Item.dart';
 
 class Info_Item extends StatefulWidget {
+  static final nomeTela = "/info_item";
   Item _item;
 
   Info_Item(Item item) {
     this._item = item;
   }
-
   @override
   _Info_ItemState createState() => _Info_ItemState();
 }

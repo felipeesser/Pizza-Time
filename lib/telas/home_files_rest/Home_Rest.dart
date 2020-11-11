@@ -4,6 +4,7 @@ import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
 import 'Abertura.dart';
 import 'Adicionar.dart';
 class Home_Rest extends StatefulWidget {
+  static final nomeTela = "/home_rest";
   @override
   _Home_RestState createState() => _Home_RestState();
 }
@@ -49,9 +50,7 @@ class _Home_RestState extends State<Home_Rest> {
             actions: [
               IconButton(
                   icon:Icon(Icons.calendar_today),
-                  onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Abertura()));
-                  }
+                  onPressed: () {Navigator.of(context).pushNamed(Abertura.nomeTela);},
                   )
             ],
         ),

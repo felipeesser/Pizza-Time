@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pizza_time/telas/Info_Item.dart';
+import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
 class HomeBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class HomeBottom extends StatelessWidget {
             borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
         ),
         color: Colors.white,
-        onPressed: (){},
+        onPressed: () {Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
