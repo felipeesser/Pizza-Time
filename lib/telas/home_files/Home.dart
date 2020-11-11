@@ -14,6 +14,7 @@ import 'HomeItens.dart';
 import 'HomeBottom.dart';
 import 'HomeSearchBar.dart';
 class Home extends StatefulWidget {
+  static final nomeTela = "/home";
   @override
   _HomeState createState() => _HomeState();
 }

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'Cadastro.dart';
 
 class Login extends StatefulWidget {
+  static final nomeTela = "/login";
   @override
   _LoginState createState() => _LoginState();
 }
@@ -140,12 +141,9 @@ class _LoginState extends State<Login> {
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           color: Colors.white,
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Cadastro()));
-                          }),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Cadastro.nomeTela);
+                        },),
                     ),
                   ],
                 ),
