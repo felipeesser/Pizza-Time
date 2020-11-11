@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pizza_time/api/ItemApi.dart';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
-import 'package:pizza_time/telas/Info_Item.dart';
+import 'package:pizza_time/telas/home_files/Info_Item.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import '../Login.dart';
-import 'HomeDrawer.dart';
-import 'HomeFilter.dart';
-import 'HomeItens.dart';
-import 'HomeBottom.dart';
-import 'HomeSearchBar.dart';
+import 'home_files_components/HomeDrawer.dart';
+import 'home_files_components/HomeFilter.dart';
+import 'home_files_components/HomeItens.dart';
+import 'home_files_components/HomeBottom.dart';
+import 'home_files_components/HomeSearchBar.dart';
 class Home extends StatefulWidget {
+  static final nomeTela = "/home";
   @override
   _HomeState createState() => _HomeState();
 }

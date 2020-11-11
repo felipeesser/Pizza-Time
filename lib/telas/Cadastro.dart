@@ -7,6 +7,7 @@ import 'package:pizza_time/telas/Login.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
 
 class Cadastro extends StatefulWidget {
+  static final nomeTela = "/cadastro";
   @override
   _CadastroState createState() => _CadastroState();
 }
@@ -263,6 +264,7 @@ class _CadastroState extends State<Cadastro> {
                       color: Colors.white,
                       onPressed: () {
                         _validarCampos();
+                        Navigator.of(context).pop();
                       }),
                 ),
                 Center(

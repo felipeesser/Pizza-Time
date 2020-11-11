@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/telas/revisar_pedido/components/tab_detalhes.dart';
 
 class Alteracao extends StatelessWidget {
+  static final nomeTela = "/alteracao";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
