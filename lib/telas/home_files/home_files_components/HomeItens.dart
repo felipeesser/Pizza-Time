@@ -19,8 +19,9 @@ class HomeItens extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: (){
-            print(_itemNotifier.listaItens[index].imagem);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Info_Item(_itemNotifier.listaItens[index])));},
+            _itemNotifier.itemAtual=_itemNotifier.listaItens[index];
+            Navigator.of(context).pushNamed(Info_Item.nomeTela);
+            },
           child: Card(
             margin: EdgeInsets.symmetric(vertical: 13,horizontal: 13),
             clipBehavior: Clip.antiAlias,

@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/Item.dart';
+import 'package:pizza_time/notifier/ItemNotifier.dart';
+import 'package:provider/provider.dart';
 
 class Info_Item extends StatefulWidget {
   static final nomeTela = "/info_item";
-  Item _item;
-
-  Info_Item(Item item) {
-    this._item = item;
-  }
   @override
   _Info_ItemState createState() => _Info_ItemState();
 }
@@ -24,21 +21,22 @@ class _Info_ItemState extends State<Info_Item> {
 
   @override
   Widget build(BuildContext context) {
+    ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          widget._item.imagem != null
+          itemNotifier.itemAtual.imagem != null
               ? Expanded(
                   flex: 2,
                   child: FittedBox(
                       fit: BoxFit.fill,
-                      child: Image.network(widget._item.imagem)))
+                      child: Image.network(itemNotifier.itemAtual.imagem)))
               : Image.asset('Imagens/pizza.jpg'),
           Flexible(
               child: Text(
-            widget._item.nome.toUpperCase(),
+                itemNotifier.itemAtual.nome.toUpperCase(),
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             textAlign: TextAlign.center,
           )),
