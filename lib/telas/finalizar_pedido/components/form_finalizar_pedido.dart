@@ -24,6 +24,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   String enderecoEntrega;
   // will be fetched from database
   List<String> enderecosEntrega;
+  final _labelOutroEndereco = 'Outro endereço...';
 
   @override
   void initState() {
@@ -105,8 +106,9 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
         });
       },
       validator: (String opcao) {
-        if (opcao == 'Outro endereço...') {
+        if (opcao == _labelOutroEndereco) {
           _navegarMostrarNovoEnderecoRoute();
+          // se necessário tratar excessões
         }
         return;
       },
