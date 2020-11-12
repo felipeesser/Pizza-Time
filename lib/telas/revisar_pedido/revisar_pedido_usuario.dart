@@ -5,7 +5,7 @@ import 'components/listview_pedido_usuario.dart';
 import 'components/panel_resume_pedido_usuario.dart';
 import '../finalizar_pedido/finalizar_pedido_route.dart';
 
-/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+/// Posiciona os widgets da tela onde o usuário revisa o carrinho do pedido.
 ///
 /// ```dart
 /// Navigator.pushNamed(context, [RevisarPedidoUsuario.nomeTela]);
@@ -53,7 +53,8 @@ class RevisarPedidoUsuario extends StatelessWidget {
   /// Empurra a tela FinalzarPedido no Navegador.
   ///
   /// Caso a tela FinalizarPedido retorne que o pedido foi realizado com sucesso
-  /// essa tela será removida do Navegador também.
+  /// esta tela também será removida do Navegador e a tela Detalhes será
+  /// mostrada.
   _apresentarFinalizarPedido(BuildContext context) async {
     final res = await Navigator.pushNamed(
       context,
