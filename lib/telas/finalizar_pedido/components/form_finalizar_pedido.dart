@@ -31,7 +31,6 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
     super.initState();
     formasPagamento = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
     enderecosEntrega = enderecosTEMP;
-    enderecosEntrega.add('Outro endereço...');
   }
 
   @override
@@ -88,18 +87,24 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
       value: enderecoEntrega,
       hint: Text('Entregar em...'),
       isExpanded: true,
-      items: enderecosEntrega
-          .map<DropdownMenuItem<String>>(
-            (String s) => DropdownMenuItem(
-              value: s,
-              child: Text(
-                s,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+      items: [
+        ...enderecosEntrega
+            .map<DropdownMenuItem<String>>(
+              (String s) => DropdownMenuItem(
+                value: s,
+                child: Text(
+                  s,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          )
-          .toList(),
+            )
+            .toList(),
+        DropdownMenuItem(
+          value: _labelOutroEndereco,
+          child: Text(_labelOutroEndereco),
+        ),
+      ],
       onChanged: (String opcao) {
         setState(() {
           enderecoEntrega = opcao;
