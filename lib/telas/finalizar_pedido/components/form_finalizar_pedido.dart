@@ -49,7 +49,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          _selecionarFormaPagamento(),
+          _selecaoFormaPagamento(),
           SizedBox(height: 24),
           Container(
             alignment: Alignment.centerLeft,
@@ -59,14 +59,14 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          _selecionarEnderecoEntrega(context),
+          _selecaoEnderecoEntrega(context),
         ],
       ),
     );
   }
 
   /// Contrói o campo para seleção do método de pagamento.
-  _selecionarFormaPagamento() {
+  _selecaoFormaPagamento() {
     return DropdownButtonFormField<String>(
       value: formaPagamento,
       hint: Text('Forma de pagamento...'),
@@ -83,7 +83,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   }
 
   /// Contrói o campo para seleção do endereço de entrega.
-  _selecionarEnderecoEntrega(BuildContext context) {
+  _selecaoEnderecoEntrega(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: enderecoEntrega,
       hint: Text('Entregar em...'),
