@@ -15,17 +15,14 @@ class NovoEndereco extends StatefulWidget {
 
 class _NovoEnderecoState extends State<NovoEndereco> {
   GlobalKey<FormState> _formNovoEnderecoKey;
-  TextEditingController _controladorEndereco;
-  TextEditingController _controladorNumero;
-  TextEditingController _controladorComplemento;
+  String _endereco;
+  String _numero;
+  String _complemento;
 
   @override
   void initState() {
     super.initState();
     _formNovoEnderecoKey = GlobalKey<FormState>();
-    _controladorEndereco = TextEditingController();
-    _controladorNumero = TextEditingController();
-    _controladorComplemento = TextEditingController();
   }
 
   @override
@@ -46,7 +43,6 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                 children: [
                   SizedBox(height: 8),
                   TextFormField(
-                    controller: _controladorEndereco,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Endereço*',
@@ -54,10 +50,12 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                       helperText: '*Requerido',
                     ),
                     validator: (value) => _validarEndereco(value),
+                    onSaved: (newValue) {
+                      _endereco = newValue;
+                    },
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: _controladorNumero,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Número*',
@@ -65,10 +63,12 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                       helperText: '*Requerido',
                     ),
                     validator: (value) => _validarNumero(value),
+                    onSaved: (newValue) {
+                      _numero = newValue;
+                    },
                   ),
                   SizedBox(height: 16),
                   TextFormField(
-                    controller: _controladorComplemento,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Complemento*',
@@ -76,6 +76,9 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                       helperText: '*Requerido',
                     ),
                     validator: (value) => _validarComplemento(value),
+                    onSaved: (newValue) {
+                      _complemento = newValue;
+                    },
                   ),
                 ],
               ),
@@ -142,26 +145,15 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   /// O endereço fornecido não deve ser armazenado por tempo indefinido no perfil
   /// do cliente.
   _salvarEndereco() {
-    final valores = {
-      'endereco': _controladorEndereco.value.text,
-      'numero': _controladorNumero.value.text,
-      'complemento': _controladorComplemento.value.text,
-    };
     // verdadeiro se o formulario for válido, falso caso contrário.
     if (_formNovoEnderecoKey.currentState.validate()) {
+      _formNovoEnderecoKey.currentState.save();
+
+      // endereço disponível aqui
+
       // TODO - salvar o endereço no banco de dados;
-      print(valores);
       return true;
     }
     return false;
-  }
-
-  /// Desaloca componentes criados para esse widget.
-  @override
-  void dispose() {
-    _controladorEndereco.dispose();
-    _controladorNumero.dispose();
-    _controladorComplemento.dispose();
-    super.dispose();
   }
 }
