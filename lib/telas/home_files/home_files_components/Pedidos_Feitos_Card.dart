@@ -20,16 +20,6 @@ class Pedidos_Feitos_Card extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Nome: '+this._nome),
-                IconButton(
-                  icon: Icon(Icons.call, color: Theme.of(context).iconTheme.color),
-                  iconSize: 26,
-                  onPressed: (){},
-                ),
-              ],
-            ),
             Text('Endereço: '+ this._endereco),
             Text('Pedidos:'),
             Column(

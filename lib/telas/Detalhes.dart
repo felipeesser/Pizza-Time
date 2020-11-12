@@ -43,15 +43,27 @@ class Detalhes extends StatelessWidget {
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Valor: 20,00\u0024',
+                'Valor: R\$ 20,00',
                 style: TextStyle(
                   fontSize: 20.0
                 ),
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Pagamento: Cartão',
+                style: TextStyle(
+                    fontSize: 20.0
+                ),
+              ),
+            ),
+          ),
           Divider(
-            height: 150.0,
+            height: 100.0,
             thickness: 1.0,
             color: Color(0xFF000000),
           ),
