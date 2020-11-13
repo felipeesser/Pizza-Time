@@ -24,13 +24,13 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   String enderecoEntrega;
   // will be fetched from database
   List<String> enderecosEntrega;
+  final _labelOutroEndereco = 'Outro endereço...';
 
   @override
   void initState() {
     super.initState();
     formasPagamento = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
     enderecosEntrega = enderecosTEMP;
-    enderecosEntrega.add('Outro endereço...');
   }
 
   @override
@@ -48,7 +48,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          _selecionarFormaPagamento(),
+          _selecaoFormaPagamento(),
           SizedBox(height: 24),
           Container(
             alignment: Alignment.centerLeft,
@@ -58,14 +58,14 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
-          _selecionarEnderecoEntrega(context),
+          _selecaoEnderecoEntrega(context),
         ],
       ),
     );
   }
 
   /// Contrói o campo para seleção do método de pagamento.
-  _selecionarFormaPagamento() {
+  _selecaoFormaPagamento() {
     return DropdownButtonFormField<String>(
       value: formaPagamento,
       hint: Text('Forma de pagamento...'),
@@ -82,31 +82,38 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   }
 
   /// Contrói o campo para seleção do endereço de entrega.
-  _selecionarEnderecoEntrega(BuildContext context) {
+  _selecaoEnderecoEntrega(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: enderecoEntrega,
       hint: Text('Entregar em...'),
       isExpanded: true,
-      items: enderecosEntrega
-          .map<DropdownMenuItem<String>>(
-            (String s) => DropdownMenuItem(
-              value: s,
-              child: Text(
-                s,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+      items: [
+        ...enderecosEntrega
+            .map<DropdownMenuItem<String>>(
+              (String s) => DropdownMenuItem(
+                value: s,
+                child: Text(
+                  s,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          )
-          .toList(),
+            )
+            .toList(),
+        DropdownMenuItem(
+          value: _labelOutroEndereco,
+          child: Text(_labelOutroEndereco),
+        ),
+      ],
       onChanged: (String opcao) {
         setState(() {
           enderecoEntrega = opcao;
         });
       },
       validator: (String opcao) {
-        if (opcao == 'Outro endereço...') {
+        if (opcao == _labelOutroEndereco) {
           _navegarMostrarNovoEnderecoRoute();
+          // se necessário tratar excessões
         }
         return;
       },
