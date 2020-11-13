@@ -39,10 +39,10 @@ class FinalizarPedido extends StatelessWidget {
 
   /// Envia o pedido para o banco de dados.
   ///
-  /// Trata as possíveis excessões e retorna que o pedido foi relizdo com
-  /// sucesso ou não.
+  /// Trata as possíveis excessões e retorna true se o pedido foi relizado com
+  /// sucesso.
   void _enviaPedidoBancoDados(BuildContext context) {
     // TODO - conectar e tratar das excessões que possam acontecer;
-    Navigator.pop(context, <String, dynamic>{'pedido_realizado': true});
+    Navigator.pop(context, true);
   }
 }

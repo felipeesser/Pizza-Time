@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
-import 'package:pizza_time/telas/Info_Item.dart';
+import 'package:pizza_time/telas/home_files/Info_Item.dart';
 import 'package:google_fonts/google_fonts.dart';
 class HomeItens extends StatelessWidget {
   ItemNotifier _itemNotifier;
@@ -19,8 +19,9 @@ class HomeItens extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: (){
-            print(_itemNotifier.listaItens[index].imagem);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Info_Item(_itemNotifier.listaItens[index])));},
+            _itemNotifier.itemAtual=_itemNotifier.listaItens[index];
+            Navigator.of(context).pushNamed(Info_Item.nomeTela);
+            },
           child: Card(
             margin: EdgeInsets.symmetric(vertical: 13,horizontal: 13),
             clipBehavior: Clip.antiAlias,

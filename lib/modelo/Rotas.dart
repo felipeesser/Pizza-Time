@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:pizza_time/telas/Info_Item.dart';
+import 'package:pizza_time/telas/home_files/Info_Item.dart';
+import 'package:pizza_time/telas/home_files/Pedidos_Feitos.dart';
 import 'package:pizza_time/telas/home_files_rest/Abertura.dart';
 import 'package:pizza_time/telas/home_files/Alteracao.dart';
 import 'package:pizza_time/telas/Cadastro.dart';
@@ -15,7 +16,7 @@ import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
 
 import '../telas/home_files_rest/Adicionar.dart';
 
-final appInitialRoute = Login.nomeTela;
+final appInitialRoute = Home.nomeTela;
 final appRoutes = {
   Home.nomeTela: (context) => Home(),
   FinalizarPedido.nomeTela: (context) => FinalizarPedido(),
@@ -27,8 +28,9 @@ final appRoutes = {
   Alteracao.nomeTela: (_) => Alteracao(),
   Cadastro.nomeTela: (_) => Cadastro(),
   Detalhes.nomeTela: (_) => Detalhes(),
-  //Info_Item.nomeTela: (_) => Info_Item(),
-  Login.nomeTela: (_) => Login()
+  Info_Item.nomeTela: (_) => Info_Item(),
+  Login.nomeTela: (_) => Login(),
+  Pedidos_Feitos.nomeTela: (_) => Pedidos_Feitos()
 };
 
 // Route<dynamic> generateRoute(RouteSettings settings){
