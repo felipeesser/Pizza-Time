@@ -19,4 +19,22 @@ class Item {
   set idItem(String id) {
     _idItem ??= id;
   }
+
+  fromMap(Map<String, dynamic> data) {
+    idItem = data['idItem'];
+    nome = data['nome'];
+    descricao = data['descricao'];
+    preco = data['preco'];
+    imagem = data['urlImagem'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'idItem': _idItem,
+      'nome': nome,
+      'descricao': descricao,
+      'preco': preco,
+      'urlImagem': imagem,
+    };
+  }
 }
