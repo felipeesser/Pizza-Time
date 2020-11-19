@@ -11,8 +11,13 @@ const pathCardapio = '/restaurante/unico/cardapio';
 
 /// Armazena no banco de dados um novo documento com o [item] fornecido.
 ///
-/// O novo documento será criado na coleção padrão do [item], a saber,
-/// '/restaurante/unico/cardapio'.
+/// Salva incorpora ao item, como url, a imagem fornecida.
+/// 
+/// ```dart
+/// ...
+/// await create(macarrao);
+/// ...
+/// ```
 void create(Item item, {File imagem}) async {
   String urlDownloadImagem;
   // salva a imagem se imagem != null
@@ -26,6 +31,8 @@ void create(Item item, {File imagem}) async {
   await novoDocumento.setData(item.toMap(), merge: false);
 }
 
+
+/// Armazena a [imagem] no storage do firestore e retorna a url de download.
 Future<String> _salvaImagem(File imagem) async {
   final uuid = Uuid().v4();
   final extensao = path.extension(imagem.path);
@@ -42,17 +49,41 @@ Future<String> _salvaImagem(File imagem) async {
   return urlDownload;
 }
 
+/// Lê o [documento] e retorna um item com os dados lidos.
+/// 
+/// ```dart
+/// ...
+/// Item aux = await read(refPizza);
+/// ...
+/// ```
 Future<Item> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
   return snapshot == null ? null : Item.fromMap(snapshot.data);
 }
 
+
+/// Atualiza o [item] no firestore, com o valor atual do item.
+/// 
+/// 
+/// ```dart
+/// ...
+/// await update(novoHamburger);
+/// ...
+/// ```
 void update(Item item) async {
   DocumentReference documento =
       Firestore.instance.collection(pathCardapio).document(item.idItem);
   await documento.updateData(item.toMap());
 }
 
+/// Remove o [item] do firestore.
+/// 
+/// 
+/// ```dart
+/// ...
+/// await delete(pizzaDoce);
+/// ...
+/// ```
 void delete(Item item) async {
   DocumentReference documento =
       Firestore.instance.collection(pathCardapio).document(item.idItem);
