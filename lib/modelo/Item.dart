@@ -1,10 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-class Item{
+class Item {
+  String _idItem;
   String nome;
+  String descricao;
+  String preco;
   String imagem;
-  Item.fromMap(Map<String, dynamic> data){
-    nome=data['nome'];
-    imagem=data['imagem'];
+  String tipo;
+
+  Item({this.nome,  this.descricao, this.preco, this.imagem, this.tipo});
+
+  Item.fromMap(Map<String, dynamic> dados) {
+    fromMap(dados);
+  }
+
+  // ignore: unnecessary_getters_setters
+  String get idItem => _idItem;
+
+  // ignore: unnecessary_getters_setters
+  set idItem(String id) {
+    _idItem ??= id;
+  }
+
+  void fromMap(Map<String, dynamic> dados) {
+    idItem = dados['idItem'];
+    nome = dados['nome'];
+    descricao = dados['descricao'];
+    preco = dados['preco'];
+    imagem = dados['imagem'];
+    tipo = dados['tipo'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'idItem': _idItem,
+      'nome': nome,
+      'descricao': descricao,
+      'preco': preco,
+      'imagem': imagem,
+      'tipo':tipo
+    };
   }
 }

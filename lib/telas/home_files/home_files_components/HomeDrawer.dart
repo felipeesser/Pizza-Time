@@ -9,6 +9,8 @@ import 'dart:io';
 import '../../Login.dart';
 import 'package:pizza_time/telas/Mensagens.dart';
 import 'package:pizza_time/api/usuario_firestore.dart' as UsuarioFireStoreCrud;
+import 'package:pizza_time/api/restaurante_firebase.dart'
+    as RestauranteFiresStoreCrud;
 
 class HomeDrawer extends StatelessWidget {
   @override
@@ -70,8 +72,17 @@ class HomeDrawer extends StatelessWidget {
               Icons.chat,
               color: Theme.of(context).accentIconTheme.color,
             ),
-            onTap: () {
-              Navigator.of(context).pushNamed(Mensagens.nomeTela, arguments: UsuarioFireStoreCrud.read(Firestore.instance.document('${UsuarioFireStoreCrud.pathUsuarios}/dono')));
+            onTap: () async {
+              var foi = await RestauranteFiresStoreCrud.idDono();
+              var dono;
+              if (foi != null) {
+                dono = await UsuarioFireStoreCrud.read(
+                    Firestore.instance.document('/usuarios/${foi}'));
+              }
+              if (dono != null) {
+                Navigator.of(context)
+                    .pushNamed(Mensagens.nomeTela, arguments: dono);
+              }
             },
           ),
         ],
