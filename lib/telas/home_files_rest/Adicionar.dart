@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pizza_time/api/ItemApi.dart';
+import 'package:pizza_time/api/item_firebase.dart';
 import 'package:pizza_time/modelo/Item.dart';
 class Adicionar extends StatefulWidget {
   @override
@@ -29,8 +30,8 @@ class _AdicionarState extends State<Adicionar> {
       return;
     }
     _formKey.currentState.save();
-    if(_imageFile==null)uploadItemImage(_itematual, null);
-    else uploadItemImage(_itematual,File(_imageFile.path));
+    if(_imageFile==null)create(_itematual,imagem: null);
+    else create(_itematual,imagem:File(_imageFile.path));
     print(_itematual.nome);
     print(_itematual.tipo);
     print(_itematual.preco);
