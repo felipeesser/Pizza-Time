@@ -30,6 +30,8 @@ dependencies:
   firebase_storage: ^3.1.6
   firebase_auth: ^0.16.1
   image_picker: ^0.6.7+4
+  path: ^1.7.0
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:
