@@ -8,8 +8,8 @@ class Item {
 
   Item();
 
-  Item.fromMap(Map<String, dynamic> data) {
-    fromMap(data);
+  Item.fromMap(Map<String, dynamic> dados) {
+    fromMap(dados);
   }
 
   // ignore: unnecessary_getters_setters
@@ -20,12 +20,12 @@ class Item {
     _idItem ??= id;
   }
 
-  fromMap(Map<String, dynamic> data) {
-    idItem = data['idItem'];
-    nome = data['nome'];
-    descricao = data['descricao'];
-    preco = data['preco'];
-    imagem = data['urlImagem'];
+  fromMap(Map<String, dynamic> dados) {
+    idItem = dados['idItem'];
+    nome = dados['nome'];
+    descricao = dados['descricao'];
+    preco = dados['preco'];
+    imagem = dados['urlImagem'];
   }
 
   Map<String, dynamic> toMap() {
