@@ -85,3 +85,20 @@ void delete(Item item) async {
       Firestore.instance.collection(pathCardapio).document(item.idItem);
   await documento.delete();
 }
+void procura(Item item,{File imagem}) async {
+  bool achou=false;
+  String urlDownloadImagem;
+  final snapshot = await Firestore.instance.collection(pathCardapio).getDocuments();
+  if (imagem != null) {
+    urlDownloadImagem = await _salvaImagem(imagem);
+  }
+  snapshot.documents.forEach((element) {
+    if (element.data['nome']==item.nome){
+      item.idItem=element.documentID;
+      item.imagem=urlDownloadImagem;
+      update(item);
+      achou=true;
+    }
+  });
+  if(!achou) create(item,imagem: imagem);
+}
