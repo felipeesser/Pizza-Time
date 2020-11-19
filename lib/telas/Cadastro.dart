@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/api/usuario_firestore.dart';
+import 'package:pizza_time/modelo/Restaurante.dart';
 import 'package:pizza_time/telas/Login.dart';
+import 'package:pizza_time/api/restaurante_firebase.dart'
+    as RestauranteFirestoreCrud;
 
 //import 'Home.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
@@ -44,7 +47,7 @@ class _CadastroState extends State<Cadastro> {
                   setState(() {
                     _mensagemErro = "";
                   });
-
+                  print('aaaaaaaaaaaaa');
                   Usuario usuario = Usuario();
                   usuario.nome = nome;
                   usuario.email = email;
@@ -97,11 +100,28 @@ class _CadastroState extends State<Cadastro> {
     auth
         .createUserWithEmailAndPassword(
             email: usuario.email, password: usuario.senha)
-        .then((firebaseUser) {
+        .then((firebaseUser) async {
       //Salvar dados do usuário
-      Firestore db = Firestore.instance;
+      //Firestore db = Firestore.instance;
+      print(usuario.nome);
       usuario.idUsuario = firebaseUser.user.uid;
+      print(usuario.idUsuario);
       create(usuario);
+      var rest = await RestauranteFirestoreCrud.read();
+      bool existeDono = false;
+      //if (rest?.idDono.runtimeType == String) {
+      //existeDono = true;
+      //}
+      if (usuario.nome == 'dono' &&
+          (await RestauranteFirestoreCrud.procuraDono())) {
+        print('111111111111111111111111111111111');
+        //TODO ADICIONAR MAP FUNCIONAMENTO
+        Restaurante restaurante = Restaurante.fromMap({
+          'aberto': false,
+          'idDono': usuario.idUsuario,
+        });
+        RestauranteFirestoreCrud.create(restaurante);
+      }
       // db
       //     .collection("usuarios")
       //     .document(firebaseUser.user.uid) //.additionalUserInfo.providerId
