@@ -1,10 +1,7 @@
-
 class Usuario {
-
   String _idUsuario;
   String _nome;
   String _email;
-  String _urlImagem;
   String _senha;
   String _endereco;
   String _numero;
@@ -12,21 +9,20 @@ class Usuario {
   String _telefone;
   Usuario();
 
-  Map<String, dynamic> toMap(){
+//TODO MODIFICAR O USUARIO PARA ACEITAR MAIS DE UM ENDEREÇO  
 
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
-      "nome" : this.nome,
-      "email" : this.email,
-      "endereco" : this.endereco,
-      "numero" : this.numero,
-      "complemento" : this.complemento,
-      "telefone" : this.telefone
+      "nome": this.nome,
+      "email": this.email,
+      "endereco": this.endereco,
+      "numero": this.numero,
+      "complemento": this.complemento,
+      "telefone": this.telefone
     };
 
     return map;
-
   }
-
 
   String get idUsuario => _idUsuario;
 
@@ -38,12 +34,6 @@ class Usuario {
 
   set senha(String value) {
     _senha = value;
-  }
-
-  String get urlImagem => _urlImagem;
-
-  set urlImagem(String value) {
-    _urlImagem = value;
   }
 
   String get email => _email;
@@ -80,5 +70,15 @@ class Usuario {
 
   set numero(String value) {
     _numero = value;
+  }
+
+  Usuario.fromMap(Map<String, dynamic> data) {
+    nome = data['nome'];
+    email = data['email'];
+    endereco = data['endereço'];
+    numero = data['numero'];
+    complemento = data['complemento'];
+    telefone = data['telefone'];
+    idUsuario = data['idUsuario'];
   }
 }
