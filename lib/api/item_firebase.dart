@@ -11,8 +11,8 @@ const pathCardapio = '/restaurante/unico/cardapio';
 
 /// Armazena no banco de dados um novo documento com o [item] fornecido.
 ///
-/// Salva incorpora ao item, como url, a imagem fornecida.
-/// 
+/// Incorpora ao item, como url, a [imagem] fornecida.
+///
 /// ```dart
 /// ...
 /// await create(macarrao);
@@ -30,7 +30,6 @@ void create(Item item, {File imagem}) async {
   item.imagem = urlDownloadImagem;
   await novoDocumento.setData(item.toMap(), merge: false);
 }
-
 
 /// Armazena a [imagem] no storage do firestore e retorna a url de download.
 Future<String> _salvaImagem(File imagem) async {
@@ -50,7 +49,7 @@ Future<String> _salvaImagem(File imagem) async {
 }
 
 /// Lê o [documento] e retorna um item com os dados lidos.
-/// 
+///
 /// ```dart
 /// ...
 /// Item aux = await read(refPizza);
@@ -61,10 +60,8 @@ Future<Item> read(DocumentReference documento) async {
   return snapshot == null ? null : Item.fromMap(snapshot.data);
 }
 
-
 /// Atualiza o [item] no firestore, com o valor atual do item.
-/// 
-/// 
+///
 /// ```dart
 /// ...
 /// await update(novoHamburger);
@@ -77,8 +74,7 @@ void update(Item item) async {
 }
 
 /// Remove o [item] do firestore.
-/// 
-/// 
+///
 /// ```dart
 /// ...
 /// await delete(pizzaDoce);
