@@ -20,7 +20,7 @@ class Item {
     _idItem ??= id;
   }
 
-  fromMap(Map<String, dynamic> dados) {
+  void fromMap(Map<String, dynamic> dados) {
     idItem = dados['idItem'];
     nome = dados['nome'];
     descricao = dados['descricao'];
