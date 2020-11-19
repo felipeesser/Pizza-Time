@@ -136,14 +136,15 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: FlatButton(
-                          child: Text(
-                            "Cadastre-se",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
-                          color: Colors.white,
+                        child: Text(
+                          "Cadastre-se",
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        ),
+                        color: Colors.white,
                         onPressed: () {
                           Navigator.of(context).pushNamed(Cadastro.nomeTela);
-                        },),
+                        },
+                      ),
                     ),
                   ],
                 ),
