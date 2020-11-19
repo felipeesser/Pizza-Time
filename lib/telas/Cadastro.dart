@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pizza_time/api/usuario_firestore.dart';
 import 'package:pizza_time/telas/Login.dart';
 
 //import 'Home.dart';
@@ -99,11 +100,12 @@ class _CadastroState extends State<Cadastro> {
         .then((firebaseUser) {
       //Salvar dados do usuário
       Firestore db = Firestore.instance;
-
-      db
-          .collection("usuarios")
-          .document(firebaseUser.user.uid) //.additionalUserInfo.providerId
-          .setData(usuario.toMap());
+      usuario.idUsuario = firebaseUser.user.uid;
+      create(usuario);
+      // db
+      //     .collection("usuarios")
+      //     .document(firebaseUser.user.uid) //.additionalUserInfo.providerId
+      //     .setData(usuario.toMap());
 
       Navigator.pushReplacementNamed(context, "/login");
     }).catchError((error) {
