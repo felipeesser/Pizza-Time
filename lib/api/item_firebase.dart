@@ -57,7 +57,7 @@ Future<String> _salvaImagem(File imagem) async {
 /// ```
 Future<Item> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
-  return snapshot == null ? null : Item.fromMap(snapshot.data);
+  return snapshot.data == null ? null : Item.fromMap(snapshot.data);
 }
 
 /// Atualiza o [item] no firestore, com o valor atual do item.

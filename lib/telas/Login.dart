@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pizza_time/modelo/Restaurante.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pizza_time/telas/home_files/Home.dart';
+import 'package:pizza_time/telas/home_files_rest/Home_Rest.dart';
 import 'Cadastro.dart';
+import 'package:pizza_time/api/restaurante_firebase.dart'
+    as RestauranteFirebaseCrud;
 
 class Login extends StatefulWidget {
   static final nomeTela = "/login";
@@ -50,8 +55,13 @@ class _LoginState extends State<Login> {
     auth
         .signInWithEmailAndPassword(
             email: usuario.email, password: usuario.senha)
-        .then((firebaseUser) {
-      Navigator.pushReplacementNamed(context, "/home");
+        .then((firebaseUser) async {
+      Restaurante rest = await RestauranteFirebaseCrud.read();
+      if (firebaseUser.user.uid != await RestauranteFirebaseCrud.idDono()) {
+        Navigator.pushReplacementNamed(context, Home.nomeTela);
+      } else {
+        Navigator.pushReplacementNamed(context, Home_Rest.nomeTela);
+      }
     }).catchError((error) {
       setState(() {
         _mensagemErro =
