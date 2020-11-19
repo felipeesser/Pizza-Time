@@ -44,7 +44,7 @@ Future<String> _salvaImagem(File imagem) async {
 
 Future<Item> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
-  return snapshot == null ? null : Item.fromMap(snapshot?.data);
+  return snapshot == null ? null : Item.fromMap(snapshot.data);
 }
 
 void update(Item item) async {
