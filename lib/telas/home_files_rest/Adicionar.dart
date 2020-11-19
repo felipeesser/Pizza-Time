@@ -30,8 +30,12 @@ class _AdicionarState extends State<Adicionar> {
       return;
     }
     _formKey.currentState.save();
-    if(_imageFile==null)create(_itematual,imagem: null);
-    else create(_itematual,imagem:File(_imageFile.path));
+    if(_imageFile==null){
+      procura(_itematual,imagem: null);
+    }
+    else {
+      procura(_itematual,imagem:File(_imageFile.path));
+    }
     print(_itematual.nome);
     print(_itematual.tipo);
     print(_itematual.preco);

@@ -26,6 +26,7 @@ class Item {
     descricao = dados['descricao'];
     preco = dados['preco'];
     imagem = dados['imagem'];
+    tipo = dados['tipo'];
   }
 
   Map<String, dynamic> toMap() {
@@ -35,6 +36,7 @@ class Item {
       'descricao': descricao,
       'preco': preco,
       'imagem': imagem,
+      'tipo':tipo
     };
   }
 }
