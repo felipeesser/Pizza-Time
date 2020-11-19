@@ -5,12 +5,12 @@ import 'endereco.dart';
 class Pedido {
   String _idPedido;
   String _idUsuario;
-  // {'Na fila', 'Preparando', 'Pronto para entrega', 'A caminho', 'Entregue'}
+  // statusPedido {'Na fila', 'Preparando', 'Pronto para entrega', 'A caminho', 'Entregue'}
   String statusPedido;
-  // {'Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'}
+  // pagamento {'Dinheiro', 'Cartão de crédito', 'Cartão de débito'}
   String pagamento;
   Endereco endereco;
-  // {idItem1: quantidadeItem1, ..., idItemN: quantidadeItemN,}
+  // idsItemQuantidade: {idItem1: quantidadeItem1, ..., idItemN: quantidadeItemN,}
   Map<String, int> idsItemQuantidade;
 
   Pedido({this.statusPedido, this.pagamento, this.endereco});
@@ -24,7 +24,7 @@ class Pedido {
     idUsuario = dados['idUsuario'];
     statusPedido = dados['statusPedido'];
     pagamento = dados['pagamento'];
-    endereco = dados['endereco'];
+    endereco = Endereco.fromMap(dados['endereco']);
     idsItemQuantidade = dados['idsItemQuantidade'];
   }
 
@@ -34,7 +34,7 @@ class Pedido {
       'idUsuario': idUsuario,
       'statusPedido': statusPedido,
       'pagamento': pagamento,
-      'endereco': endereco,
+      'endereco': endereco.toMap(),
       'idsItemQuantidade': idsItemQuantidade,
     };
   }
