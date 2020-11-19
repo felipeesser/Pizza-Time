@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/telas/AbaConversas.dart';
 import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
 
 import 'Abertura.dart';
@@ -18,7 +19,7 @@ class _Home_RestState extends State<Home_Rest> {
         Home_Rest_Ped("Marreco","cartao","Rua dos bobos 66666",["pizza doce","pizza de carne seca"],["1","3"]),
       ],
     ),
-    Text("Pagina Chat"),
+    AbaConversas(),
     Adicionar(),
   ];
   int _selectedIndex = 0;
