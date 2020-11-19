@@ -13,6 +13,9 @@ import 'package:pizza_time/telas/home_files_rest/Home_Rest.dart';
 import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_restaurante.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
+import 'package:pizza_time/telas/AbaConversas.dart';
+import 'package:pizza_time/telas/Mensagens.dart';
+
 
 import '../telas/home_files_rest/Adicionar.dart';
 
@@ -30,7 +33,9 @@ final appRoutes = {
   Detalhes.nomeTela: (_) => Detalhes(),
   Info_Item.nomeTela: (_) => Info_Item(),
   Login.nomeTela: (_) => Login(),
-  Pedidos_Feitos.nomeTela: (_) => Pedidos_Feitos()
+  Pedidos_Feitos.nomeTela: (_) => Pedidos_Feitos(),
+  Mensagens.nomeTela: (_) => Mensagens(),
+  AbaConversas.nomeTela: (_) => AbaConversas(),
 };
 
 // Route<dynamic> generateRoute(RouteSettings settings){
