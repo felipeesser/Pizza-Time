@@ -27,6 +27,7 @@ class Endereco {
   }
 
   void fromMap(Map<String, dynamic> dados) {
+    idEndereco = dados['idEndereco'];
     rua = dados['rua'];
     numero = dados['numero'];
     complemento = dados['complemento'];
@@ -34,6 +35,7 @@ class Endereco {
 
   Map<String, dynamic> toMap() {
     return {
+      'idEndereco': idEndereco,
       'rua': rua,
       'numero': numero,
       'complemento': complemento,
