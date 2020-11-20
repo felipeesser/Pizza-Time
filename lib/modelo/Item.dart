@@ -2,7 +2,7 @@ class Item {
   String _idItem;
   String nome;
   String descricao;
-  double preco;
+  String preco;
   String imagem;
   String tipo;
 
@@ -25,7 +25,8 @@ class Item {
     nome = dados['nome'];
     descricao = dados['descricao'];
     preco = dados['preco'];
-    imagem = dados['urlImagem'];
+    imagem = dados['imagem'];
+    tipo = dados['tipo'];
   }
 
   Map<String, dynamic> toMap() {
@@ -34,7 +35,8 @@ class Item {
       'nome': nome,
       'descricao': descricao,
       'preco': preco,
-      'urlImagem': imagem,
+      'imagem': imagem,
+      'tipo':tipo
     };
   }
 }
