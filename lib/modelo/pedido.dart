@@ -13,7 +13,20 @@ class Pedido {
   // idsItemQuantidade: {idItem1: quantidadeItem1, ..., idItemN: quantidadeItemN,}
   Map<String, int> idsItemQuantidade;
 
-  Pedido({this.statusPedido, this.pagamento, this.endereco});
+  Pedido(
+      {String idPedido,
+      String idUsuario,
+      String statusPedido,
+      String pagamento,
+      String idEndereco,
+      Map<String, int> idsItemQuantidade}) {
+    this.idPedido = idPedido;
+    this.idUsuario = idUsuario;
+    this.statusPedido = statusPedido;
+    this.pagamento = pagamento;
+    this.idEndereco = idEndereco;
+    this.idsItemQuantidade = idsItemQuantidade;
+  }
 
   Pedido.fromMap(Map<String, dynamic> dados) {
     fromMap(dados);
