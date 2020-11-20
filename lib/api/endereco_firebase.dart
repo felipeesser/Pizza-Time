@@ -38,7 +38,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:pizza_time/modelo/Usuario.dart';
 import 'package:pizza_time/modelo/endereco.dart';
 
 const replaceToken = 'replaceToken';
@@ -46,23 +45,24 @@ const pathEnderecos = '/usuarios/$replaceToken/enderecos';
 
 /// Armazena no banco de dados um novo documento com o [endereco] fornecido.
 ///
-/// O [endereço] fornecido será armazenado na coleção de endereços do [usuario].
+/// O [endereço] fornecido será armazenado na coleção de endereços do usuario 
+/// definido com o [idUsuario] fornecido.
 ///
 /// ```dart
 /// ...
-/// await create(casa, usuario);
+/// await create(casa, usuario.idUsuario);
 /// ...
 /// ```
-void create(Endereco endereco, Usuario usuario) async {
+void create(Endereco endereco, String idUsuario) async {
   DocumentReference novoDocumento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, usuario.idUsuario))
+      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
       .document();
   endereco.idEndereco = novoDocumento.documentID;
   await novoDocumento.setData(endereco.toMap(), merge: false);
 }
 
 /// Lê o [documento] e retorna um endereco com os dados lidos.
-/// 
+///
 /// Retorna null se o documento não existir.
 ///
 /// ```dart
@@ -79,12 +79,12 @@ Future<Endereco> read(DocumentReference documento) async {
 ///
 /// ```dart
 /// ...
-/// await update(enderecoCasaVeraneio);
+/// await update(enderecoCasaVeraneio, usuario.idUsuario);
 /// ...
 /// ```
-void update(Endereco endereco, Usuario usuario) async {
+void update(Endereco endereco, String idUsuario) async {
   DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, usuario.idUsuario))
+      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
       .document(endereco.idEndereco);
   await documento.updateData(endereco.toMap());
 }
@@ -93,12 +93,12 @@ void update(Endereco endereco, Usuario usuario) async {
 ///
 /// ```dart
 /// ...
-/// await delete(casaEx, usuario);
+/// await delete(casaEx, usuario.idUsuario);
 /// ...
 /// ```
-Future<void> delete(Endereco endereco, Usuario usuario) async {
+void delete(Endereco endereco, String idUsuario) async {
   DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, usuario.idUsuario))
+      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
       .document(endereco.idEndereco);
   await documento.delete();
 }
