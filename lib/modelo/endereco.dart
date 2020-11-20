@@ -4,7 +4,12 @@ class Endereco {
   String numero;
   String complemento;
 
-  Endereco({this.rua, this.numero, this.complemento});
+  Endereco({String idEndereco, String rua, String numero, String complemento}) {
+    this.idEndereco = idEndereco;
+    this.rua = rua;
+    this.numero = numero;
+    this.complemento = complemento;
+  }
 
   Endereco.fromMap(Map<String, dynamic> dados) {
     fromMap(dados);
