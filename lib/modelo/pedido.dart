@@ -37,8 +37,12 @@ class Pedido {
     statusPedido = dados['statusPedido'];
     pagamento = dados['pagamento'];
     idEndereco = dados['idEndereco'];
+    // null caso caso a chave não exista ou o valor da chave seja null em dados;
+    if (dados['idsItemQuantidade'].runtimeType == null) {
+      idsItemQuantidade = null;
+    } else {
+      idsItemQuantidade = Map<String, int>.from(dados['idsItemQuantidade']);
     }
-    idsItemQuantidade = dados['idsItemQuantidade'];
   }
 
   Map<String, dynamic> toMap() {
