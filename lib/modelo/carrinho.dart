@@ -4,6 +4,10 @@ import 'item_carrinho.dart';
 class Carrinho {
   List<ItemCarrinho> itensCarrinho;
 
+  Carrinho() {
+    itensCarrinho = List<ItemCarrinho>();
+  }
+
   int get length {
     int soma = 0;
     for (var item in itensCarrinho) {
