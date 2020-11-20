@@ -53,11 +53,10 @@ const pathPedidosRestaurante = '/restaurante/unico/pedidos';
 /// ...
 /// ```
 void create(Pedido pedido) async {
-  DocumentReference novoDocumento = Firestore.instance
-      .collection(pathPedidos)
-      .document();
-  pedido.idPedido = novoDocumento.documentID;
-  await novoDocumento.setData(pedido.toMap(), merge: false);
+  DocumentReference novoDocumentoRestaurante =
+      Firestore.instance.collection(pathPedidosRestaurante).document();
+  pedido.idPedido = novoDocumentoRestaurante.documentID;
+  await novoDocumentoRestaurante.setData(pedido.toMap(), merge: false);
 }
 
 /// Lê o [documento] e retorna um pedido com os dados lidos.
@@ -83,7 +82,7 @@ Future<Pedido> read(DocumentReference documento) async {
 /// ```
 void update(Pedido pedido) async {
   DocumentReference documento = Firestore.instance
-      .collection(pathPedidos)
+      .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
   await documento.updateData(pedido.toMap());
 }
@@ -97,7 +96,7 @@ void update(Pedido pedido) async {
 /// ```
 Future<void> delete(Pedido pedido) async {
   DocumentReference documento = Firestore.instance
-      .collection(pathPedidos)
+      .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
   await documento.delete();
 }
