@@ -105,7 +105,7 @@ void procura(Item item,{File imagem}) async {//procura se existe item com msm no
 }
 //coloca no notifier os itens do cardapio
 getItens(ItemNotifier itemNotifier)async{
-  QuerySnapshot snapshot=await Firestore.instance.collection('cardapio').getDocuments();
+  QuerySnapshot snapshot=await Firestore.instance.collection(pathCardapio).getDocuments();
   List<Item> _itemList=[];
   snapshot.documents.forEach((document){
     Item item=Item.fromMap(document.data);
