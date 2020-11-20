@@ -12,5 +12,5 @@ void create(Usuario usuario) async {
 
 Future<Usuario> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
-  return snapshot == null ? null : Usuario.fromMap(snapshot.data);
+  return snapshot.data == null ? null : Usuario.fromMap(snapshot.data);
 }

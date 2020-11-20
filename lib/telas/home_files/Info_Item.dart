@@ -12,10 +12,9 @@ class Info_Item extends StatefulWidget {
 
 class _Info_ItemState extends State<Info_Item> {
   int _cont = 1;
-  int _preco = 15;
-  int _total = 15;
+  double _total;
 
-  int _calculo(int cont, int preco) {
+  double _calculo(int cont, double preco) {
     return cont * preco;
   }
 
@@ -42,14 +41,14 @@ class _Info_ItemState extends State<Info_Item> {
           )),
           Flexible(
               child: Text(
-                  'Descricao do pedido serve toda familia muito muito muito muito grande esse texto')),
+                  itemNotifier.itemAtual.descricao)),
           Table(
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             columnWidths: {0: FractionColumnWidth(.5)},
             children: [
               TableRow(children: [
                 Text('Preço:'),
-                Align(alignment: Alignment.center, child: Text('R\$ $_preco')),
+                Align(alignment: Alignment.center, child: Text('R\$ ${itemNotifier.itemAtual.preco}')),
               ]),
               TableRow(children: [
                 Text('Quantidade:'),
@@ -68,7 +67,7 @@ class _Info_ItemState extends State<Info_Item> {
                           onPressed: () {
                             setState(() {
                               if (_cont > 1) _cont--;
-                              _total = _calculo(_cont, _preco);
+                              _total = _calculo(_cont,double.parse(itemNotifier.itemAtual.preco));
                             });
                           }),
                     ),
@@ -85,7 +84,7 @@ class _Info_ItemState extends State<Info_Item> {
                           onPressed: () {
                             setState(() {
                               _cont++;
-                              _total = _calculo(_cont, _preco);
+                              _total = _calculo(_cont, double.parse(itemNotifier.itemAtual.preco));
                             });
                           }),
                     ),
@@ -104,7 +103,7 @@ class _Info_ItemState extends State<Info_Item> {
               ]),
               TableRow(children: [
                 Text('Total:'),
-                Align(alignment: Alignment.center, child: Text('R\$ $_total'))
+                Align(alignment: Alignment.center, child: Text('R\$ ${(_total==null)?itemNotifier.itemAtual.preco:_total}'))
               ]),
             ],
           ),
