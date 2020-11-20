@@ -7,5 +7,5 @@ class ItemCarrinho {
 
   ItemCarrinho({this.item, this.quantidade});
 
-  double get total => quantidade * item.preco;
+  double get total => quantidade * double.parse(item.preco);
 }
