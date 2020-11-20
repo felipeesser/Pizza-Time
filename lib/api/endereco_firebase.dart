@@ -1,3 +1,41 @@
+/// EXEMPLO DE USO
+///
+/// ```dart
+/// import '.../endereco_firebase.dart' as enderecoFirebaseCrud;
+/// ...
+/// var endereco = Endereco(rua: 'aaa', numero: '000', complemento: 'apartamento 0');
+/// String idUsuario = 'algumUuidUsuario';
+/// ...
+/// // CREATE
+/// enderecoFiresbaseCrud.create(endereco, idUsuario);
+/// print(endereco.toMap());
+///
+/// // READ
+/// var documento = Firestore.instance.document(
+///     '/usuarios/$idUsuario/enderecos/${endereco.idEndereco}'
+/// );
+/// var lidoCriado = await enderecoFiresbaseCrud.read(documento);
+/// print(lidoCriado.toMap());
+///
+/// // UPDATE
+/// enderecoFiresbaseCrud.update(
+///   endereco
+///     ..rua = 'bbb',
+///   idUsuario
+/// );
+///
+/// // READ
+/// var lidoAtualizado = await enderecoFiresbaseCrud.read(documento);
+/// print(lidoAtualizado.toMap());
+///
+/// // DELETE
+/// enderecoFiresbaseCrud.delete(endereco, idUsuario);
+///
+/// // READ
+/// var lidoDeletado = await enderecoFiresbaseCrud.read(documento);
+/// print('${lidoDeletado?.toMap()==null ? 'Não existe um endereco no documento fornecido.': lidoDeletado.toMap()}');
+/// ```
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/Usuario.dart';

@@ -1,3 +1,40 @@
+/// EXEMPLO DE USO
+///
+/// ```dart
+/// import '.../pedido_firebase.dart' as pedidoFirebaseCrud;
+/// ...
+/// var pedido = Pedido(statusPedido: 'Na fila', pagamento: 'Dinheiro');
+/// // CREATE
+/// pedidoFirebaseCrud.create(pedido);
+/// print(pedido.toMap());
+///
+/// // READ
+/// var documento = Firestore.instance.document(
+///   '${pedidoFirebaseCrud.pathPedidosRestaurante}/${pedido.idPedido}'
+/// );
+/// var lidoCriado = await pedidoFirebaseCrud.read(documento);
+/// print(lidoCriado.toMap());
+///
+/// // UPDATE
+/// pedidoFirebaseCrud.update(
+///   pedido
+///     ..statusPedido = 'Preparando'
+///     ..idsItemQuantidade = {'aa': 2, 'bb': 3}
+///     ..idEndereco = 'algumUuid'
+/// );
+///
+/// // READ
+/// var lidoAtualizado = await pedidoFirebaseCrud.read(documento);
+/// print(lidoAtualizado.toMap());
+///
+/// // DELETE
+/// pedidoFirebaseCrud.delete(pedido);
+///
+/// // READ
+/// var lidoDeletado = await pedidoFirebaseCrud.read(documento);
+/// print('${lidoDeletado?.toMap()==null ? 'Não existe um pedido no documento fornecido.': lidoDeletado.toMap()}');
+/// ```
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/pedido.dart';
