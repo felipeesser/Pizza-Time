@@ -24,7 +24,12 @@ class Pedido {
     idUsuario = dados['idUsuario'];
     statusPedido = dados['statusPedido'];
     pagamento = dados['pagamento'];
-    endereco = Endereco.fromMap(dados['endereco']);
+    if (dados['endereco'].runtimeType == Endereco) {
+      endereco = dados['endereco'];
+    } else {
+      endereco = Endereco.fromMap(Map<String, dynamic>.from(dados['endereco']),
+      );
+    }
     idsItemQuantidade = dados['idsItemQuantidade'];
   }
 
@@ -34,7 +39,7 @@ class Pedido {
       'idUsuario': idUsuario,
       'statusPedido': statusPedido,
       'pagamento': pagamento,
-      'endereco': endereco.toMap(),
+      'endereco': endereco?.toMap(),
       'idsItemQuantidade': idsItemQuantidade,
     };
   }
@@ -56,10 +61,9 @@ class Pedido {
   }
 
   void itensPedidoFromCarrinho(Carrinho carrinho) {
+    // TODO - continuar implementação
     for (ItemCarrinho i in carrinho.itensCarrinho) {
       idsItemQuantidade.addAll({i.item.idItem: i.quantidade});
     }
   }
-
-  // TODO - continuar implementação
 }

@@ -13,7 +13,7 @@ const pathPedidos = '/restaurante/unico/pedidos';
 /// await create(novoPedido);
 /// ...
 /// ```
-void create({Pedido pedido}) async {
+void create(Pedido pedido) async {
   DocumentReference novoDocumento = Firestore.instance
       .collection(pathPedidos)
       .document();
@@ -23,6 +23,8 @@ void create({Pedido pedido}) async {
 
 /// Lê o [documento] e retorna um pedido com os dados lidos.
 ///
+/// Retorna null se o documento não existir.
+///
 /// ```dart
 /// ...
 /// Item aux = await read(refEmpresaUsuario);
@@ -30,7 +32,7 @@ void create({Pedido pedido}) async {
 /// ```
 Future<Pedido> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
-  return snapshot == null ? null : Pedido.fromMap(snapshot.data);
+  return snapshot.data == null ? null : Pedido.fromMap(snapshot.data);
 }
 
 /// Atualiza o [pedido] no firestore, com o valor atual do [pedido].
@@ -54,7 +56,7 @@ void update(Pedido pedido) async {
 /// await delete(pedido);
 /// ...
 /// ```
-void delete(Pedido pedido) async {
+Future<void> delete(Pedido pedido) async {
   DocumentReference documento = Firestore.instance
       .collection(pathPedidos)
       .document(pedido.idPedido);
