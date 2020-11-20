@@ -83,6 +83,12 @@ class Pedido {
     _idEndereco ??= id;
   }
 
+  /// Preenche este pedido com os itens do [carrinho].
+  ///
+  /// Todos os itens que já presentes serão descartados e os novos serão
+  /// adicionados.
+  void idsItemQuantidadeFromCarrinho(Carrinho carrinho) {
+    idsItemQuantidade = Map<String, int>();
     for (ItemCarrinho i in carrinho.itensCarrinho) {
       idsItemQuantidade.addAll({i.item.idItem: i.quantidade});
     }
