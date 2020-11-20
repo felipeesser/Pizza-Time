@@ -62,7 +62,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
     );
     // REVIEW - confirmar que essa condição está sendo satisfeita após a
     // implementação do backend.
-    if (res) {
+    if (res ?? false) {
      Navigator.popUntil(context, ModalRoute.withName(Home.nomeTela));
      Navigator.pushNamed(context, Detalhes.nomeTela);
     }
