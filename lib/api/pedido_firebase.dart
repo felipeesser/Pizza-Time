@@ -65,7 +65,7 @@ void create(Pedido pedido) async {
 ///
 /// ```dart
 /// ...
-/// Item aux = await read(refEmpresaUsuario);
+/// Pedido aux = await read(refPedidoUsuario);
 /// ...
 /// ```
 Future<Pedido> read(DocumentReference documento) async {
@@ -94,7 +94,7 @@ void update(Pedido pedido) async {
 /// await delete(pedido);
 /// ...
 /// ```
-Future<void> delete(Pedido pedido) async {
+void delete(Pedido pedido) async {
   DocumentReference documento = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
