@@ -1,21 +1,21 @@
 /// Armazena os horarios de funcionamento do restaurante para cada dia da semana.
 class Funcionamento {
-  // Map<int, Map<String, String>> dias = {
-  final _diasHorarios = {
-    1: {'abertura': '', 'fechamento': ''},
-    2: {'abertura': '', 'fechamento': ''},
-    3: {'abertura': '', 'fechamento': ''},
-    4: {'abertura': '', 'fechamento': ''},
-    5: {'abertura': '', 'fechamento': ''},
-    6: {'abertura': '', 'fechamento': ''},
-    7: {'abertura': '', 'fechamento': ''},
+  final Map<String, dynamic> _diasHorarios = {
+    // segunda
+    '1': {'abertura': '', 'fechamento': ''},
+    '2': {'abertura': '', 'fechamento': ''},
+    '3': {'abertura': '', 'fechamento': ''},
+    '4': {'abertura': '', 'fechamento': ''},
+    '5': {'abertura': '', 'fechamento': ''},
+    '6': {'abertura': '', 'fechamento': ''},
+    '7': {'abertura': '', 'fechamento': ''},
   };
 
-  Funcionamento.fromMap(Map<int, Map<String, String>> diasHorarios) {
+  Funcionamento.fromMap(Map<String, dynamic> diasHorarios) {
     fromMap(diasHorarios);
   }
 
-  fromMap(Map<int, Map<String, String>> diasHorarios) {
+  fromMap(Map<String, dynamic> diasHorarios) {
     for (var k in diasHorarios.keys) {
       if (_diasHorarios.containsKey(k)) {
         _diasHorarios[k]['abertura'] = diasHorarios[k]['abertura'] ?? '';
@@ -24,5 +24,5 @@ class Funcionamento {
     }
   }
 
-  Map<int, Map<String, String>> toMap() => {..._diasHorarios};
+  Map<String, dynamic> toMap() => {..._diasHorarios};
 }
