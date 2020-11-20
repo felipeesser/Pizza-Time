@@ -39,7 +39,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/pedido.dart';
 
-const pathPedidos = '/restaurante/unico/pedidos';
+const pathPedidosRestaurante = '/restaurante/unico/pedidos';
+
+// TODO - unir com o crud do usuario, para atualizar a lista de pedidos dele.
 
 /// Armazena no banco de dados um novo documento com o [pedido] fornecido.
 ///
