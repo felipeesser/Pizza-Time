@@ -19,7 +19,7 @@ class Carrinho {
   double get precoTotal {
     double soma = 0;
     for (ItemCarrinho i in itensCarrinho) {
-      soma += i.item.preco;
+      soma += i.total;
     }
     return soma;
   }
