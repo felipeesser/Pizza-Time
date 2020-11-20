@@ -15,7 +15,7 @@ const pathEnderecos = '/usuarios/$replaceToken/enderecos';
 /// await create(casa, usuario);
 /// ...
 /// ```
-void create({Endereco endereco, Usuario usuario}) async {
+void create(Endereco endereco, Usuario usuario) async {
   DocumentReference novoDocumento = Firestore.instance
       .collection(pathEnderecos.replaceAll(replaceToken, usuario.idUsuario))
       .document();
@@ -23,7 +23,9 @@ void create({Endereco endereco, Usuario usuario}) async {
   await novoDocumento.setData(endereco.toMap(), merge: false);
 }
 
-/// Lê o [documento] e retorna um enereco com os dados lidos.
+/// Lê o [documento] e retorna um endereco com os dados lidos.
+/// 
+/// Retorna null se o documento não existir.
 ///
 /// ```dart
 /// ...
@@ -32,7 +34,7 @@ void create({Endereco endereco, Usuario usuario}) async {
 /// ```
 Future<Endereco> read(DocumentReference documento) async {
   final snapshot = await documento?.get();
-  return snapshot == null ? null : Endereco.fromMap(snapshot.data);
+  return snapshot.data == null ? null : Endereco.fromMap(snapshot.data);
 }
 
 /// Atualiza o [endereco] no firestore, com o valor atual do [endereco].
@@ -56,7 +58,7 @@ void update(Endereco endereco, Usuario usuario) async {
 /// await delete(casaEx, usuario);
 /// ...
 /// ```
-void delete(Endereco endereco, Usuario usuario) async {
+Future<void> delete(Endereco endereco, Usuario usuario) async {
   DocumentReference documento = Firestore.instance
       .collection(pathEnderecos.replaceAll(replaceToken, usuario.idUsuario))
       .document(endereco.idEndereco);
