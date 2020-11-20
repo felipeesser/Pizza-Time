@@ -17,7 +17,7 @@ import 'package:pizza_time/telas/Mensagens.dart';
 
 import '../telas/home_files_rest/Adicionar.dart';
 
-final appInitialRoute = Login.nomeTela;
+final appInitialRoute = Home.nomeTela;
 final appRoutes = {
   Home.nomeTela: (context) => Home(),
   FinalizarPedido.nomeTela: (context) => FinalizarPedido(),
