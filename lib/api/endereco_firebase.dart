@@ -40,8 +40,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/endereco.dart';
 
-const replaceToken = 'replaceToken';
 const pathEnderecos = '/usuarios/$replaceToken/enderecos';
+const replaceToken = '-replaceToken';
 
 /// Armazena no banco de dados um novo documento com o [endereco] fornecido.
 ///
