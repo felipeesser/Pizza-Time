@@ -20,6 +20,9 @@ class Endereco {
 
   // ignore: unnecessary_getters_setters
   set idEndereco(String id) {
+    if ((id.runtimeType == String) && (id.isEmpty)) {
+      return;
+    }
     _idEndereco ??= id;
   }
 

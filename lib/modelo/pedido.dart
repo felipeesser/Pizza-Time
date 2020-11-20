@@ -61,6 +61,9 @@ class Pedido {
 
   // ignore: unnecessary_getters_setters
   set idPedido(String id) {
+    if ((id.runtimeType == String) && (id.isEmpty)) {
+      return;
+    }
     _idPedido ??= id;
   }
 
@@ -69,6 +72,9 @@ class Pedido {
 
   // ignore: unnecessary_getters_setters
   set idUsuario(String id) {
+    if ((id.runtimeType == String) && (id.isEmpty)) {
+      return;
+    }
     _idUsuario ??= id;
   }
 
