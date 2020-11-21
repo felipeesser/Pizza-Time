@@ -10,13 +10,17 @@ import 'telas/Login.dart';
 import 'modelo/Rotas.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './modelo/tema.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 
 void main() => runApp(
   MultiProvider(
     providers: [
       ChangeNotifierProvider(
         create: (context) => ItemNotifier(),
-      )
+      ),
+      ChangeNotifierProvider(
+        create: (context) => CarrinhoNotifier(),
+      ),
     ],
     child: MyApp(),
   ),
