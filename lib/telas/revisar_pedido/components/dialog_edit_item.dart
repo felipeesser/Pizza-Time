@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+import 'package:provider/provider.dart';
+import 'package:pizza_time/notifier/ItemNotifier.dart';
 // TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
-import 'Carrinho.dart';
+
 
 /// Edita um item dentro do pedido.
 ///
 /// Modifica a quantidade, ou remove da lista de pedido.
 class DialogEditarItem extends StatefulWidget {
-  final ItemPedido item;
-  final Carrinho carrinho;
 
   /// Contrói o editor para [item] dentro do [carrinho].
   DialogEditarItem({@required this.carrinho, @required this.item});
@@ -18,19 +19,14 @@ class DialogEditarItem extends StatefulWidget {
 
 class _DialogEditarItemState extends State<DialogEditarItem> {
   // referencia para widget.param.item
-  ItemPedido item;
-  // referencia para widget.param.carrinho
-  Carrinho carrinho;
-
-  @override
   void initState() {
     super.initState();
-    item = widget.item;
-    carrinho = widget.carrinho;
   }
 
   @override
   Widget build(BuildContext context) {
+    CarrinhoNotifier carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
     return SimpleDialog(
       children: [
         Padding(
@@ -39,7 +35,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                '${item.nome}',
+                '${itemNotifier.itemAtual.nome}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headline6,
@@ -66,18 +62,18 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Text(
-            'Valor unitário: ${Carrinho.moeda} ${item.valor.toStringAsFixed(2)}',
+            'Valor unitário: R\$ ${itemNotifier.itemAtual.preco}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
             softWrap: false,
           ),
         ),
-        _buildEditorQuantidade(context, item),
+        _buildEditorQuantidade(context),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Text(
-            'Subtotal: ${Carrinho.moeda} ${item.subtotal.toStringAsFixed(2)}',
+            'Subtotal: R\$ ${item.subtotal.toStringAsFixed(2)}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
