@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-class Detalhes extends StatelessWidget {
+import 'package:url_launcher/url_launcher.dart';
+class Detalhes extends StatefulWidget {
   static final nomeTela = "/detalhes";
+
+  @override
+  _DetalhesState createState() => _DetalhesState();
+}
+void _chamada(String command)async{
+  if(await canLaunch(command)){
+    await launch(command);
+  }
+  else{
+    print ('erro chamada');
+  }
+}
+class _DetalhesState extends State<Detalhes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +102,9 @@ class Detalhes extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: FlatButton(
-              onPressed: (){},
+              onPressed: (){
+                _chamada('tel:21999999999');
+              },
               child: Text(
                 'Contato com o restaurante',
                 style: TextStyle(
