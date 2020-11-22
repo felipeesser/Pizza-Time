@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 import 'package:pizza_time/modelo/endereco.dart';
+
 /// Posiciona os widgets da tela onde o usuário revisa seu pedido.
 ///
 /// ```dart
@@ -18,7 +19,7 @@ class NovoEndereco extends StatefulWidget {
 
 class _NovoEnderecoState extends State<NovoEndereco> {
   GlobalKey<FormState> _formNovoEnderecoKey;
-  String _endereco;
+  String _rua;
   String _numero;
   String _complemento;
 
@@ -54,7 +55,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     ),
                     validator: (value) => _validarEndereco(value),
                     onSaved: (newValue) {
-                      _endereco = newValue;
+                      _rua = newValue;
                     },
                   ),
                   SizedBox(height: 16),
