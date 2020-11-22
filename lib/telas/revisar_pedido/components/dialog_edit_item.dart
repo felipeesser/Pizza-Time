@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
-import 'package:provider/provider.dart';
-import 'package:pizza_time/notifier/ItemNotifier.dart';
-// TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
 
+import 'package:provider/provider.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+import 'package:pizza_time/notifier/item_carrinho_notifier.dart';
 
 /// Edita um item dentro do pedido.
 ///
 /// Modifica a quantidade, ou remove da lista de pedido.
 class DialogEditarItem extends StatefulWidget {
-
-  /// Contrói o editor para [item] dentro do [carrinho].
-  DialogEditarItem({@required this.carrinho, @required this.item});
+  /// Contrói o editor de entradas do carrinho.
+  ///
+  /// Usa Notifiers para recber um objeto do tipo [Carrinho] e [ItemCarrinho].
+  DialogEditarItem();
 
   @override
   _DialogEditarItemState createState() => _DialogEditarItemState();
 }
 
 class _DialogEditarItemState extends State<DialogEditarItem> {
-  // referencia para widget.param.item
+  CarrinhoNotifier _carrinhoNotifier;
+  ItemCarrinhoNotifier _itemCarrinhoNotifier;
+  int _quantidade;
+
   void initState() {
     super.initState();
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
+    _quantidade = _itemCarrinhoNotifier.quantidadeItemAtual;
   }
 
   @override
   Widget build(BuildContext context) {
-    CarrinhoNotifier carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
-    ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
     return SimpleDialog(
       children: [
         Padding(
@@ -35,7 +39,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                '${itemNotifier.itemAtual.nome}',
+                '${_itemCarrinhoNotifier.nomeItemAtual}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headline6,
@@ -47,22 +51,29 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                   Icons.delete_forever,
                   color: Colors.red,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _carrinhoNotifier
+                      .removerItem(_itemCarrinhoNotifier.itemAtual);
+                },
               ),
             ],
           ),
         ),
         AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Container(
-            color: Colors.teal[200],
-          ),
-        ),
-        // Image.network(src, fit: BoxFit.fitWidth,)
+            aspectRatio: 16 / 9,
+            child: Image.network(
+              _itemCarrinhoNotifier.urlImagemItemAtual,
+              fit: BoxFit.fitWidth,
+            )
+            // ANCHOR - remover
+            // child: Container(
+            //   color: Colors.teal[200],
+            // ),
+            ),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Text(
-            'Valor unitário: R\$ ${itemNotifier.itemAtual.preco}',
+            'Valor unitário: R\$ ${_itemCarrinhoNotifier.valorUnitarioItemAtual}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
@@ -73,7 +84,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Text(
-            'Subtotal: R\$ ${item.subtotal.toStringAsFixed(2)}',
+            'Subtotal: R\$ ${_itemCarrinhoNotifier.valorTotalItemAtual.toStringAsFixed(2)}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
@@ -92,7 +103,17 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),
-              onPressed: () {},
+              onPressed: () {
+                if (_quantidade == 0) {
+                  _carrinhoNotifier
+                      .removerItem(_itemCarrinhoNotifier.itemAtual);
+                  return;
+                }
+                if (_quantidade != _itemCarrinhoNotifier.quantidadeItemAtual) {
+                  _itemCarrinhoNotifier.quantidadeItemAtual = _quantidade;
+                  return;
+                }
+              },
             ),
             FlatButton(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -117,8 +138,8 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
     );
   }
 
-  // Contrói a barra de edição da quantidade do item.
-  Widget _buildEditorQuantidade(BuildContext context, ItemPedido item) {
+  /// Contrói a barra de edição da quantidade do item.
+  Widget _buildEditorQuantidade(BuildContext context) {
     return Table(
       columnWidths: {1: FlexColumnWidth(0.4)},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -137,13 +158,13 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    item.quantidade--;
+                    _quantidade--;
                   });
                 },
               ),
             ),
             Text(
-              '${item.quantidade}',
+              '$_quantidade',
               textAlign: TextAlign.center,
             ),
             Align(
@@ -158,7 +179,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 ),
                 onPressed: () {
                   setState(() {
-                    item.quantidade++;
+                    _quantidade++;
                   });
                 },
               ),
