@@ -142,4 +142,14 @@ Future<Endereco> enderecoFromPedido(Pedido pedido) => read(
           idEndereco: pedido.idEndereco, idUsuario: pedido.idUsuario),
     );
 
+/// Retorna uma lista de [Endereco] que pertencem ao usuario com [iDusuario].
+Future<List<Endereco>> endrecosFromUsuario(String idUsuario) async {
+  List<Endereco> enderecos;
+  final snapshots = await _colecaoEnderecos(idUsuario).getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Endereco endereco = Endereco.fromMap(doc.data);
+    enderecos.add(endereco);
+  }
+  return enderecos;
 }
