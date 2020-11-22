@@ -41,8 +41,10 @@ print('${lidoDeletado?.toMap()==null ? 'Não existe um pedido no documento forne
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/api/item_firebase.dart' as itemFirebaseCrud;
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 import 'package:pizza_time/modelo/carrinho.dart';
 import 'package:pizza_time/modelo/item_carrinho.dart';
+import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
@@ -126,3 +128,10 @@ Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
   return carrinho;
 }
 
+/// Retorna um [Endereco] a partir do [Pedido] fornecido.
+Future<Endereco> enderecoFromPedido(Pedido pedido) => enderecoFirebaseCrud.read(
+      enderecoFirebaseCrud.documentoEndereco(
+        idUsuario: pedido.idUsuario,
+        idEndereco: pedido.idEndereco,
+      ),
+    );
