@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../../novo_endereco/novo_endereco.dart';
-import 'Endereco.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
+import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 
 /// Constrói um formulário para a finalização da entrega.
 ///
@@ -20,17 +23,24 @@ class FormFinalizarPedido extends StatefulWidget {
 class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   final _formKey = GlobalKey<FormState>();
   String formaPagamento;
-  List<String> formasPagamento;
-  String enderecoEntrega;
-  // will be fetched from database
-  List<String> enderecosEntrega;
+  final formasPagamento = const [
+    'Dinheiro',
+    'Cartão de Crédito',
+    'Cartão de Débito'
+  ];
+  // String _idEnderecoSelecionado;
+  Endereco _enderecoEntregaSelecionado;
+  List<Endereco> _enderecosEntrega;
   final _labelOutroEndereco = 'Outro endereço...';
+  final _valueOutroEndereco = Endereco();
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    formasPagamento = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
-    enderecosEntrega = enderecosTEMP;
+    // TODO - checar se utilizaremos provider para o usuario ou não;
+    var usuarioAux = await FirebaseAuth.instance.currentUser();
+    _enderecosEntrega =
+        await enderecoFirebaseCrud.endrecosFromUsuario(usuarioAux.uid);
   }
 
   @override
@@ -83,17 +93,17 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
 
   /// Contrói o campo para seleção do endereço de entrega.
   _selecaoEnderecoEntrega(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      value: enderecoEntrega,
+    return DropdownButtonFormField<Endereco>(
+      value: _enderecoEntregaSelecionado,
       hint: Text('Entregar em...'),
       isExpanded: true,
       items: [
-        ...enderecosEntrega
-            .map<DropdownMenuItem<String>>(
-              (String s) => DropdownMenuItem(
-                value: s,
+        ..._enderecosEntrega
+            .map<DropdownMenuItem<Endereco>>(
+              (Endereco e) => DropdownMenuItem(
+                value: e,
                 child: Text(
-                  s,
+                  e.toString(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -101,7 +111,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
             )
             .toList(),
         DropdownMenuItem(
-          value: _labelOutroEndereco,
+          value: _valueOutroEndereco,
           child: Text(_labelOutroEndereco),
         ),
       ],
