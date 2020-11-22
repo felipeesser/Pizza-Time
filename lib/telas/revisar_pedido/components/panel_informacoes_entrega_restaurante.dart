@@ -3,7 +3,7 @@ import 'package:pizza_time/modelo/endereco.dart';
 
 import 'package:provider/provider.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
-import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 
 /// Apresenta um resumo das informações de entrega do pedido do cliente.
 ///
@@ -33,7 +33,7 @@ class _PanelInformacoesEntregaRestauranteState
   void initState() async {
     super.initState();
     _pedidoNotifier = Provider.of<PedidoNotifier>(context);
-    _endereco = await pedidoFirebaseCrud
+    _endereco = await enderecoFirebaseCrud
         .enderecoFromPedido(_pedidoNotifier.pedidoAtual);
   }
 

@@ -127,11 +127,3 @@ Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
   }
   return carrinho;
 }
-
-/// Retorna um [Endereco] a partir do [Pedido] fornecido.
-Future<Endereco> enderecoFromPedido(Pedido pedido) => enderecoFirebaseCrud.read(
-      enderecoFirebaseCrud.documentoEndereco(
-        idUsuario: pedido.idUsuario,
-        idEndereco: pedido.idEndereco,
-      ),
-    );

@@ -42,6 +42,7 @@ print('${lidoDeletado?.toMap()==null ? 'Não existe um endereco no documento for
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/modelo/pedido.dart';
 
 const pathEnderecos = '/usuarios/$replaceToken/enderecos';
 const replaceToken = '-replaceToken';
@@ -134,5 +135,11 @@ CollectionReference _colecaoEnderecos(String idUsuario) {
     pathEnderecos.replaceAll(replaceToken, idUsuario),
   );
 }
+
+/// Retorna um [Endereco] a partir do [Pedido] fornecido.
+Future<Endereco> enderecoFromPedido(Pedido pedido) => read(
+      _documentoEndereco(
+          idEndereco: pedido.idEndereco, idUsuario: pedido.idUsuario),
+    );
 
 }
