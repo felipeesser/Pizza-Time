@@ -105,3 +105,12 @@ void delete(Endereco endereco, String idUsuario) async {
       .document(endereco.idEndereco);
   await documento.delete();
 }
+
+/// Retorna o documento onde o [idEndereco] de um dado [idusuario] está armazenado.
+///
+///```dart
+/// String path = pathDocumentoEndereco(idUsuario: uuidUsuario, idEndereco: uuidEnderecoUsuario);
+///```
+DocumentReference documentoEndereco({String idUsuario, String idEndereco}) {
+  return Firestore.instance.document('${pathEnderecos.replaceAll(replaceToken, idUsuario)}/$idEndereco');
+}
