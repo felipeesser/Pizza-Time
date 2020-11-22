@@ -56,10 +56,11 @@ const replaceToken = '-replaceToken';
 /// await create(casa, usuario.idUsuario);
 /// ...
 /// ```
-void create(Endereco endereco, String idUsuario) async {
-  DocumentReference novoDocumento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document();
+void create({Endereco endereco, String idUsuario}) async {
+  if (endereco == null || idUsuario == null) {
+    return;
+  }
+  DocumentReference novoDocumento = _colecaoEnderecos(idUsuario).document();
   endereco.idEndereco = novoDocumento.documentID;
   await novoDocumento.setData(endereco.toMap(), merge: false);
 }
@@ -85,32 +86,53 @@ Future<Endereco> read(DocumentReference documento) async {
 /// await update(enderecoCasaVeraneio, usuario.idUsuario);
 /// ...
 /// ```
-void update(Endereco endereco, String idUsuario) async {
-  DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document(endereco.idEndereco);
+void update({Endereco endereco, String idUsuario}) async {
+  if (endereco == null || idUsuario == null) {
+    return;
+  }
+  DocumentReference documento =
+      _documentoEndereco(idEndereco: endereco.idEndereco, idUsuario: idUsuario);
   await documento.updateData(endereco.toMap());
 }
 
-/// Remove do firestore o [enedreco] armazenado na coleção de endereços do [usuario].
+/// Remove um endereco de um usuario.
+///
+/// Remove do firestore o endereco com [idEndereco] armazenado na coleção de
+/// endereços do usuario com idUsuario.
 ///
 /// ```dart
 /// ...
-/// await delete(casaEx, usuario.idUsuario);
+/// await delete(CasaEx.idEndereco, usuario.idUsuario);
 /// ...
 /// ```
-void delete(Endereco endereco, String idUsuario) async {
-  DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document(endereco.idEndereco);
+void delete({String idEndereco, String idUsuario}) async {
+  DocumentReference documento =
+      _documentoEndereco(idEndereco: idEndereco, idUsuario: idUsuario);
   await documento.delete();
 }
 
 /// Retorna o documento onde o [idEndereco] de um dado [idusuario] está armazenado.
 ///
 ///```dart
-/// String path = pathDocumentoEndereco(idUsuario: uuidUsuario, idEndereco: uuidEnderecoUsuario);
+/// DocumentReference documento = _documentoEndereco(
+///   idUsuario: uuidUsuario,
+///   idEndereco: uuidEnderecoUsuario
+/// );
 ///```
-DocumentReference documentoEndereco({String idUsuario, String idEndereco}) {
-  return Firestore.instance.document('${pathEnderecos.replaceAll(replaceToken, idUsuario)}/$idEndereco');
+DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
+  return Firestore.instance.document(
+      '${pathEnderecos.replaceAll(replaceToken, idUsuario)}/$idEndereco');
+}
+
+/// Retorna a colecao de enderecos do usuario com [idUsuario].
+///
+///```dart
+/// String path = colecaoEnderecos(uuidUsuario);
+///```
+CollectionReference _colecaoEnderecos(String idUsuario) {
+  return Firestore.instance.collection(
+    pathEnderecos.replaceAll(replaceToken, idUsuario),
+  );
+}
+
 }
