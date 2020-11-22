@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-// TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
-import 'Carrinho.dart';
+
+import 'package:provider/provider.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 
 /// Apresenta um resumo das informações do pedido do cliente para o restaurante.
 ///
@@ -15,13 +16,12 @@ class PanelResumePedidoRestaurante extends StatefulWidget {
 
 class _PanelResumePedidoRestauranteState
     extends State<PanelResumePedidoRestaurante> {
-  Carrinho carrinho;
+  CarrinhoNotifier _carrinhoNotifier;
 
   @override
   void initState() {
-    // REVIEW - carrinho será pego do banco de dados ou recebido pelo construtor da classe.
-    carrinho = carrinhoTEMP;
     super.initState();
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
   }
 
   @override
@@ -39,7 +39,7 @@ class _PanelResumePedidoRestauranteState
             Container(
               margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.centerRight,
-              child: Text('${carrinho.length} itens'),
+              child: Text('${_carrinhoNotifier.carrinhoAtual.length} itens'),
             ),
           ],
         ),
@@ -47,13 +47,13 @@ class _PanelResumePedidoRestauranteState
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              child: Text('Subtotal:'),
+              child: Text('Total:'),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.centerRight,
               child: Text(
-                '${Carrinho.moeda} ${carrinho.subtotal.toStringAsFixed(2)}',
+                'R\$ ${_carrinhoNotifier.carrinhoAtual.precoTotal.toStringAsFixed(2)}',
                 maxLines: 1,
                 style: Theme.of(context).textTheme.headline6,
               ),
