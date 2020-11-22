@@ -122,7 +122,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarEndereco(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o endereço';
     }
     return null;
@@ -130,7 +130,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarNumero(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o número';
     }
     return null;
@@ -138,7 +138,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarComplemento(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o compelemento';
     }
     return null;
