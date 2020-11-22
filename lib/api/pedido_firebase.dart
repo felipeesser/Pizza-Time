@@ -40,6 +40,10 @@ print('${lidoDeletado?.toMap()==null ? 'Não existe um pedido no documento forne
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:pizza_time/api/item_firebase.dart' as itemFirebaseCrud;
+import 'package:pizza_time/modelo/carrinho.dart';
+import 'package:pizza_time/modelo/item_carrinho.dart';
+import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
 const pathPedidosRestaurante = '/restaurante/unico/pedidos';
@@ -103,3 +107,22 @@ void delete(Pedido pedido) async {
       .document(pedido.idPedido);
   await documento.delete();
 }
+
+/// Retorna um [Carrinho] a partir do [Pedido] fornecido.
+Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
+  final carrinho = Carrinho();
+  CollectionReference cardapio =
+      Firestore.instance.collection(itemFirebaseCrud.pathCardapio);
+  for (MapEntry<String, int> idItemQuantidade
+      in pedido.idsItemQuantidade.entries) {
+    Item item =
+        await itemFirebaseCrud.read(cardapio.document(idItemQuantidade.key));
+    // pode não estar mais lá
+    if (item != null) {
+      carrinho.itensCarrinho
+          .add(ItemCarrinho(item: item, quantidade: idItemQuantidade.value));
+    }
+  }
+  return carrinho;
+}
+
