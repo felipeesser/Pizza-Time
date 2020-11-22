@@ -22,7 +22,7 @@ print(lidoCriado.toMap());
 // UPDATE
 enderecoFiresbaseCrud.update(
   endereco
-    ..rua = 'bbb',
+    ..rua = 'Rua dos bobos',
   idUsuario
 );
 
