@@ -9,6 +9,8 @@ class Adicionar extends StatefulWidget {
 }
 
 class _AdicionarState extends State<Adicionar> {
+  List<String> _tipos=["salgada","doce","vegetariana"];
+  String dropdownValue=null;
   final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
   final ImagePicker _picker = ImagePicker();
   Item _itematual=Item();
@@ -25,6 +27,9 @@ class _AdicionarState extends State<Adicionar> {
     }
   }
   _salvarItem(context){
+    if(_itematual.tipo==null){
+      _itematual.tipo='salgada';
+    }
     if(!_formKey.currentState.validate()){
       return;
     }
@@ -123,26 +128,28 @@ class _AdicionarState extends State<Adicionar> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.text,
-                      style: TextStyle(fontSize: 20),
+                    child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
-                          hintText: "Tipo",
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(32))),
-                      validator: (String value){
-                        if(value.isEmpty){
-                          return "Tipo nao preenchido";
-                        };
-                        return null;
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30))
+                        )
+                      ),
+                      value: dropdownValue==null?_tipos.elementAt(0):dropdownValue,
+                      icon: Icon(Icons.arrow_drop_down),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          _itematual.tipo=dropdownValue;
+                        });
                       },
-                      onSaved: (String value){
-                        _itematual.tipo=value;
-                      },
+                      items: _tipos.map((String tipo) {
+                        return new DropdownMenuItem<String>(
+                          value: tipo,
+                          child: new Text(
+                            tipo,
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ),
                   Padding(
