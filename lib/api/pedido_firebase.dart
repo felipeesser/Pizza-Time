@@ -47,8 +47,8 @@ import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
 const pathPedidosRestaurante = '/restaurante/unico/pedidos';
-const pathPedidosUsuario = '/usuarios/$replaceToken/pedidos';
-const replaceToken = '-replaceToken';
+const _pathPedidosUsuario = '/usuarios/$_replaceToken/pedidos';
+const _replaceToken = '-replaceToken';
 
 /// Armazena no banco de dados um novo documento com o [pedido] fornecido.
 ///
@@ -141,7 +141,7 @@ Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
 ///```
 CollectionReference _colecaoPedidosUsuario(String idUsuario) {
   return Firestore.instance.collection(
-    pathPedidosUsuario.replaceAll(replaceToken, idUsuario),
+    _pathPedidosUsuario.replaceAll(_replaceToken, idUsuario),
   );
 }
 
@@ -155,5 +155,5 @@ CollectionReference _colecaoPedidosUsuario(String idUsuario) {
 ///```
 DocumentReference _documentoPedidoUsuario({String idUsuario, String idPedido}) {
   return Firestore.instance.document(
-      '${pathPedidosUsuario.replaceAll(replaceToken, idUsuario)}/$idPedido');
+      '${_pathPedidosUsuario.replaceAll(_replaceToken, idUsuario)}/$idPedido');
 }

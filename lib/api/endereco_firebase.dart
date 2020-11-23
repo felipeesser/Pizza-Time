@@ -44,8 +44,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
-const pathEnderecos = '/usuarios/$replaceToken/enderecos';
-const replaceToken = '-replaceToken';
+const _pathEnderecos = '/usuarios/$_replaceToken/enderecos';
+const _replaceToken = '-replaceToken';
 
 /// Armazena no banco de dados um novo documento com o [endereco] fornecido.
 ///
@@ -122,7 +122,7 @@ void delete({String idEndereco, String idUsuario}) async {
 ///```
 DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
   return Firestore.instance.document(
-      '${pathEnderecos.replaceAll(replaceToken, idUsuario)}/$idEndereco');
+      '${_pathEnderecos.replaceAll(_replaceToken, idUsuario)}/$idEndereco');
 }
 
 /// Retorna a colecao de enderecos do usuario com [idUsuario].
@@ -132,7 +132,7 @@ DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
 ///```
 CollectionReference _colecaoEnderecos(String idUsuario) {
   return Firestore.instance.collection(
-    pathEnderecos.replaceAll(replaceToken, idUsuario),
+    _pathEnderecos.replaceAll(_replaceToken, idUsuario),
   );
 }
 
