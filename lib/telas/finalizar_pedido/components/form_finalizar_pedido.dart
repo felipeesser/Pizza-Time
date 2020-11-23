@@ -1,5 +1,7 @@
+// TODO - deletar esse arquivo
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
@@ -15,6 +17,7 @@ import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 /// child: FormFinalizarPedido(),
 /// ...
 /// ```
+
 class FormFinalizarPedido extends StatefulWidget {
   @override
   _FormFinalizarPedidoState createState() => _FormFinalizarPedidoState();
@@ -28,7 +31,8 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
     'Cartão de Crédito',
     'Cartão de Débito'
   ];
-  // String _idEnderecoSelecionado;
+  // TODO - checar se utilizaremos provider para o usuario ou não;
+  FirebaseUser usuarioAux;
   Endereco _enderecoEntregaSelecionado;
   List<Endereco> _enderecosEntrega;
   final _labelOutroEndereco = 'Outro endereço...';
@@ -37,8 +41,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   @override
   void initState() async {
     super.initState();
-    // TODO - checar se utilizaremos provider para o usuario ou não;
-    var usuarioAux = await FirebaseAuth.instance.currentUser();
+    usuarioAux = await FirebaseAuth.instance.currentUser();
     _enderecosEntrega =
         await enderecoFirebaseCrud.endrecosFromUsuario(usuarioAux.uid);
   }
@@ -47,7 +50,7 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.disabled,
       child: Column(
         children: [
           Container(
@@ -115,25 +118,33 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
           child: Text(_labelOutroEndereco),
         ),
       ],
-      onChanged: (String opcao) {
-        setState(() {
-          enderecoEntrega = opcao;
-        });
-      },
-      validator: (String opcao) {
-        if (opcao == _labelOutroEndereco) {
-          _navegarMostrarNovoEnderecoRoute();
-          // se necessário tratar excessões
+      onChanged: (Endereco opcao) async {
+        if (opcao == _valueOutroEndereco) {
+          // _navegarMostrarNovoEnderecoRoute();
+          if (await Navigator.pushNamed(context, NovoEndereco.nomeTela) ??
+              false) {
+            setState(() async {
+              _enderecosEntrega = await enderecoFirebaseCrud
+                  .endrecosFromUsuario(usuarioAux.uid);
+            });
+          }
+        } else {
+          setState(() {
+            _enderecoEntregaSelecionado = opcao;
+          });
         }
+      },
+      validator: (Endereco opcao) {
+        if (opcao == _valueOutroEndereco) {}
         return;
       },
     );
   }
 
-  /// Empurra a tela NovoEndereço no Navegador.
-  _navegarMostrarNovoEnderecoRoute() {
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      Navigator.pushNamed(context, NovoEndereco.nomeTela);
-    });
+  // /// Empurra a tela NovoEndereço no Navegador.
+  // _navegarMostrarNovoEnderecoRoute() {
+  //   SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+  //     await Navigator.pushNamed(context, NovoEndereco.nomeTela);
+  //   });
+  // }
   }
-}
