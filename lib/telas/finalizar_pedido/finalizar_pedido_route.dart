@@ -66,9 +66,6 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
                 child: RaisedButton(
                   child: Text('Pedir'.toUpperCase()),
                   onPressed: () {
-                    if (_carrinhoNotifier.carrinhoAtual.length <= 0) {
-                      return;
-                    }
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       _enviaPedidoBancoDados(context);
