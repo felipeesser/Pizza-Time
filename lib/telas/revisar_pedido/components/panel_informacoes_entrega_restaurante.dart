@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/modelo/possiveis_status_pedido.dart';
 
 import 'package:provider/provider.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
@@ -21,13 +22,7 @@ class _PanelInformacoesEntregaRestauranteState
   Endereco _endereco;
 
   String _statusAtual;
-  final _status = const [
-    'Na fila',
-    'Preparando',
-    'Pronto para entrega',
-    'A caminho',
-    'Entregue'
-  ];
+  final _status = PossiveisStatusPedido.values;
 
   @override
   void initState() async {
