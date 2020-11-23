@@ -6,7 +6,7 @@ abstract class PossiveisStatusPedido {
   static const String aCaminho = 'A caminho';
   static const String entregue = 'Entregue';
 
-  static List<String> get values => [
+  static List<String> get values => const [
         PossiveisStatusPedido.naFila,
         PossiveisStatusPedido.preparando,
         PossiveisStatusPedido.prontoParaEntrega,
