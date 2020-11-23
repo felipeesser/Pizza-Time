@@ -40,11 +40,15 @@ class FinalizarPedido extends StatelessWidget {
   }
 
   /// Envia o pedido para o banco de dados.
-  ///
-  /// Trata as possíveis excessões e retorna true se o pedido foi relizado com
-  /// sucesso.
   void _enviaPedidoBancoDados(BuildContext context) {
-    // TODO - conectar e tratar das excessões que possam acontecer;
-    Navigator.pop(context, true);
+    final pedido = Pedido(
+      idUsuario: _usuario.uid,
+      idEndereco: _enderecoEntregaSelecionado.idEndereco,
+      pagamento: _formaPagamentoSelecionada,
+      statusPedido: PossiveisStatusPedido.naFila,
+    );
+    pedido.idsItemQuantidadeFromCarrinho(_carrinhoNotifier.carrinhoAtual);
+    pedidoFirebaseCrud.create(pedido);
+    _carrinhoNotifier.esvaziarCarrinho();
   }
 }
