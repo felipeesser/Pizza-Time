@@ -22,7 +22,7 @@ print(lidoCriado.toMap());
 // UPDATE
 enderecoFiresbaseCrud.update(
   endereco
-    ..rua = 'bbb',
+    ..rua = 'Rua dos bobos',
   idUsuario
 );
 
@@ -42,9 +42,10 @@ print('${lidoDeletado?.toMap()==null ? 'Não existe um endereco no documento for
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/modelo/pedido.dart';
 
-const pathEnderecos = '/usuarios/$replaceToken/enderecos';
-const replaceToken = '-replaceToken';
+const _pathEnderecos = '/usuarios/$_replaceToken/enderecos';
+const _replaceToken = '-replaceToken';
 
 /// Armazena no banco de dados um novo documento com o [endereco] fornecido.
 ///
@@ -56,10 +57,11 @@ const replaceToken = '-replaceToken';
 /// await create(casa, usuario.idUsuario);
 /// ...
 /// ```
-void create(Endereco endereco, String idUsuario) async {
-  DocumentReference novoDocumento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document();
+void create({Endereco endereco, String idUsuario}) async {
+  if (endereco == null || idUsuario == null) {
+    return;
+  }
+  DocumentReference novoDocumento = _colecaoEnderecos(idUsuario).document();
   endereco.idEndereco = novoDocumento.documentID;
   await novoDocumento.setData(endereco.toMap(), merge: false);
 }
@@ -85,23 +87,69 @@ Future<Endereco> read(DocumentReference documento) async {
 /// await update(enderecoCasaVeraneio, usuario.idUsuario);
 /// ...
 /// ```
-void update(Endereco endereco, String idUsuario) async {
-  DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document(endereco.idEndereco);
+void update({Endereco endereco, String idUsuario}) async {
+  if (endereco == null || idUsuario == null) {
+    return;
+  }
+  DocumentReference documento =
+      _documentoEndereco(idEndereco: endereco.idEndereco, idUsuario: idUsuario);
   await documento.updateData(endereco.toMap());
 }
 
-/// Remove do firestore o [enedreco] armazenado na coleção de endereços do [usuario].
+/// Remove um endereco de um usuario.
+///
+/// Remove do firestore o endereco com [idEndereco] armazenado na coleção de
+/// endereços do usuario com idUsuario.
 ///
 /// ```dart
 /// ...
-/// await delete(casaEx, usuario.idUsuario);
+/// await delete(CasaEx.idEndereco, usuario.idUsuario);
 /// ...
 /// ```
-void delete(Endereco endereco, String idUsuario) async {
-  DocumentReference documento = Firestore.instance
-      .collection(pathEnderecos.replaceAll(replaceToken, idUsuario))
-      .document(endereco.idEndereco);
+void delete({String idEndereco, String idUsuario}) async {
+  DocumentReference documento =
+      _documentoEndereco(idEndereco: idEndereco, idUsuario: idUsuario);
   await documento.delete();
+}
+
+/// Retorna o documento onde o [idEndereco] de um dado [idusuario] está armazenado.
+///
+///```dart
+/// DocumentReference documento = _documentoEndereco(
+///   idUsuario: uuidUsuario,
+///   idEndereco: uuidEnderecoUsuario
+/// );
+///```
+DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
+  return Firestore.instance.document(
+      '${_pathEnderecos.replaceAll(_replaceToken, idUsuario)}/$idEndereco');
+}
+
+/// Retorna a colecao de enderecos do usuario com [idUsuario].
+///
+///```dart
+/// CollectionReference enderecos = colecaoEnderecos(uuidUsuario);
+///```
+CollectionReference _colecaoEnderecos(String idUsuario) {
+  return Firestore.instance.collection(
+    _pathEnderecos.replaceAll(_replaceToken, idUsuario),
+  );
+}
+
+/// Retorna um [Endereco] a partir do [Pedido] fornecido.
+Future<Endereco> enderecoFromPedido(Pedido pedido) => read(
+      _documentoEndereco(
+          idEndereco: pedido.idEndereco, idUsuario: pedido.idUsuario),
+    );
+
+/// Retorna uma lista de [Endereco] que pertencem ao usuario com [iDusuario].
+Future<List<Endereco>> endrecosFromUsuario(String idUsuario) async {
+  List<Endereco> enderecos;
+  final snapshots = await _colecaoEnderecos(idUsuario).getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Endereco endereco = Endereco.fromMap(doc.data);
+    enderecos.add(endereco);
+  }
+  return enderecos;
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'listitem_pedido_usuario.dart';
-import 'dialog_edit_item.dart';
-// TODO - remover as referencias ao carrinho assim que discutirmos como será o backend.
-import 'Carrinho.dart';
+import 'package:provider/provider.dart';
+
+import 'package:pizza_time/modelo/item_carrinho.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+import 'package:pizza_time/notifier/item_carrinho_notifier.dart';
+
+import './dialog_edit_item.dart';
 
 /// Apresenta, como lista, os itens do pedido do cliente.
 ///
@@ -17,59 +20,55 @@ class ListViewPedidoUsuario extends StatefulWidget {
 }
 
 class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
-  Carrinho carrinho;
+  CarrinhoNotifier _carrinhoNotifier;
+  ItemCarrinhoNotifier _itemCarrinhoNotifier;
 
   @override
   void initState() {
     super.initState();
-    // REVIEW - usar Provider
-    carrinho = carrinhoTEMP;
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: carrinho.length,
+      itemCount: _carrinhoNotifier.carrinhoAtual.length,
       itemBuilder: (context, index) {
-        // return ListItemPedidoUsuario(item: carrinho.itensPedido[index]);
-        return _buildListItem(carrinho.itensPedido[index]);
+        return _buildListItem(
+            _carrinhoNotifier.carrinhoAtual.itensCarrinho[index]);
       },
       separatorBuilder: (context, index) => Divider(),
     );
   }
 
   /// Constrói a representação visual do item da lista de pedido do cliente.
-  _buildListItem(ItemPedido item) {
+  _buildListItem(ItemCarrinho item) {
     return ListTile(
       dense: true,
       title: Text(
-        item.nome,
+        item.item.nome,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       leading: Icon(Icons.image),
       subtitle: Text(
-        'Valor unitário: ${Carrinho.moeda} ${item.valor.toStringAsFixed(2).replaceAll('.', ',')}'
+        'Valor unitário: R\$ ${item.item.preco}'
         '\n'
         'Quantidade: ${item.quantidade}',
         maxLines: 2,
       ),
       trailing: Text(
-        '${Carrinho.moeda} ${item.subtotal.toStringAsFixed(2)}',
+        'R\$ ${item.total.toStringAsFixed(2)}',
         textAlign: TextAlign.center,
       ),
-      onTap:
-
-          /// Apresenta a caixa de dialogo para edição do item.
-          () async {
+      onTap: () async {
+        _itemCarrinhoNotifier.itemAtual = item;
         await showDialog(
           context: context,
           useSafeArea: true,
           barrierDismissible: false,
-          builder: (context) => DialogEditarItem(
-            carrinho: carrinho,
-            item: item,
-          ),
+          builder: (context) => DialogEditarItem(),
         );
       },
     );

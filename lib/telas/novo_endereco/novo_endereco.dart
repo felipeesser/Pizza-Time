@@ -1,6 +1,10 @@
 // NOTE - essa rota foi desenvolvida para ser chamada a partir da rota finalizarPedido.
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
+import 'package:pizza_time/modelo/endereco.dart';
 
 /// Posiciona os widgets da tela onde o usuário revisa seu pedido.
 ///
@@ -15,7 +19,7 @@ class NovoEndereco extends StatefulWidget {
 
 class _NovoEnderecoState extends State<NovoEndereco> {
   GlobalKey<FormState> _formNovoEnderecoKey;
-  String _endereco;
+  String _rua;
   String _numero;
   String _complemento;
 
@@ -51,7 +55,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     ),
                     validator: (value) => _validarEndereco(value),
                     onSaved: (newValue) {
-                      _endereco = newValue;
+                      _rua = newValue;
                     },
                   ),
                   SizedBox(height: 16),
@@ -118,7 +122,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarEndereco(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o endereço';
     }
     return null;
@@ -126,7 +130,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarNumero(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o número';
     }
     return null;
@@ -134,7 +138,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
 
   /// Avalia o endereço seguindo as regras definidas para a avaliação.
   _validarComplemento(String value) {
-    if (value.isEmpty) {
+    if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o compelemento';
     }
     return null;
@@ -144,14 +148,14 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   ///
   /// O endereço fornecido não deve ser armazenado por tempo indefinido no perfil
   /// do cliente.
-  _salvarEndereco() {
+  _salvarEndereco() async {
     // verdadeiro se o formulario for válido, falso caso contrário.
     if (_formNovoEnderecoKey.currentState.validate()) {
       _formNovoEnderecoKey.currentState.save();
-
-      // endereço disponível aqui
-
-      // TODO - salvar o endereço no banco de dados;
+      final enderecoAux = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
+      // TODO - checar se utilizaremos provider para o usuario ou não;
+      final usuarioAux = await FirebaseAuth.instance.currentUser();
+      enderecoFirebaseCrud.create(endereco: enderecoAux, idUsuario: usuarioAux.uid);
       return true;
     }
     return false;

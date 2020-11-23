@@ -113,3 +113,12 @@ getItens(ItemNotifier itemNotifier)async{
   });
   itemNotifier.listaItens=_itemList;
 }
+
+/// Retorna a coleção cardápio do restaurante.
+///
+///```dart
+/// CollectionReference cardapio = colecaoCardapio(uuidUsuario);
+///```
+CollectionReference colecaoCardapio(String idUsuario) {
+  return Firestore.instance.collection(pathCardapio);
+}
