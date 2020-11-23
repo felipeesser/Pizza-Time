@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+import 'package:provider/provider.dart';
+
 import 'package:pizza_time/telas/home_files/Home.dart';
-import '../Detalhes.dart';
-import 'components/listview_pedido_usuario.dart';
-import 'components/panel_resume_pedido_usuario.dart';
-import '../finalizar_pedido/finalizar_pedido_route.dart';
+import 'package:pizza_time/telas/Detalhes.dart';
+import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
+
+import './components/listview_pedido_usuario.dart';
+import './components/panel_resume_pedido_usuario.dart';
+
 
 /// Posiciona os widgets da tela onde o usuário revisa o carrinho do pedido.
 ///
@@ -15,6 +20,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CarrinhoNotifier _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Revisar Pedido'),
@@ -39,6 +45,9 @@ class RevisarPedidoUsuario extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('finalizar pedido'.toUpperCase()),
                   onPressed: () {
+                    if (_carrinhoNotifier.carrinhoAtual.length <= 0) {
+                      return;
+                    }
                     _apresentarFinalizarPedido(context);
                   },
                 ),
@@ -63,8 +72,8 @@ class RevisarPedidoUsuario extends StatelessWidget {
     // REVIEW - confirmar que essa condição está sendo satisfeita após a
     // implementação do backend.
     if (res ?? false) {
-     Navigator.popUntil(context, ModalRoute.withName(Home.nomeTela));
-     Navigator.pushNamed(context, Detalhes.nomeTela);
+      Navigator.popUntil(context, ModalRoute.withName(Home.nomeTela));
+      Navigator.pushNamed(context, Detalhes.nomeTela);
     }
   }
 }
