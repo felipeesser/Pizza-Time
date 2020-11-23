@@ -128,7 +128,7 @@ DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
 /// Retorna a colecao de enderecos do usuario com [idUsuario].
 ///
 ///```dart
-/// String path = colecaoEnderecos(uuidUsuario);
+/// CollectionReference enderecos = colecaoEnderecos(uuidUsuario);
 ///```
 CollectionReference _colecaoEnderecos(String idUsuario) {
   return Firestore.instance.collection(
