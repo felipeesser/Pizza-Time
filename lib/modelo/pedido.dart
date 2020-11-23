@@ -41,6 +41,7 @@ class Pedido {
     if (dados['idsItemQuantidade'].runtimeType == null) {
       idsItemQuantidade = null;
     } else {
+      // resolve o retorno do banco de dados que vem como _internalLinkedHashMap
       idsItemQuantidade = Map<String, int>.from(dados['idsItemQuantidade']);
     }
   }

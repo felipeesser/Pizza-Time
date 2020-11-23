@@ -11,6 +11,8 @@ import 'modelo/Rotas.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './modelo/tema.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+import 'package:pizza_time/notifier/item_carrinho_notifier.dart';
+import 'package:pizza_time/notifier/pedido_notifier.dart';
 
 void main() => runApp(
   MultiProvider(
@@ -20,6 +22,12 @@ void main() => runApp(
       ),
       ChangeNotifierProvider(
         create: (context) => CarrinhoNotifier(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ItemCarrinhoNotifier(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => PedidoNotifier(),
       ),
     ],
     child: MyApp(),

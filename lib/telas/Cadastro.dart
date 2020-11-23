@@ -52,9 +52,10 @@ class _CadastroState extends State<Cadastro> {
                   usuario.nome = nome;
                   usuario.email = email;
                   usuario.senha = senha;
-                  usuario.endereco = endereco;
-                  usuario.numero = numero;
-                  usuario.complemento = complemento;
+                  // TODO - usuario não tem esses campos.
+                  // usuario.endereco = endereco;
+                  // usuario.numero = numero;
+                  // usuario.complemento = complemento;
                   usuario.telefone = telefone;
                   _cadastrarUsuario(usuario);
                 } else {

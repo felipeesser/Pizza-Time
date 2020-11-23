@@ -40,11 +40,15 @@ print('${lidoDeletado?.toMap()==null ? 'Não existe um pedido no documento forne
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:pizza_time/api/item_firebase.dart' as itemFirebaseCrud;
+import 'package:pizza_time/modelo/carrinho.dart';
+import 'package:pizza_time/modelo/item_carrinho.dart';
+import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
 const pathPedidosRestaurante = '/restaurante/unico/pedidos';
-
-// TODO - unir com o crud do usuario, para atualizar a lista de pedidos dele.
+const _pathPedidosUsuario = '/usuarios/$_replaceToken/pedidos';
+const _replaceToken = '-replaceToken';
 
 /// Armazena no banco de dados um novo documento com o [pedido] fornecido.
 ///
@@ -60,6 +64,10 @@ void create(Pedido pedido) async {
       Firestore.instance.collection(pathPedidosRestaurante).document();
   pedido.idPedido = novoDocumentoRestaurante.documentID;
   await novoDocumentoRestaurante.setData(pedido.toMap(), merge: false);
+  // manter essa ordem
+  DocumentReference novoDocumentoUsuario =
+      _colecaoPedidosUsuario(pedido.idUsuario).document(pedido.idPedido);
+  await novoDocumentoUsuario.setData(pedido.toMap(), merge: false);
 }
 
 /// Lê o [documento] e retorna um pedido com os dados lidos.
@@ -84,10 +92,12 @@ Future<Pedido> read(DocumentReference documento) async {
 /// ...
 /// ```
 void update(Pedido pedido) async {
-  DocumentReference documento = Firestore.instance
+  DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  await documento.updateData(pedido.toMap());
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  await documentoRestaurante.updateData(pedido.toMap());
+  await documentoUsuario.updateData(pedido.toMap());
 }
 
 /// Remove do firestore o [pedido] armazenado na coleção de pedidos do restaurante.
@@ -98,8 +108,52 @@ void update(Pedido pedido) async {
 /// ...
 /// ```
 void delete(Pedido pedido) async {
-  DocumentReference documento = Firestore.instance
+  DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  await documento.delete();
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  await documentoRestaurante.delete();
+  await documentoUsuario.delete();
+}
+
+/// Retorna um [Carrinho] a partir do [Pedido] fornecido.
+Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
+  final carrinho = Carrinho();
+  CollectionReference cardapio =
+      Firestore.instance.collection(itemFirebaseCrud.pathCardapio);
+  for (MapEntry<String, int> idItemQuantidade
+      in pedido.idsItemQuantidade.entries) {
+    Item item =
+        await itemFirebaseCrud.read(cardapio.document(idItemQuantidade.key));
+    // pode não estar mais lá
+    if (item != null) {
+      carrinho.itensCarrinho
+          .add(ItemCarrinho(item: item, quantidade: idItemQuantidade.value));
+    }
+  }
+  return carrinho;
+}
+
+/// Retorna a colecao de pedidos do usuario com [idUsuario].
+///
+///```dart
+/// String path = colecaoPedidosUsuario(uuidUsuario);
+///```
+CollectionReference _colecaoPedidosUsuario(String idUsuario) {
+  return Firestore.instance.collection(
+    _pathPedidosUsuario.replaceAll(_replaceToken, idUsuario),
+  );
+}
+
+/// Retorna o documento onde o [idPedido] de um dado [idusuario] está armazenado.
+///
+///```dart
+/// DocumentReference documento = _documentoPedidoUsuario(
+///   idUsuario: uuidUsuario,
+///   idPedido: uuidPedidoHamburguer
+/// );
+///```
+DocumentReference _documentoPedidoUsuario({String idUsuario, String idPedido}) {
+  return Firestore.instance.document(
+      '${_pathPedidosUsuario.replaceAll(_replaceToken, idUsuario)}/$idPedido');
 }
