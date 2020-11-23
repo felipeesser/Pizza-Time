@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'components/form_finalizar_pedido.dart';
 
+import 'package:pizza_time/modelo/possiveis_formas_pagamento.dart';
 /// Posiciona os widgets da tela onde o usuário revisa seu pedido.
 ///
 /// ```dart
@@ -8,6 +9,7 @@ import 'components/form_finalizar_pedido.dart';
 /// ```
 class FinalizarPedido extends StatelessWidget {
   static const String nomeTela = '/finalizar_pedido';
+  final _formasPagamento = PossiveisFormasPagamento.values;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
