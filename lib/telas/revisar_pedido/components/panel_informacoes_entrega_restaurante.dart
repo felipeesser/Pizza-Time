@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../finalizar_pedido/components/Endereco.dart';
+import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/modelo/possiveis_status_pedido.dart';
+
+import 'package:provider/provider.dart';
+import 'package:pizza_time/notifier/pedido_notifier.dart';
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 
 /// Apresenta um resumo das informações de entrega do pedido do cliente.
 ///
@@ -13,15 +18,19 @@ class PanelInformacoesEntregaRestaurante extends StatefulWidget {
 
 class _PanelInformacoesEntregaRestauranteState
     extends State<PanelInformacoesEntregaRestaurante> {
-  // TODO - substituir por um enum
-  var _status = [
-    'Na fila',
-    'Preparando',
-    'Pronto para entrega',
-    'A caminho',
-    'Entregue'
-  ];
+  PedidoNotifier _pedidoNotifier;
+  Endereco _endereco;
+
   String _statusAtual;
+  final _status = PossiveisStatusPedido.values;
+
+  @override
+  void initState() async {
+    super.initState();
+    _pedidoNotifier = Provider.of<PedidoNotifier>(context);
+    _endereco = await enderecoFirebaseCrud
+        .enderecoFromPedido(_pedidoNotifier.pedidoAtual);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +74,9 @@ class _PanelInformacoesEntregaRestauranteState
             ),
           ],
         ),
-        TableRow(children: [SizedBox(height: 16,)]),
+        TableRow(children: [
+          SizedBox(height: 16),
+        ]),
         TableRow(
           children: [
             Padding(
@@ -79,7 +90,7 @@ class _PanelInformacoesEntregaRestauranteState
         ),
         TableRow(
           children: [
-            Text('${enderecosTEMP[1]}'),
+            Text('${_endereco.toString()}'),
           ],
         ),
       ],
