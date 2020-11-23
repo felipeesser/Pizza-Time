@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:provider/provider.dart';
@@ -78,4 +77,3 @@ class RevisarPedidoUsuario extends StatelessWidget {
     }
   }
 }
-
