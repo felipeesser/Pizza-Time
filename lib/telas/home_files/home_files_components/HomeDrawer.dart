@@ -60,7 +60,7 @@ class HomeDrawer extends StatelessWidget {
             ),
             isThreeLine: true,
             onTap: () {
-              Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);
+              //Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);
             },
           ),
           ListTile(
