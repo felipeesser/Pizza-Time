@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -75,4 +74,3 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
     );
   }
 }
-

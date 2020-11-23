@@ -13,7 +13,7 @@ class HomeBottom extends StatelessWidget {
             borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
         ),
         color: Colors.white,
-        onPressed: () {/*Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);*/},
+        onPressed: () {Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
