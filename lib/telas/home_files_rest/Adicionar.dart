@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pizza_time/api/ItemApi.dart';
 import 'package:pizza_time/api/item_firebase.dart';
 import 'package:pizza_time/modelo/Item.dart';
 class Adicionar extends StatefulWidget {
@@ -150,7 +149,7 @@ class _AdicionarState extends State<Adicionar> {
                     padding: const EdgeInsets.all(4.0),
                     child: TextFormField(
                       autofocus: false,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.numberWithOptions(),
                       style: TextStyle(fontSize: 20),
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),

@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 class Home_Rest_Ped extends StatelessWidget {
+  void _chamada(String command)async{
+    if(await canLaunch(command)){
+      await launch(command);
+    }
+    else{
+      print ('erro chamada');
+    }
+  }
   String _nome;
   String _endereco;
   String _pagamento;
@@ -26,7 +35,9 @@ class Home_Rest_Ped extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.call, color: Theme.of(context).iconTheme.color),
                   iconSize: 26,
-                  onPressed: (){},
+                  onPressed: (){
+                    _chamada('tel:21999999999');
+                  },
                 ),
               ],
             ),

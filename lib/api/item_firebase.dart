@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
+import 'package:pizza_time/notifier/ItemNotifier.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:pizza_time/modelo/Item.dart';
@@ -85,7 +86,7 @@ void delete(Item item) async {
       Firestore.instance.collection(pathCardapio).document(item.idItem);
   await documento.delete();
 }
-void procura(Item item,{File imagem}) async {
+void procura(Item item,{File imagem}) async {//procura se existe item com msm nome
   bool achou=false;
   String urlDownloadImagem;
   final snapshot = await Firestore.instance.collection(pathCardapio).getDocuments();
@@ -101,4 +102,14 @@ void procura(Item item,{File imagem}) async {
     }
   });
   if(!achou) create(item,imagem: imagem);
+}
+//coloca no notifier os itens do cardapio
+getItens(ItemNotifier itemNotifier)async{
+  QuerySnapshot snapshot=await Firestore.instance.collection(pathCardapio).getDocuments();
+  List<Item> _itemList=[];
+  snapshot.documents.forEach((document){
+    Item item=Item.fromMap(document.data);
+    _itemList.add(item);
+  });
+  itemNotifier.listaItens=_itemList;
 }

@@ -12,7 +12,7 @@ import 'home_files_components/HomeFilter.dart';
 import 'home_files_components/HomeItens.dart';
 import 'home_files_components/HomeBottom.dart';
 import 'home_files_components/HomeSearchBar.dart';
-import 'package:pizza_time/api/ItemApi.dart';
+import 'package:pizza_time/api/item_firebase.dart';
 
 class Home extends StatefulWidget {
   static final nomeTela = "/home";
