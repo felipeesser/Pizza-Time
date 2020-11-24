@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 
 class DiaSemana {
   String _dia;
-  TimeOfDay _abertura;
+  String _abertura;
+  String _fechamento;
 
-  TimeOfDay get abertura => _abertura;
+  String get abertura => _abertura;
 
-  set abertura(TimeOfDay value) {
+  set abertura(String value) {
     _abertura = value;
   }
 
-  TimeOfDay _fechamento;
+  String get fechamento => _fechamento;
 
-  TimeOfDay get fechamento => _fechamento;
-
-  set fechamento(TimeOfDay value) {
+  set fechamento(String value) {
     _fechamento = value;
   }
 
@@ -25,7 +24,7 @@ class DiaSemana {
     _dia = value;
   }
 
-  DiaSemana(String dia, TimeOfDay abertura, TimeOfDay fechamento){
+  DiaSemana(String dia, String abertura, String fechamento){
     this._abertura=abertura;
     this._dia=dia;
     this._fechamento=fechamento;
