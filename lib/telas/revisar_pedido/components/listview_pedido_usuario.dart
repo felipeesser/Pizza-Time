@@ -54,8 +54,8 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
       leading: Icon(Icons.image),
       subtitle: Text(
         'Valor unitário: R\$ ${item.item.preco}'
-        '\n'
-        'Quantidade: ${item.quantidade}',
+            '\n'
+            'Quantidade: ${item.quantidade}',
         maxLines: 2,
       ),
       trailing: Text(

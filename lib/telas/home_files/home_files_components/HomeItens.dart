@@ -12,14 +12,14 @@ class HomeItens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: _itemNotifier.listaItens.length,
+      itemCount: _itemNotifier.listaFiltrada().length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: (){
-            _itemNotifier.itemAtual=_itemNotifier.listaItens[index];
+            _itemNotifier.itemAtual=_itemNotifier.listaFiltrada().elementAt(index);
             Navigator.of(context).pushNamed(Info_Item.nomeTela);
             },
           child: Card(
@@ -32,15 +32,15 @@ class HomeItens extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                _itemNotifier.listaItens[index].imagem!=null? Expanded(child: FittedBox(fit:BoxFit.fill,child: Image.network(_itemNotifier.listaItens[index].imagem))):Image.asset('Imagens/pizza.jpg'),
+                _itemNotifier.listaFiltrada().elementAt(index).imagem!=null? Expanded(child: FittedBox(fit:BoxFit.fill,child: Image.network(_itemNotifier.listaFiltrada().elementAt(index).imagem))):Image.asset('Imagens/pizza.jpg'),
                 Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Flexible(flex:1,child: Text(_itemNotifier.listaItens[index].nome.toUpperCase(),overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: 12))),
-                        Flexible(flex:2,child: Text(_itemNotifier.listaItens[index].descricao,maxLines:2,overflow:TextOverflow.ellipsis,style: TextStyle(color: Color.fromRGBO(89, 89, 89, 1),fontSize: 12,))),
+                        Flexible(flex:1,child: Text(_itemNotifier.listaFiltrada().elementAt(index).nome.toUpperCase(),overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: 12))),
+                        Flexible(flex:2,child: Text(_itemNotifier.listaFiltrada().elementAt(index).descricao,maxLines:2,overflow:TextOverflow.ellipsis,style: TextStyle(color: Color.fromRGBO(89, 89, 89, 1),fontSize: 12,))),
                         Divider(),
-                        Flexible(flex:1,child: Align(alignment:Alignment.topRight,child: Padding(padding:EdgeInsets.only(right: 5),child: Text('R\$ ${_itemNotifier.listaItens[index].preco}',style: TextStyle(color: Colors.black))))),
+                        Flexible(flex:1,child: Align(alignment:Alignment.topRight,child: Padding(padding:EdgeInsets.only(right: 5),child: Text('R\$ ${_itemNotifier.listaFiltrada().elementAt(index).preco}',style: TextStyle(color: Colors.black))))),
                       ],
                     ),
                   ),

@@ -45,8 +45,8 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
       leading: Icon(Icons.image),
       subtitle: Text(
         'Valor unitário: R\$ ${item.item.preco}'
-        '\n'
-        'Quantidade: ${item.quantidade}',
+            '\n'
+            'Quantidade: ${item.quantidade}',
         maxLines: 2,
       ),
       trailing: Text(

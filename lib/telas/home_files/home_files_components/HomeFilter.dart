@@ -3,20 +3,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/telas/home_files/Info_Item.dart';
 import 'dart:io';
-
+import 'package:pizza_time/notifier/ItemNotifier.dart';
+import 'package:provider/provider.dart';
 class HomeFilter extends StatefulWidget {
   @override
   _HomeFilterState createState() => _HomeFilterState();
 }
 
 class _HomeFilterState extends State<HomeFilter> {
-  Widget _filtro() {
+  Widget _filtro(ItemNotifier itemNotifier) {
     return Container(
       height: 200.0,
       width: 200.0,
       child: ListView(
         children: <Widget>[
           ListTile(
+            onTap: (){
+              itemNotifier.palavraAtual='';
+              itemNotifier.filtroAtual=3;
+            },
+            title: Text(
+              'Todas',
+              style: TextStyle(
+                color: Color.fromRGBO(204, 41, 0, 1),
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: (){
+              itemNotifier.palavraAtual='';
+              itemNotifier.filtroAtual=1;
+            },
             title: Text(
               'Doce',
               style: TextStyle(
@@ -25,12 +42,20 @@ class _HomeFilterState extends State<HomeFilter> {
             ),
           ),
           ListTile(
+            onTap: (){
+              itemNotifier.palavraAtual='';
+              itemNotifier.filtroAtual=0;
+            },
             title: Text(
               'Salgada',
               style: TextStyle(color: Color.fromRGBO(204, 41, 0, 1)),
             ),
           ),
           ListTile(
+            onTap: (){
+              itemNotifier.palavraAtual='';
+              itemNotifier.filtroAtual=2;
+            },
             title: Text(
               'Vegetariana',
               style: TextStyle(
@@ -44,6 +69,7 @@ class _HomeFilterState extends State<HomeFilter> {
   }
   @override
   Widget build(BuildContext context) {
+    ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
     return FlatButton(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Align(
@@ -77,7 +103,7 @@ class _HomeFilterState extends State<HomeFilter> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text("Filtro"),
-                content: _filtro(),
+                content: _filtro(itemNotifier),
               );
             });
       });},
