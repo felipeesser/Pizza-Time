@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/DiaSemana.dart';
 import 'package:pizza_time/api/funcionamento_firebase.dart'
-as funcionamentoFirebaseCrud;
+    as funcionamentoFirebaseCrud;
 import 'package:pizza_time/modelo/funcionamento.dart';
 
 class Abertura extends StatefulWidget {
@@ -13,42 +13,72 @@ class Abertura extends StatefulWidget {
 }
 
 class _AberturaState extends State<Abertura> {
-  List<DiaSemana> _dias = [
-    DiaSemana("Segunda", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Terça", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Quarta", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Quinta", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Sexta", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Sábado", TimeOfDay.now(), TimeOfDay.now()),
-    DiaSemana("Domingo", TimeOfDay.now(), TimeOfDay.now()),
-  ];
+  List<DiaSemana> _dias; //= [
+  @override
+  void initState() {
+    super.initState();
+    defineHorario();
+    print(_dias);
+  }
+
+  defineHorario() async {
+    var dados = await funcionamentoFirebaseCrud.read();
+    if (dados != null) {
+      print('1234567');
+      var hora = dados.toMap();
+      // print(dados.toMap());
+      // print(hora);
+      this._dias = [
+        DiaSemana("Segunda", hora['1']['abertura'], hora['1']['fechamento']),
+        DiaSemana("Terça", hora['2']['abertura'], hora['2']['fechamento']),
+        DiaSemana("Quarta", hora['3']['abertura'], hora['3']['fechamento']),
+        DiaSemana("Quinta", hora['4']['abertura'], hora['4']['fechamento']),
+        DiaSemana("Sexta", hora['5']['abertura'], hora['5']['fechamento']),
+        DiaSemana("Sábado", hora['6']['abertura'], hora['6']['fechamento']),
+        DiaSemana("Domingo", hora['7']['abertura'], hora['7']['fechamento']),
+      ];
+    } else {
+      _dias = [
+        DiaSemana("Segunda", "10:00", "10:00"),
+        DiaSemana("Terça", "10:00", "10:00"),
+        DiaSemana("Quarta", "10:00", "10:00"),
+        DiaSemana("Quinta", "10:00", "10:00"),
+        DiaSemana("Sexta", "10:00", "10:00"),
+        DiaSemana("Sábado", "10:00", "10:00"),
+        DiaSemana("Domingo", "10:00", "10:00"),
+      ];
+    }
+  }
+
   DiaSemana dropdownValue = null;
   TimeOfDay _timei = new TimeOfDay.now();
   TimeOfDay _timef = new TimeOfDay.now();
   Future<Null> _selectTimei(BuildContext context) async {
     final TimeOfDay picked =
-    await showTimePicker(context: context, initialTime: _timei);
+        await showTimePicker(context: context, initialTime: _timei);
     if (picked != null && picked != _timei) {
       setState(() {
         _timei = picked;
         if (dropdownValue != null)
-          _dias.elementAt(_dias.indexOf(dropdownValue)).abertura = _timei;
+          _dias.elementAt(_dias.indexOf(dropdownValue)).abertura =
+              '${_timei.hour}:${_timei.minute}';
         else
-          _dias.elementAt(0).abertura = _timei;
+          _dias.elementAt(0).abertura = '${_timei.hour}:${_timei.minute}';
       });
     }
   }
 
   Future<Null> _selectTimef(BuildContext context) async {
     final TimeOfDay picked =
-    await showTimePicker(context: context, initialTime: _timef);
+        await showTimePicker(context: context, initialTime: _timef);
     if (picked != null && picked != _timef) {
       setState(() {
         _timef = picked;
         if (dropdownValue != null)
-          _dias.elementAt(_dias.indexOf(dropdownValue)).fechamento = _timef;
+          _dias.elementAt(_dias.indexOf(dropdownValue)).fechamento =
+              '${_timef.hour}:${_timef.minute}';
         else
-          _dias.elementAt(0).fechamento = _timef;
+          _dias.elementAt(0).fechamento = '${_timef.hour}:${_timef.minute}';
       });
     }
   }
@@ -71,11 +101,10 @@ class _AberturaState extends State<Abertura> {
                     border: TableBorder.all(),
                     children: _dias
                         .map((e) => TableRow(children: [
-                      Text(e.dia),
-                      Text('${e.abertura.hour}:${e.abertura.minute}'),
-                      Text(
-                          '${e.fechamento.hour}:${e.fechamento.minute}')
-                    ]))
+                              Text(e.dia),
+                              Text('${e.abertura}'),
+                              Text('${e.fechamento}')
+                            ]))
                         .toList()),
                 Text('Editar Horário:'),
                 DropdownButton<DiaSemana>(
