@@ -51,10 +51,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                   Icons.delete_forever,
                   color: Colors.red,
                 ),
-                onPressed: () {
-                  _carrinhoNotifier
-                      .removerItem(_itemCarrinhoNotifier.itemAtual);
-                },
+                onPressed: _acaoBotaoRemover,
               ),
             ],
           ),
@@ -103,17 +100,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),
-              onPressed: () {
-                if (_quantidade == 0) {
-                  _carrinhoNotifier
-                      .removerItem(_itemCarrinhoNotifier.itemAtual);
-                  return;
-                }
-                if (_quantidade != _itemCarrinhoNotifier.quantidadeItemAtual) {
-                  _itemCarrinhoNotifier.quantidadeItemAtual = _quantidade;
-                  return;
-                }
-              },
+              onPressed: _acaoBotaoConfirmar,
             ),
             FlatButton(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -128,9 +115,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 side: BorderSide(color: Colors.black, width: 1),
                 borderRadius: BorderRadius.circular(32),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: _acaoBotaoCancelar,
             ),
           ],
         ),
@@ -188,5 +173,24 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         ),
       ],
     );
+  }
+
+  _acaoBotaoRemover() {
+    _carrinhoNotifier.removerItem(_itemCarrinhoNotifier.itemAtual);
+    Navigator.pop(context);
+  }
+
+  void _acaoBotaoConfirmar() {
+    if (_quantidadeNova == 0) {
+      _carrinhoNotifier.removerItem(_itemCarrinhoNotifier.itemAtual);
+    } else if (_quantidadeNova != _itemCarrinhoNotifier.quantidadeItemAtual) {
+      _itemCarrinhoNotifier.quantidadeItemAtual = _quantidadeNova;
+    }
+    Navigator.pop(context);
+  }
+
+  void _acaoBotaoCancelar() {
+    _itemCarrinhoNotifier.quantidadeItemAtual = _quantidadeAntiga;
+    Navigator.pop(context);
   }
 }
