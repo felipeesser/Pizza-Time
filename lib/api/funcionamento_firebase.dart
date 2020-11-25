@@ -45,7 +45,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/modelo/funcionamento.dart';
 
 const pathFuncionamentoRestaurante =
-    '/restaurante/unico/funcionamento/diasHorarios_';
+    '/restaurante/unico/funcionamento/diasHorarios';
 
 /// Armazena no banco de dados as informações contidas em [funcionamento].
 ///
