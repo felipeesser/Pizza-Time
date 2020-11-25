@@ -47,7 +47,6 @@ class _PanelInformacoesEntregaRestauranteState
 
   /// Consulta todos os dados associados a esse pedido fornecido.
   Future<bool> _consultaFirebase() async {
-    print(_pedidoNotifier.idPedidoAtual);
     _usuario = await usuarioFirebaseCrud.read(
       usuarioFirebaseCrud.documentoUsuario(_pedidoNotifier.pedidoAtual.idUsuario),
     );

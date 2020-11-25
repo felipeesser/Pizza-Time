@@ -206,7 +206,6 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
 
   /// Contrói o campo para seleção do endereço de entrega.
   _selecaoEnderecoEntrega(BuildContext context) {
-    print(_enderecoEntregaAtual);
     return DropdownButtonFormField<Endereco>(
       value: _enderecoEntregaAtual,
       hint: Text('Entregar em...\n'),
