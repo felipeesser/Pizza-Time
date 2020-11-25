@@ -67,7 +67,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Text(
-            'Valor unitário: R\$ ${_itemCarrinhoNotifier.valorUnitarioItemAtual}',
+            'Valor unitário: R\$ ${double.parse(_itemCarrinhoNotifier.valorUnitarioItemAtual).toStringAsFixed(2)}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
