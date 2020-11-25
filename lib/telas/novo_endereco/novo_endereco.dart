@@ -22,6 +22,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   String _rua;
   String _numero;
   String _complemento;
+  Endereco _novoEndereco;
 
   @override
   void initState() {
@@ -152,10 +153,10 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     // verdadeiro se o formulario for válido, falso caso contrário.
     if (_formNovoEnderecoKey.currentState.validate()) {
       _formNovoEnderecoKey.currentState.save();
-      final enderecoAux = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
+      _novoEndereco = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
       // TODO - checar se utilizaremos provider para o usuario ou não;
       final usuarioAux = await FirebaseAuth.instance.currentUser();
-      enderecoFirebaseCrud.create(endereco: enderecoAux, idUsuario: usuarioAux.uid);
+      enderecoFirebaseCrud.create(endereco: _novoEndereco, idUsuario: usuarioAux.uid);
       return true;
     }
     return false;
