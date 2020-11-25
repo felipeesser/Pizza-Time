@@ -6,6 +6,7 @@ import 'package:pizza_time/modelo/item_carrinho.dart';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
 import 'package:provider/provider.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
+
 class Info_Item extends StatefulWidget {
   static final nomeTela = "/info_item";
   @override
@@ -31,27 +32,26 @@ class _Info_ItemState extends State<Info_Item> {
         children: <Widget>[
           itemNotifier.itemAtual.imagem != null
               ? Expanded(
-              flex: 2,
-              child: FittedBox(
-                  fit: BoxFit.fill,
-                  child: Image.network(itemNotifier.itemAtual.imagem)))
+                  flex: 2,
+                  child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.network(itemNotifier.itemAtual.imagem)))
               : Image.asset('Imagens/pizza.jpg'),
           Flexible(
               child: Text(
-                itemNotifier.itemAtual.nome.toUpperCase(),
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                textAlign: TextAlign.center,
-              )),
-          Flexible(
-              child: Text(
-                  itemNotifier.itemAtual.descricao)),
+            itemNotifier.itemAtual.nome.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            textAlign: TextAlign.center,
+          )),
+          Flexible(child: Text(itemNotifier.itemAtual.descricao)),
           Table(
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             columnWidths: {0: FractionColumnWidth(.5)},
             children: [
               TableRow(children: [
                 Text('Preço:'),
-                Align(alignment: Alignment.center,
+                Align(
+                    alignment: Alignment.center,
                     child: Text('R\$ ${itemNotifier.itemAtual.preco}')),
               ]),
               TableRow(children: [
@@ -109,10 +109,10 @@ class _Info_ItemState extends State<Info_Item> {
               ]),
               TableRow(children: [
                 Text('Total:'),
-                Align(alignment: Alignment.center,
-                    child: Text('R\$ ${(_total == null)
-                        ? itemNotifier.itemAtual.preco
-                        : _total}'))
+                Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                        'R\$ ${(_total == null) ? itemNotifier.itemAtual.preco : _total}'))
               ]),
             ],
           ),
@@ -124,10 +124,13 @@ class _Info_ItemState extends State<Info_Item> {
               color: Color.fromRGBO(204, 41, 0, 1),
               padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
               shape: RoundedRectangleBorder(
-                //side: BorderSide(color: Colors.black,width: 3),
+                  //side: BorderSide(color: Colors.black,width: 3),
                   borderRadius: BorderRadius.circular(32)),
               onPressed: () {
-                carrinhoNotifier.adicionarItem(ItemCarrinho(item:itemNotifier.itemAtual,quantidade:_cont));
+                carrinhoNotifier.adicionarItem(ItemCarrinho(
+                    item: itemNotifier.itemAtual, quantidade: _cont));
+                print(carrinhoNotifier.carrinhoAtual.itensCarrinho);
+                Navigator.pop(context);
               })
         ],
       ),
