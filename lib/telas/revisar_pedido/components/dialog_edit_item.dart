@@ -20,17 +20,16 @@ class DialogEditarItem extends StatefulWidget {
 class _DialogEditarItemState extends State<DialogEditarItem> {
   CarrinhoNotifier _carrinhoNotifier;
   ItemCarrinhoNotifier _itemCarrinhoNotifier;
-  int _quantidade;
-
-  void initState() {
-    super.initState();
-    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
-    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
-    _quantidade = _itemCarrinhoNotifier.quantidadeItemAtual;
-  }
+  int _quantidadeAntiga;
+  int _quantidadeNova;
 
   @override
   Widget build(BuildContext context) {
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
+    _quantidadeAntiga ??= _itemCarrinhoNotifier.quantidadeItemAtual;
+    _quantidadeNova ??= _itemCarrinhoNotifier.quantidadeItemAtual;
+
     return SimpleDialog(
       children: [
         Padding(
@@ -143,13 +142,13 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    _quantidade--;
+                    _quantidadeNova--;
                   });
                 },
               ),
             ),
             Text(
-              '$_quantidade',
+              '$_quantidadeNova',
               textAlign: TextAlign.center,
             ),
             Align(
@@ -164,7 +163,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 ),
                 onPressed: () {
                   setState(() {
-                    _quantidade++;
+                    _quantidadeNova++;
                   });
                 },
               ),
