@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    ;
     ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
@@ -43,54 +42,41 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.white,
         ),
         body: Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(204, 41, 0, 1),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30),
-                    topLeft: Radius.circular(30))),
-            child: StreamBuilder(
-              stream: Firestore.instance.collection('cardapio').snapshots(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                switch (snapshot.connectionState) {
-                  //case ConnectionState.waiting:
-                  //return LinearProgressIndicator();
-                  //break;
-                  default:
-                    return Column(children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 6, right: 2, top: 6),
-                                    child: HomeSearchBar())),
-                            Expanded(
-                                child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 2, right: 6, top: 6),
-                                    child: HomeFilter())),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 9,
-                        child: HomeItens(itemNotifier),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: HomeBottom(),
-                      )
-                    ]);
-                }
-              },
-            )),
-        // This trailing comma makes auto-formatting nicer for build methods.
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(204, 41, 0, 1),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 6, right: 2, top: 6),
+                            child: HomeSearchBar())),
+                    Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 2, right: 6, top: 6),
+                            child: HomeFilter())),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 9,
+                child: HomeItens(itemNotifier),
+              ),
+              Expanded(
+                flex: 1,
+                child: HomeBottom(),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
+// This trailing comma makes auto-formatting nicer for build methods

@@ -13,6 +13,7 @@ import './modelo/tema.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/notifier/item_carrinho_notifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
+import 'notifier/funcionamentoNotifier.dart';
 
 void main() => runApp(
   MultiProvider(
@@ -28,6 +29,9 @@ void main() => runApp(
       ),
       ChangeNotifierProvider(
         create: (context) => PedidoNotifier(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => FuncionamentoNotifier(),
       ),
     ],
     child: MyApp(),

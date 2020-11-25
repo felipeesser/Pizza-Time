@@ -5,6 +5,8 @@ import 'package:pizza_time/modelo/DiaSemana.dart';
 import 'package:pizza_time/api/funcionamento_firebase.dart'
     as funcionamentoFirebaseCrud;
 import 'package:pizza_time/modelo/funcionamento.dart';
+import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
+import 'package:provider/provider.dart';
 
 class Abertura extends StatefulWidget {
   static final nomeTela = "/abertura";
@@ -13,47 +15,12 @@ class Abertura extends StatefulWidget {
 }
 
 class _AberturaState extends State<Abertura> {
-  List<DiaSemana> _dias; //= [
-  @override
-  void initState() {
-    super.initState();
-    defineHorario();
-    print(_dias);
-  }
-
-  defineHorario() async {
-    var dados = await funcionamentoFirebaseCrud.read();
-    if (dados != null) {
-      print('1234567');
-      var hora = dados.toMap();
-      // print(dados.toMap());
-      // print(hora);
-      this._dias = [
-        DiaSemana("Segunda", hora['1']['abertura'], hora['1']['fechamento']),
-        DiaSemana("Terça", hora['2']['abertura'], hora['2']['fechamento']),
-        DiaSemana("Quarta", hora['3']['abertura'], hora['3']['fechamento']),
-        DiaSemana("Quinta", hora['4']['abertura'], hora['4']['fechamento']),
-        DiaSemana("Sexta", hora['5']['abertura'], hora['5']['fechamento']),
-        DiaSemana("Sábado", hora['6']['abertura'], hora['6']['fechamento']),
-        DiaSemana("Domingo", hora['7']['abertura'], hora['7']['fechamento']),
-      ];
-    } else {
-      _dias = [
-        DiaSemana("Segunda", "10:00", "10:00"),
-        DiaSemana("Terça", "10:00", "10:00"),
-        DiaSemana("Quarta", "10:00", "10:00"),
-        DiaSemana("Quinta", "10:00", "10:00"),
-        DiaSemana("Sexta", "10:00", "10:00"),
-        DiaSemana("Sábado", "10:00", "10:00"),
-        DiaSemana("Domingo", "10:00", "10:00"),
-      ];
-    }
-  }
+  List<DiaSemana> _dias;
 
   DiaSemana dropdownValue = null;
   TimeOfDay _timei = new TimeOfDay.now();
   TimeOfDay _timef = new TimeOfDay.now();
-  Future<Null> _selectTimei(BuildContext context) async {
+  Future<Null> _selectTimei(BuildContext context, List<DiaSemana> _dias) async {
     final TimeOfDay picked =
         await showTimePicker(context: context, initialTime: _timei);
     if (picked != null && picked != _timei) {
@@ -68,7 +35,7 @@ class _AberturaState extends State<Abertura> {
     }
   }
 
-  Future<Null> _selectTimef(BuildContext context) async {
+  Future<Null> _selectTimef(BuildContext context, List<DiaSemana> _dias) async {
     final TimeOfDay picked =
         await showTimePicker(context: context, initialTime: _timef);
     if (picked != null && picked != _timef) {
@@ -85,6 +52,36 @@ class _AberturaState extends State<Abertura> {
 
   @override
   Widget build(BuildContext context) {
+    FuncionamentoNotifier hora =
+        Provider.of<FuncionamentoNotifier>(context, listen: false);
+    if (hora.funcionamentoAtual != null) {
+      _dias ??= [
+        DiaSemana("Segunda", hora.funcionamentoAtual.toMap()['1']['abertura'],
+            hora.funcionamentoAtual.toMap()['1']['fechamento']),
+        DiaSemana("Terça", hora.funcionamentoAtual.toMap()['2']['abertura'],
+            hora.funcionamentoAtual.toMap()['2']['fechamento']),
+        DiaSemana("Quarta", hora.funcionamentoAtual.toMap()['3']['abertura'],
+            hora.funcionamentoAtual.toMap()['3']['fechamento']),
+        DiaSemana("Quinta", hora.funcionamentoAtual.toMap()['4']['abertura'],
+            hora.funcionamentoAtual.toMap()['4']['fechamento']),
+        DiaSemana("Sexta", hora.funcionamentoAtual.toMap()['5']['abertura'],
+            hora.funcionamentoAtual.toMap()['5']['fechamento']),
+        DiaSemana("Sábado", hora.funcionamentoAtual.toMap()['6']['abertura'],
+            hora.funcionamentoAtual.toMap()['6']['fechamento']),
+        DiaSemana("Domingo", hora.funcionamentoAtual.toMap()['7']['abertura'],
+            hora.funcionamentoAtual.toMap()['7']['fechamento']),
+      ];
+    } else {
+      _dias ??= [
+        DiaSemana("Segunda", "10:00", "10:00"),
+        DiaSemana("Terça", "10:00", "10:00"),
+        DiaSemana("Quarta", "10:00", "10:00"),
+        DiaSemana("Quinta", "10:00", "10:00"),
+        DiaSemana("Sexta", "10:00", "10:00"),
+        DiaSemana("Sábado", "10:00", "10:00"),
+        DiaSemana("Domingo", "10:00", "10:00")
+      ];
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Horário de Funcionamento'),
@@ -137,13 +134,13 @@ class _AberturaState extends State<Abertura> {
                         FlatButton(
                           child: Text("${_timei.hour}:${_timei.minute}"),
                           onPressed: () {
-                            _selectTimei(context);
+                            _selectTimei(context, _dias);
                           },
                         ),
                         FlatButton(
                           child: Text("${_timef.hour}:${_timef.minute}"),
                           onPressed: () {
-                            _selectTimef(context);
+                            _selectTimef(context, _dias);
                           },
                         ),
                       ],

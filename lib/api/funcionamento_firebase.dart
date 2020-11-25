@@ -38,13 +38,14 @@ print(
     '${lidoDeletado?.toMap() == null ? 'Não existe um registro de funcionamento no documento fornecido.' : lidoDeletado.toMap()}');
 ```
 */
+import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/funcionamento.dart';
 
 const pathFuncionamentoRestaurante =
-    '/restaurante/unico/funcionamento/diasHorarios';
+    '/restaurante/unico/funcionamento/diasHorarios_';
 
 /// Armazena no banco de dados as informações contidas em [funcionamento].
 ///
@@ -100,4 +101,8 @@ void delete() async {
   DocumentReference documento =
       Firestore.instance.document(pathFuncionamentoRestaurante);
   await documento.delete();
+}
+
+getFuncionamento(FuncionamentoNotifier funcionamentoNotifier) async {
+  funcionamentoNotifier.funcionamentoAtual = await read();
 }
