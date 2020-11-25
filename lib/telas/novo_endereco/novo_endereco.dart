@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 import 'package:pizza_time/modelo/endereco.dart';
 
-/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+/// Posiciona os widgets da tela onde o usuário pode cadastrar um novo endereço.
 ///
 /// ```dart
-/// Navigator.pushNamed(context, [NovoEndereco.nomeTela]);
+/// Navigator.pushNamed(context, NovoEndereco.nomeTela);
 /// ```
 class NovoEndereco extends StatefulWidget {
   static const nomeTela = '/novo_endereco';
@@ -128,7 +128,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     return null;
   }
 
-  /// Avalia o endereço seguindo as regras definidas para a avaliação.
+  /// Avalia o numero seguindo as regras definidas para a avaliação.
   _validarNumero(String value) {
     if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o número';
@@ -136,7 +136,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     return null;
   }
 
-  /// Avalia o endereço seguindo as regras definidas para a avaliação.
+  /// Avalia o complemento seguindo as regras definidas para a avaliação.
   _validarComplemento(String value) {
     if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o compelemento';
