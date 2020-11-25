@@ -51,7 +51,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Endereço*',
                       hintText: 'Endereço para entrega',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarEndereco(value),
                     onSaved: (newValue) {
@@ -64,7 +64,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Número*',
                       hintText: 'número...',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarNumero(value),
                     onSaved: (newValue) {
@@ -77,7 +77,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Complemento*',
                       hintText: 'complemento...',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarComplemento(value),
                     onSaved: (newValue) {
