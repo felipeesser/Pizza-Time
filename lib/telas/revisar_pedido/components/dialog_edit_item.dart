@@ -37,13 +37,15 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                '${_itemCarrinhoNotifier.nomeItemAtual}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline6,
+              Expanded(
+                child: Text(
+                  '${_itemCarrinhoNotifier.nomeItemAtual}',
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.headline6,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
               ),
-              Spacer(),
               IconButton(
                 constraints: BoxConstraints.tightFor(),
                 icon: Icon(
