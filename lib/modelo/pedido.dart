@@ -97,7 +97,11 @@ class Pedido {
   void idsItemQuantidadeFromCarrinho(Carrinho carrinho) {
     idsItemQuantidade = Map<String, int>();
     for (ItemCarrinho i in carrinho.itensCarrinho) {
-      idsItemQuantidade.addAll({i.item.idItem: i.quantidade});
+      idsItemQuantidade.update(
+        i.item.idItem,
+        (valorAtual) => valorAtual + i.quantidade,
+        ifAbsent: () => i.quantidade,
+      );
     }
   }
 }
