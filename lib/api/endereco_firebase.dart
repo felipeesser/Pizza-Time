@@ -144,7 +144,7 @@ Future<Endereco> enderecoFromPedido(Pedido pedido) => read(
 
 /// Retorna uma lista de [Endereco] que pertencem ao usuario com [iDusuario].
 Future<List<Endereco>> endrecosFromUsuario(String idUsuario) async {
-  List<Endereco> enderecos;
+  List<Endereco> enderecos = [];
   final snapshots = await _colecaoEnderecos(idUsuario).getDocuments();
   final documentos = snapshots.documents;
   for (DocumentSnapshot doc in documentos) {
