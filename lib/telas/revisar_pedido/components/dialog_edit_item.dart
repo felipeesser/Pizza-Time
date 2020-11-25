@@ -56,16 +56,12 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
           ),
         ),
         AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.network(
-              _itemCarrinhoNotifier.urlImagemItemAtual,
-              fit: BoxFit.fitWidth,
-            )
-            // ANCHOR - remover
-            // child: Container(
-            //   color: Colors.teal[200],
-            // ),
-            ),
+          aspectRatio: 16 / 9,
+          child: Image.network(
+            _itemCarrinhoNotifier.urlImagemItemAtual,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Text(
