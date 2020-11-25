@@ -100,10 +100,9 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                   color: Theme.of(context).accentColor,
                 ),
           ),
-          onPressed: () {
-            if (_salvarEndereco()) {
-              // se salvar endereço, ocorreu com sucesso então volte
-              Navigator.pop(context);
+          onPressed: () async {
+            if (await _salvarEndereco()) {
+              Navigator.pop<Endereco>(context, _novoEndereco);
             }
           },
         ),
