@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 import 'package:pizza_time/modelo/endereco.dart';
 
-/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+/// Posiciona os widgets da tela onde o usuário pode cadastrar um novo endereço.
 ///
 /// ```dart
-/// Navigator.pushNamed(context, [NovoEndereco.nomeTela]);
+/// Navigator.pushNamed(context, NovoEndereco.nomeTela);
 /// ```
 class NovoEndereco extends StatefulWidget {
   static const nomeTela = '/novo_endereco';
@@ -22,6 +22,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   String _rua;
   String _numero;
   String _complemento;
+  Endereco _novoEndereco;
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Endereço*',
                       hintText: 'Endereço para entrega',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarEndereco(value),
                     onSaved: (newValue) {
@@ -64,7 +65,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Número*',
                       hintText: 'número...',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarNumero(value),
                     onSaved: (newValue) {
@@ -77,7 +78,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                     decoration: InputDecoration(
                       labelText: 'Complemento*',
                       hintText: 'complemento...',
-                      helperText: '*Requerido',
+                      helperText: '*Obrigatório',
                     ),
                     validator: (value) => _validarComplemento(value),
                     onSaved: (newValue) {
@@ -99,10 +100,9 @@ class _NovoEnderecoState extends State<NovoEndereco> {
                   color: Theme.of(context).accentColor,
                 ),
           ),
-          onPressed: () {
-            if (_salvarEndereco()) {
-              // se salvar endereço, ocorreu com sucesso então volte
-              Navigator.pop(context);
+          onPressed: () async {
+            if (await _salvarEndereco()) {
+              Navigator.pop<Endereco>(context, _novoEndereco);
             }
           },
         ),
@@ -128,7 +128,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     return null;
   }
 
-  /// Avalia o endereço seguindo as regras definidas para a avaliação.
+  /// Avalia o numero seguindo as regras definidas para a avaliação.
   _validarNumero(String value) {
     if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o número';
@@ -136,7 +136,7 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     return null;
   }
 
-  /// Avalia o endereço seguindo as regras definidas para a avaliação.
+  /// Avalia o complemento seguindo as regras definidas para a avaliação.
   _validarComplemento(String value) {
     if (value.runtimeType == String && value.isEmpty) {
       return 'Preencha o compelemento';
@@ -152,10 +152,10 @@ class _NovoEnderecoState extends State<NovoEndereco> {
     // verdadeiro se o formulario for válido, falso caso contrário.
     if (_formNovoEnderecoKey.currentState.validate()) {
       _formNovoEnderecoKey.currentState.save();
-      final enderecoAux = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
+      _novoEndereco = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
       // TODO - checar se utilizaremos provider para o usuario ou não;
       final usuarioAux = await FirebaseAuth.instance.currentUser();
-      enderecoFirebaseCrud.create(endereco: enderecoAux, idUsuario: usuarioAux.uid);
+      enderecoFirebaseCrud.create(endereco: _novoEndereco, idUsuario: usuarioAux.uid);
       return true;
     }
     return false;

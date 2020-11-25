@@ -46,3 +46,7 @@ Future<void> delete(String idUsuario) async {
       Firestore.instance.collection(pathUsuarios).document(idUsuario);
   documento.delete();
 }
+
+DocumentReference documentoUsuario(String idUsuario) {
+  return Firestore.instance.document('$pathUsuarios/$idUsuario');
+}

@@ -95,7 +95,8 @@ void update(Pedido pedido) async {
   DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(
+      idPedido: pedido.idPedido, idUsuario: pedido.idUsuario);
   await documentoRestaurante.updateData(pedido.toMap());
   await documentoUsuario.updateData(pedido.toMap());
 }
@@ -111,9 +112,36 @@ void delete(Pedido pedido) async {
   DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(
+      idPedido: pedido.idPedido, idUsuario: pedido.idUsuario);
   await documentoRestaurante.delete();
   await documentoUsuario.delete();
+}
+
+/// Retorna a lista de todos os [Pedido] do restaurante.
+Future<List<Pedido>> pedidosFromRestaurante() async {
+  List<Pedido> pedidos = [];
+  final snapshots = await Firestore.instance
+      .collection(pathPedidosRestaurante)
+      .getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Pedido pedido = Pedido.fromMap(doc.data);
+    pedidos.add(pedido);
+  }
+  return pedidos;
+}
+
+/// Retorna uma lista de [Pedido] que pertencem ao usuario com [idUsuario].
+Future<List<Pedido>> pedidosFromUsuario(String idUsuario) async {
+  List<Pedido> pedidos = [];
+  final snapshots = await _colecaoPedidosUsuario(idUsuario).getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Pedido pedido = Pedido.fromMap(doc.data);
+    pedidos.add(pedido);
+  }
+  return pedidos;
 }
 
 /// Retorna um [Carrinho] a partir do [Pedido] fornecido.

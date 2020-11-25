@@ -20,17 +20,16 @@ class DialogEditarItem extends StatefulWidget {
 class _DialogEditarItemState extends State<DialogEditarItem> {
   CarrinhoNotifier _carrinhoNotifier;
   ItemCarrinhoNotifier _itemCarrinhoNotifier;
-  int _quantidade;
-
-  void initState() {
-    super.initState();
-    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
-    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
-    _quantidade = _itemCarrinhoNotifier.quantidadeItemAtual;
-  }
+  int _quantidadeAntiga;
+  int _quantidadeNova;
 
   @override
   Widget build(BuildContext context) {
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    _itemCarrinhoNotifier = Provider.of<ItemCarrinhoNotifier>(context);
+    _quantidadeAntiga ??= _itemCarrinhoNotifier.quantidadeItemAtual;
+    _quantidadeNova ??= _itemCarrinhoNotifier.quantidadeItemAtual;
+
     return SimpleDialog(
       children: [
         Padding(
@@ -38,42 +37,37 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                '${_itemCarrinhoNotifier.nomeItemAtual}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline6,
+              Expanded(
+                child: Text(
+                  '${_itemCarrinhoNotifier.nomeItemAtual}',
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.headline6,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
               ),
-              Spacer(),
               IconButton(
                 constraints: BoxConstraints.tightFor(),
                 icon: Icon(
                   Icons.delete_forever,
                   color: Colors.red,
                 ),
-                onPressed: () {
-                  _carrinhoNotifier
-                      .removerItem(_itemCarrinhoNotifier.itemAtual);
-                },
+                onPressed: _acaoBotaoRemover,
               ),
             ],
           ),
         ),
         AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.network(
-              _itemCarrinhoNotifier.urlImagemItemAtual,
-              fit: BoxFit.fitWidth,
-            )
-            // ANCHOR - remover
-            // child: Container(
-            //   color: Colors.teal[200],
-            // ),
-            ),
+          aspectRatio: 16 / 9,
+          child: Image.network(
+            _itemCarrinhoNotifier.urlImagemItemAtual,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Text(
-            'Valor unitário: R\$ ${_itemCarrinhoNotifier.valorUnitarioItemAtual}',
+            'Valor unitário: R\$ ${double.parse(_itemCarrinhoNotifier.valorUnitarioItemAtual).toStringAsFixed(2)}',
             maxLines: 1,
             overflow: TextOverflow.fade,
             textAlign: TextAlign.center,
@@ -103,17 +97,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),
-              onPressed: () {
-                if (_quantidade == 0) {
-                  _carrinhoNotifier
-                      .removerItem(_itemCarrinhoNotifier.itemAtual);
-                  return;
-                }
-                if (_quantidade != _itemCarrinhoNotifier.quantidadeItemAtual) {
-                  _itemCarrinhoNotifier.quantidadeItemAtual = _quantidade;
-                  return;
-                }
-              },
+              onPressed: _acaoBotaoConfirmar,
             ),
             FlatButton(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -128,9 +112,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 side: BorderSide(color: Colors.black, width: 1),
                 borderRadius: BorderRadius.circular(32),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: _acaoBotaoCancelar,
             ),
           ],
         ),
@@ -158,13 +140,13 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    _quantidade--;
+                    _quantidadeNova--;
                   });
                 },
               ),
             ),
             Text(
-              '$_quantidade',
+              '$_quantidadeNova',
               textAlign: TextAlign.center,
             ),
             Align(
@@ -179,7 +161,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
                 ),
                 onPressed: () {
                   setState(() {
-                    _quantidade++;
+                    _quantidadeNova++;
                   });
                 },
               ),
@@ -188,5 +170,24 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         ),
       ],
     );
+  }
+
+  _acaoBotaoRemover() {
+    _carrinhoNotifier.removerItem(_itemCarrinhoNotifier.itemAtual);
+    Navigator.pop(context);
+  }
+
+  void _acaoBotaoConfirmar() {
+    if (_quantidadeNova == 0) {
+      _carrinhoNotifier.removerItem(_itemCarrinhoNotifier.itemAtual);
+    } else if (_quantidadeNova != _itemCarrinhoNotifier.quantidadeItemAtual) {
+      _itemCarrinhoNotifier.quantidadeItemAtual = _quantidadeNova;
+    }
+    Navigator.pop(context);
+  }
+
+  void _acaoBotaoCancelar() {
+    _itemCarrinhoNotifier.quantidadeItemAtual = _quantidadeAntiga;
+    Navigator.pop(context);
   }
 }

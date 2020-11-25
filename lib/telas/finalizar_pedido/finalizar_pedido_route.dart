@@ -34,56 +34,120 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
   String _formaPagamentoAtual;
   String _formaPagamentoSelecionada;
   final _formasPagamento = PossiveisFormasPagamento.values;
+  Endereco _enderecoEntregaAtual;
   Endereco _enderecoEntregaSelecionado;
+  Future<List<Endereco>> _futureEnderecosEntrega;
   List<Endereco> _enderecosEntrega;
   final _labelOutroEndereco = 'Outro endereço...';
   final _valueOutroEndereco = Endereco();
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    _usuario = await FirebaseAuth.instance.currentUser();
-    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
-    _enderecosEntrega =
-        await enderecoFirebaseCrud.endrecosFromUsuario(_usuario.uid);
+    _futureEnderecosEntrega = _consultaEnderecos();
+  }
+
+  /// Obtem a lista de endereços do usuario atual e o usuário atual caso necessário.
+  Future<List<Endereco>> _consultaEnderecos() async {
+    var aux = enderecoFirebaseCrud.endrecosFromUsuario(_usuario == null
+        ? await FirebaseAuth.instance.currentUser().then((value) {
+            _usuario = value;
+            return _usuario.uid;
+          })
+        : _usuario.uid);
+    return aux;
   }
 
   @override
   Widget build(BuildContext context) {
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(FinalizarPedido.nomeTela),
-      ),
+      appBar: AppBar(title: Text(FinalizarPedido.nomeTela)),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            children: [
-              _formFinalizarPedido(context),
-              Spacer(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: RaisedButton(
-                  child: Text('Pedir'.toUpperCase()),
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
-                      _enviaPedidoBancoDados(context);
-                      Navigator.pop(context, true);
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+        child: FutureBuilder(
+          future: _futureEnderecosEntrega,
+          builder: _futureBuilder,
         ),
       ),
     );
   }
 
+  /// Constrói o widget apropriado dependendo do andamento da consulta aos
+  /// endereços
+  Widget _futureBuilder(
+      BuildContext context, AsyncSnapshot<List<Endereco>> snapshot) {
+    // Função para auxiliar na legibilidade
+    Widget _carregando() {
+      return Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(),
+            Text(
+              'Carregando dados...',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Função para auxiliar na legibilidade
+    Widget _algoDeuErrado() {
+      return Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Oops!',
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            Text(
+              'Tente novamente mais tarde :(',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Função para auxiliar na legibilidade
+    Widget _mostraConteudoCompleto() {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            _formFinalizarPedido(context),
+            Spacer(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: RaisedButton(
+                child: Text('Pedir'.toUpperCase()),
+                onPressed: _acaoBotaoPedir,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasError) {
+        return _algoDeuErrado();
+      } else {
+        _enderecosEntrega = snapshot.data;
+        return _mostraConteudoCompleto();
+      }
+    } else {
+      return _carregando();
+    }
+  }
+
   /// Constrói um formulário para a finalização da entrega.
   ///
-  /// Os campos desse formulário são modo de pagamento, e endereço para entrega.
+  /// Os campos desse formulário são: modo de pagamento, e endereço para entrega.
   ///
   /// ```dart
   /// ...
@@ -100,7 +164,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(bottom: 16),
             child: Text(
-              'Forma de pagamento:',
+              'Forma de pagamento:*',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -110,7 +174,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(bottom: 16),
             child: Text(
-              'Endereço para entrega:',
+              'Endereço para entrega:*',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -125,26 +189,27 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
     return DropdownButtonFormField<String>(
       value: _formaPagamentoAtual,
       hint: Text('Forma de pagamento...'),
+      decoration: InputDecoration(helperText: '*Obrigatório'),
       items: _formasPagamento
           .map<DropdownMenuItem<String>>(
               (String s) => DropdownMenuItem(value: s, child: Text(s)))
           .toList(),
       onChanged: (String opcao) {
-        setState(() {
-          _formaPagamentoAtual = opcao;
-        });
+        _formaPagamentoAtual = opcao;
       },
       onSaved: (String opcao) {
         _formaPagamentoSelecionada = opcao;
       },
+      validator: _validarOpcaoPagamento,
     );
   }
 
   /// Contrói o campo para seleção do endereço de entrega.
   _selecaoEnderecoEntrega(BuildContext context) {
     return DropdownButtonFormField<Endereco>(
-      value: _enderecoEntregaSelecionado,
-      hint: Text('Entregar em...'),
+      value: _enderecoEntregaAtual,
+      hint: Text('Entregar em...\n'),
+      decoration: InputDecoration(helperText: '*Obrigatório'),
       isExpanded: true,
       items: [
         ..._enderecosEntrega
@@ -158,7 +223,9 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
                 ),
               ),
             )
-            .toList(),
+            .toList()
+              ..sort(
+                  (a, b) => a.value.toString().compareTo(b.value.toString())),
         DropdownMenuItem(
           value: _valueOutroEndereco,
           child: Text(_labelOutroEndereco),
@@ -166,25 +233,45 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
       ],
       onChanged: (Endereco opcao) async {
         if (opcao == _valueOutroEndereco) {
-          // _navegarMostrarNovoEnderecoRoute();
-          if (await Navigator.pushNamed(context, NovoEndereco.nomeTela) ??
-              false) {
-            setState(() async {
-              _enderecosEntrega =
-                  await enderecoFirebaseCrud.endrecosFromUsuario(_usuario.uid);
+          var novoEndereco =
+              await Navigator.pushNamed(context, NovoEndereco.nomeTela);
+          _enderecoEntregaAtual = novoEndereco;
+          if (novoEndereco != null) {
+            setState(() {
+              _enderecosEntrega.add(novoEndereco);
             });
           }
-        } else {
-          setState(() {
-            _enderecoEntregaSelecionado = opcao;
-          });
         }
       },
-      validator: (Endereco opcao) {
-        if (opcao == _valueOutroEndereco) {}
-        return;
+      onSaved: (Endereco opcao) {
+        _enderecoEntregaSelecionado = opcao;
       },
+      validator: _validarOpcaoEndereco,
     );
+  }
+
+  /// Avalia a opcao de pagamento seguindo as regras definidas para a avaliação.
+  String _validarOpcaoPagamento(String s) {
+    if (s == null) {
+      return 'Escolha uma forma.';
+    }
+    return null;
+  }
+
+  /// Avalia o endereço de entrega seguindo as regras definidas para a avaliação.
+  String _validarOpcaoEndereco(Endereco e) {
+    if (e == null || e == _valueOutroEndereco) {
+      return 'Escolha um endereco.';
+    }
+    return null;
+  }
+
+  _acaoBotaoPedir() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      _enviaPedidoBancoDados(context);
+      Navigator.pop(context, true);
+    }
   }
 
   /// Envia o pedido para o banco de dados.

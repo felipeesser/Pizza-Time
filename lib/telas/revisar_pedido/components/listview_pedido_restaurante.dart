@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/modelo/pedido.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pizza_time/modelo/item_carrinho.dart';
@@ -18,11 +19,11 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
   @override
   void initState() {
     super.initState();
-    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return ListView.separated(
       itemCount: _carrinhoNotifier.carrinhoAtual.length,
       itemBuilder: (context, index) {
