@@ -116,6 +116,32 @@ void delete(Pedido pedido) async {
   await documentoUsuario.delete();
 }
 
+/// Retorna a lista de todos os [Pedido] do restaurante.
+Future<List<Pedido>> pedidosFromRestaurante() async {
+  List<Pedido> pedidos = [];
+  final snapshots = await Firestore.instance
+      .collection(pathPedidosRestaurante)
+      .getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Pedido pedido = Pedido.fromMap(doc.data);
+    pedidos.add(pedido);
+  }
+  return pedidos;
+}
+
+/// Retorna uma lista de [Pedido] que pertencem ao usuario com [idUsuario].
+Future<List<Pedido>> pedidosFromUsuario(String idUsuario) async {
+  List<Pedido> pedidos = [];
+  final snapshots = await _colecaoPedidosUsuario(idUsuario).getDocuments();
+  final documentos = snapshots.documents;
+  for (DocumentSnapshot doc in documentos) {
+    Pedido pedido = Pedido.fromMap(doc.data);
+    pedidos.add(pedido);
+  }
+  return pedidos;
+}
+
 /// Retorna um [Carrinho] a partir do [Pedido] fornecido.
 Future<Carrinho> carrinhoFromPedido(Pedido pedido) async {
   final carrinho = Carrinho();
