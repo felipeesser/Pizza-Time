@@ -21,11 +21,11 @@ class _PanelResumePedidoRestauranteState
   @override
   void initState() {
     super.initState();
-    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return Table(
       columnWidths: {0: FlexColumnWidth(0.5), 1: FlexColumnWidth()},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
