@@ -95,7 +95,8 @@ void update(Pedido pedido) async {
   DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(
+      idPedido: pedido.idPedido, idUsuario: pedido.idUsuario);
   await documentoRestaurante.updateData(pedido.toMap());
   await documentoUsuario.updateData(pedido.toMap());
 }
@@ -111,7 +112,8 @@ void delete(Pedido pedido) async {
   DocumentReference documentoRestaurante = Firestore.instance
       .collection(pathPedidosRestaurante)
       .document(pedido.idPedido);
-  DocumentReference documentoUsuario = _documentoPedidoUsuario(idPedido: pedido.idPedido,idUsuario: pedido.idUsuario);
+  DocumentReference documentoUsuario = _documentoPedidoUsuario(
+      idPedido: pedido.idPedido, idUsuario: pedido.idUsuario);
   await documentoRestaurante.delete();
   await documentoUsuario.delete();
 }
