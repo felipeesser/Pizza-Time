@@ -21,24 +21,25 @@ class PanelInformacoesEntregaRestaurante extends StatefulWidget {
 
 class _PanelInformacoesEntregaRestauranteState
     extends State<PanelInformacoesEntregaRestaurante> {
-  PedidoNotifier _pedidoNotifier;
+  Future<bool> _consultouFirebase;
   Usuario _usuario;
   Endereco _endereco;
 
   String _statusAtual;
-  String _statusSelecionado;
-  Future<bool> _consultouFirebase;
-  final _status = PossiveisStatusPedido.values;
+
+  PedidoNotifier _pedidoNotifier;
 
   @override
   void initState() {
     super.initState();
-    _consultouFirebase = _consultaFirebase();
   }
 
   @override
   Widget build(BuildContext context) {
-    _pedidoNotifier = Provider.of<PedidoNotifier>(context);
+    _pedidoNotifier = Provider.of<PedidoNotifier>(context, listen: false);
+    if (_consultouFirebase == null) {
+      _consultouFirebase = _consultaFirebase();
+    }
     return FutureBuilder(
       future: _consultouFirebase,
       builder: _futureBuilder,
@@ -48,16 +49,19 @@ class _PanelInformacoesEntregaRestauranteState
   /// Consulta todos os dados associados a esse pedido fornecido.
   Future<bool> _consultaFirebase() async {
     _usuario = await usuarioFirebaseCrud.read(
-      usuarioFirebaseCrud.documentoUsuario(_pedidoNotifier.pedidoAtual.idUsuario),
+      usuarioFirebaseCrud
+          .documentoUsuario(_pedidoNotifier.pedidoAtual.idUsuario),
     );
-    _endereco = await enderecoFirebaseCrud.enderecoFromPedido(_pedidoNotifier.pedidoAtual);
-    return (_usuario != null) && (_endereco != null)
-        ? true
-        : false;
+    _endereco = await enderecoFirebaseCrud
+        .enderecoFromPedido(_pedidoNotifier.pedidoAtual);
+    return ((_usuario != null) && (_endereco != null)) ? true : false;
   }
 
+  /// Retorna o widget que será mostrado na tela
+  ///
+  /// O widget que será mostrado depende do status da snapshot.
   Widget _futureBuilder(BuildContext context, AsyncSnapshot snapshot) {
-    // Função para auxiliar na legibilidade
+    /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(
         alignment: Alignment.center,
@@ -74,7 +78,7 @@ class _PanelInformacoesEntregaRestauranteState
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra aviso.
     Widget _algoDeuErrado() {
       return Align(
         alignment: Alignment.center,
@@ -93,7 +97,7 @@ class _PanelInformacoesEntregaRestauranteState
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra as informações preechidas no momento do pedido.
     Widget _conteudoCompleto() {
       return Table(
         columnWidths: {},
@@ -112,10 +116,10 @@ class _PanelInformacoesEntregaRestauranteState
           TableRow(
             children: [
               DropdownButtonFormField(
-                value: _statusAtual,
+                value: _pedidoNotifier.statusPedidoAtual,
                 hint: Text('Status atual do pedido'),
                 isExpanded: true,
-                items: _status
+                items: PossiveisStatusPedido.values
                     .map<DropdownMenuItem<String>>(
                       (String s) => DropdownMenuItem(
                         value: s,
@@ -161,6 +165,7 @@ class _PanelInformacoesEntregaRestauranteState
       );
     }
 
+    // Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();
