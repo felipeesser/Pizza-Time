@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
+import 'package:pizza_time/api/usuario_firestore.dart' as usuarioFirebaseCrud;
+import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
 import 'package:pizza_time/modelo/Usuario.dart';
 import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/modelo/possiveis_status_pedido.dart';
-
-import 'package:provider/provider.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
-import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
-import 'package:pizza_time/api/usuario_firestore.dart' as usuarioFirebaseCrud;
 
 /// Apresenta um resumo das informações de entrega do pedido do cliente.
 ///
