@@ -43,5 +43,5 @@ class Endereco {
   }
 
   @override
-  String toString() => 'Rua: $rua, $numero, Complemento: $complemento';
+  String toString() => '$rua, $numero, $complemento';
 }

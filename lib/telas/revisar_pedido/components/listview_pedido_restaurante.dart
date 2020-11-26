@@ -25,7 +25,7 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
   Widget build(BuildContext context) {
     _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return ListView.separated(
-      itemCount: _carrinhoNotifier.carrinhoAtual.length,
+      itemCount: _carrinhoNotifier.carrinhoAtual.itensCarrinho.length,
       itemBuilder: (context, index) {
         return _buildListItem(
             _carrinhoNotifier.carrinhoAtual.itensCarrinho[index]);

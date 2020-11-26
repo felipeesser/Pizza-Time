@@ -45,7 +45,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('finalizar pedido'.toUpperCase()),
                   onPressed: () {
-                    if (_carrinhoNotifier.carrinhoAtual.length <= 0) {
+                    if (_carrinhoNotifier.carrinhoAtual.quantidadeItens <= 0) {
                       return;
                     }
                     _apresentarFinalizarPedido(context);

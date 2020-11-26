@@ -25,5 +25,7 @@ class PedidoNotifier extends ChangeNotifier {
 
   String get statusPedidoAtual => _pedidoAtual.statusPedido;
 
+  set statusPedidoAtual(String status) => _pedidoAtual.statusPedido = status;
+
   Map<String, int> get idsItemQuantidade => {..._pedidoAtual.idsItemQuantidade};
 }

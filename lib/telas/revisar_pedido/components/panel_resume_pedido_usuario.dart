@@ -38,7 +38,7 @@ class _PanelResumePedidoUsuarioState extends State<PanelResumePedidoUsuario> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.centerRight,
-              child: Text('${_carrinhoNotifier.carrinhoAtual.length} itens'),
+              child: Text('${_carrinhoNotifier.carrinhoAtual.quantidadeItens} itens'),
             ),
           ],
         ),
