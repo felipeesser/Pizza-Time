@@ -129,7 +129,6 @@ class _Info_ItemState extends State<Info_Item> {
               onPressed: () {
                 carrinhoNotifier.adicionarItem(ItemCarrinho(
                     item: itemNotifier.itemAtual, quantidade: _cont));
-                print(carrinhoNotifier.carrinhoAtual.itensCarrinho);
                 Navigator.pop(context);
               })
         ],
