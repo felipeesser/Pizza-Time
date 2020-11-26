@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/Item.dart';
+import 'package:pizza_time/modelo/carrinho.dart';
+import 'package:pizza_time/modelo/item_carrinho.dart';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
 import 'package:provider/provider.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 
 class Info_Item extends StatefulWidget {
   static final nomeTela = "/info_item";
@@ -21,6 +24,7 @@ class _Info_ItemState extends State<Info_Item> {
   @override
   Widget build(BuildContext context) {
     ItemNotifier itemNotifier = Provider.of<ItemNotifier>(context);
+    CarrinhoNotifier carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,20 +39,20 @@ class _Info_ItemState extends State<Info_Item> {
               : Image.asset('Imagens/pizza.jpg'),
           Flexible(
               child: Text(
-                itemNotifier.itemAtual.nome.toUpperCase(),
+            itemNotifier.itemAtual.nome.toUpperCase(),
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             textAlign: TextAlign.center,
           )),
-          Flexible(
-              child: Text(
-                  itemNotifier.itemAtual.descricao)),
+          Flexible(child: Text(itemNotifier.itemAtual.descricao)),
           Table(
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             columnWidths: {0: FractionColumnWidth(.5)},
             children: [
               TableRow(children: [
                 Text('Preço:'),
-                Align(alignment: Alignment.center, child: Text('R\$ ${itemNotifier.itemAtual.preco}')),
+                Align(
+                    alignment: Alignment.center,
+                    child: Text('R\$ ${itemNotifier.itemAtual.preco}')),
               ]),
               TableRow(children: [
                 Text('Quantidade:'),
@@ -67,7 +71,8 @@ class _Info_ItemState extends State<Info_Item> {
                           onPressed: () {
                             setState(() {
                               if (_cont > 1) _cont--;
-                              _total = _calculo(_cont,double.parse(itemNotifier.itemAtual.preco));
+                              _total = _calculo(_cont,
+                                  double.parse(itemNotifier.itemAtual.preco));
                             });
                           }),
                     ),
@@ -84,7 +89,8 @@ class _Info_ItemState extends State<Info_Item> {
                           onPressed: () {
                             setState(() {
                               _cont++;
-                              _total = _calculo(_cont, double.parse(itemNotifier.itemAtual.preco));
+                              _total = _calculo(_cont,
+                                  double.parse(itemNotifier.itemAtual.preco));
                             });
                           }),
                     ),
@@ -103,7 +109,10 @@ class _Info_ItemState extends State<Info_Item> {
               ]),
               TableRow(children: [
                 Text('Total:'),
-                Align(alignment: Alignment.center, child: Text('R\$ ${(_total==null)?itemNotifier.itemAtual.preco:_total}'))
+                Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                        'R\$ ${(_total == null) ? itemNotifier.itemAtual.preco : _total}'))
               ]),
             ],
           ),
@@ -117,7 +126,12 @@ class _Info_ItemState extends State<Info_Item> {
               shape: RoundedRectangleBorder(
                   //side: BorderSide(color: Colors.black,width: 3),
                   borderRadius: BorderRadius.circular(32)),
-              onPressed: () {})
+              onPressed: () {
+                carrinhoNotifier.adicionarItem(ItemCarrinho(
+                    item: itemNotifier.itemAtual, quantidade: _cont));
+                print(carrinhoNotifier.carrinhoAtual.itensCarrinho);
+                Navigator.pop(context);
+              })
         ],
       ),
     );

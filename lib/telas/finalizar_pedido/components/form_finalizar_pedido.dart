@@ -1,7 +1,12 @@
+// TODO - deletar esse arquivo
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import '../../novo_endereco/novo_endereco.dart';
-import 'Endereco.dart';
+// import 'package:flutter/scheduler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
+import 'package:pizza_time/modelo/endereco.dart';
+import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 
 /// Constrói um formulário para a finalização da entrega.
 ///
@@ -12,6 +17,7 @@ import 'Endereco.dart';
 /// child: FormFinalizarPedido(),
 /// ...
 /// ```
+
 class FormFinalizarPedido extends StatefulWidget {
   @override
   _FormFinalizarPedidoState createState() => _FormFinalizarPedidoState();
@@ -20,24 +26,31 @@ class FormFinalizarPedido extends StatefulWidget {
 class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
   final _formKey = GlobalKey<FormState>();
   String formaPagamento;
-  List<String> formasPagamento;
-  String enderecoEntrega;
-  // will be fetched from database
-  List<String> enderecosEntrega;
+  final formasPagamento = const [
+    'Dinheiro',
+    'Cartão de Crédito',
+    'Cartão de Débito'
+  ];
+  // TODO - checar se utilizaremos provider para o usuario ou não;
+  FirebaseUser usuarioAux;
+  Endereco _enderecoEntregaSelecionado;
+  List<Endereco> _enderecosEntrega;
   final _labelOutroEndereco = 'Outro endereço...';
+  final _valueOutroEndereco = Endereco();
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    formasPagamento = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
-    enderecosEntrega = enderecosTEMP;
+    usuarioAux = await FirebaseAuth.instance.currentUser();
+    _enderecosEntrega =
+        await enderecoFirebaseCrud.endrecosFromUsuario(usuarioAux.uid);
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.disabled,
       child: Column(
         children: [
           Container(
@@ -83,17 +96,17 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
 
   /// Contrói o campo para seleção do endereço de entrega.
   _selecaoEnderecoEntrega(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      value: enderecoEntrega,
+    return DropdownButtonFormField<Endereco>(
+      value: _enderecoEntregaSelecionado,
       hint: Text('Entregar em...'),
       isExpanded: true,
       items: [
-        ...enderecosEntrega
-            .map<DropdownMenuItem<String>>(
-              (String s) => DropdownMenuItem(
-                value: s,
+        ..._enderecosEntrega
+            .map<DropdownMenuItem<Endereco>>(
+              (Endereco e) => DropdownMenuItem(
+                value: e,
                 child: Text(
-                  s,
+                  e.toString(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -101,29 +114,37 @@ class _FormFinalizarPedidoState extends State<FormFinalizarPedido> {
             )
             .toList(),
         DropdownMenuItem(
-          value: _labelOutroEndereco,
+          value: _valueOutroEndereco,
           child: Text(_labelOutroEndereco),
         ),
       ],
-      onChanged: (String opcao) {
-        setState(() {
-          enderecoEntrega = opcao;
-        });
-      },
-      validator: (String opcao) {
-        if (opcao == _labelOutroEndereco) {
-          _navegarMostrarNovoEnderecoRoute();
-          // se necessário tratar excessões
+      onChanged: (Endereco opcao) async {
+        if (opcao == _valueOutroEndereco) {
+          // _navegarMostrarNovoEnderecoRoute();
+          if (await Navigator.pushNamed(context, NovoEndereco.nomeTela) ??
+              false) {
+            setState(() async {
+              _enderecosEntrega = await enderecoFirebaseCrud
+                  .endrecosFromUsuario(usuarioAux.uid);
+            });
+          }
+        } else {
+          setState(() {
+            _enderecoEntregaSelecionado = opcao;
+          });
         }
+      },
+      validator: (Endereco opcao) {
+        if (opcao == _valueOutroEndereco) {}
         return;
       },
     );
   }
 
-  /// Empurra a tela NovoEndereço no Navegador.
-  _navegarMostrarNovoEnderecoRoute() {
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      Navigator.pushNamed(context, NovoEndereco.nomeTela);
-    });
+  // /// Empurra a tela NovoEndereço no Navegador.
+  // _navegarMostrarNovoEnderecoRoute() {
+  //   SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+  //     await Navigator.pushNamed(context, NovoEndereco.nomeTela);
+  //   });
+  // }
   }
-}
