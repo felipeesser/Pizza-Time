@@ -194,7 +194,7 @@ class _AlteracaoState extends State<Alteracao> {
                               padding: EdgeInsets.only(top: 8),
                               child: TextFormField(
                                 //controller: _controllerTelefone,
-                                obscureText: true,
+                                obscureText: false,
                                 keyboardType: TextInputType.numberWithOptions(),
                                 style: TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
