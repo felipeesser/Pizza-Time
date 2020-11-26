@@ -12,18 +12,27 @@ import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_restaurante.dart';
 
-class CardPedido extends StatelessWidget {
-  // Future<Pedido> _umFuturoPedido;
+class CardPedido extends StatefulWidget {
+  final Pedido pedido;
+
+  CardPedido(this.pedido);
+
+  @override
+  _CardPedidoState createState() => _CardPedidoState();
+}
+
+class _CardPedidoState extends State<CardPedido> {
   Future<bool> _consultouFirebase;
-  Pedido _pedido;
+
   Endereco _endereco;
   Usuario _usuario;
 
   PedidoNotifier _pedidoNotifier;
   CarrinhoNotifier _carrinhoNotifier;
 
-  CardPedido(Pedido pedido) {
-    this._pedido = pedido;
+  @override
+  void initState() {
+    super.initState();
     _consultouFirebase = _consultaFirebase();
   }
 
@@ -43,18 +52,20 @@ class CardPedido extends StatelessWidget {
   /// Consulta todos os dados associados ao futurePedido fornecido.
   Future<bool> _consultaFirebase() async {
     _usuario = await usuarioFirebaseCrud.read(
-      usuarioFirebaseCrud.documentoUsuario(_pedido.idUsuario),
+      usuarioFirebaseCrud.documentoUsuario(widget.pedido.idUsuario),
     );
-    _endereco = await enderecoFirebaseCrud.enderecoFromPedido(_pedido);
-    return (_pedido != null) && (_usuario != null) && (_endereco != null)
+    _endereco = await enderecoFirebaseCrud.enderecoFromPedido(widget.pedido);
+    return (widget.pedido != null) && (_usuario != null) && (_endereco != null)
         ? true
         : false;
   }
 
-  /// Constrói o widget apropriado dependendo do andamento da consulta aos dados.
+  /// Retorna o widget que será mostrado na tela
+  ///
+  /// O widget que será mostrado depende do status da snapshot.
   Widget _futureBuilderCard(
       BuildContext context, AsyncSnapshot<bool> snapshot) {
-    // Função para auxiliar na legibilidade
+    /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(
         alignment: Alignment.center,
@@ -71,7 +82,7 @@ class CardPedido extends StatelessWidget {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra aviso.
     Widget _algoDeuErrado() {
       return Align(
         alignment: Alignment.center,
@@ -90,7 +101,7 @@ class CardPedido extends StatelessWidget {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra as informações preechidas no momento do pedido.
     Widget _conteudoCompleto() {
       return GestureDetector(
         child: Card(
@@ -136,19 +147,22 @@ class CardPedido extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 SizedBox(height: 8),
-                Text('${_pedido.pagamento}'),
+                Text('${widget.pedido.pagamento}'),
               ],
             ),
           ),
         ),
         onTap: () async {
-          _pedidoNotifier.pedidoAtual = _pedido;
-          _carrinhoNotifier.carrinhoAtual = await pedidoFirebaseCrud.carrinhoFromPedido(_pedido);
+          _carrinhoNotifier.carrinhoAtual = await pedidoFirebaseCrud.carrinhoFromPedido(widget.pedido);
+          // var aux = _pedidoNotifier.pedidoAtual;
+          _pedidoNotifier.pedidoAtual = widget.pedido;
           await Navigator.of(context).pushNamed(RevisarPedidoRestaurante.nomeTela);
+          // _pedidoNotifier.pedidoAtual = aux;
         },
       );
     }
 
+    // Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();
