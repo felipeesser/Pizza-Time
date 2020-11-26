@@ -19,6 +19,8 @@ class Alteracao extends StatefulWidget {
 class _AlteracaoState extends State<Alteracao> {
   Future<bool> acesso;
   Usuario _usuarioAtual;
+  String senhaAntiga;
+  String emailAntigo;
   @override
   void initState() {
     acesso = getUser();
@@ -29,23 +31,27 @@ class _AlteracaoState extends State<Alteracao> {
     var id = (await FirebaseAuth.instance.currentUser()).uid;
     DocumentReference documento =
         Firestore.instance.collection(pathUsuarios).document(id);
-    print(documento.path);
     _usuarioAtual = await fireBaseUsuarioCrud.read(documento);
-    print(_usuarioAtual);
+    emailAntigo = _usuarioAtual.email;
     return _usuarioAtual != null ? true : false;
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  _salvarUsuario(context) {
+  _salvarUsuario(context) async {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
     fireBaseUsuarioCrud.update(_usuarioAtual);
-    print(_usuarioAtual.nome);
-    print(_usuarioAtual.idUsuario);
-    print(_usuarioAtual.email);
-    print(_usuarioAtual.telefone);
+    (await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: emailAntigo, password: senhaAntiga));
+    (await FirebaseAuth.instance.currentUser())
+      ..updatePassword(_usuarioAtual.senha)
+      ..updateEmail(_usuarioAtual.email);
+    // print(_usuarioAtual.nome);
+    // print(_usuarioAtual.idUsuario);
+    // print(_usuarioAtual.email);
+    // print(_usuarioAtual.telefone);
   }
 
   @override
@@ -63,7 +69,6 @@ class _AlteracaoState extends State<Alteracao> {
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     !snapshot.hasError) {
-                  print(_usuarioAtual.nome);
                   return Center(
                     child: SingleChildScrollView(
                       child: Form(
@@ -83,7 +88,7 @@ class _AlteracaoState extends State<Alteracao> {
                                     errorStyle: TextStyle(color: Colors.white),
                                     contentPadding:
                                         EdgeInsets.fromLTRB(32, 16, 32, 16),
-                                    hintText: "Nome atual",
+                                    hintText: _usuarioAtual.nome,
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
@@ -111,7 +116,7 @@ class _AlteracaoState extends State<Alteracao> {
                                     errorStyle: TextStyle(color: Colors.white),
                                     contentPadding:
                                         EdgeInsets.fromLTRB(32, 16, 32, 16),
-                                    hintText: "_usuarioAtual.email",
+                                    hintText: _usuarioAtual.email,
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
@@ -139,15 +144,43 @@ class _AlteracaoState extends State<Alteracao> {
                                     errorStyle: TextStyle(color: Colors.white),
                                     contentPadding:
                                         EdgeInsets.fromLTRB(32, 16, 32, 16),
-                                    hintText: "_usuarioAtual.senha",
+                                    hintText: "Digite a senha Antiga",
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(32))),
                                 validator: (String value) {
-                                  if (value.isEmpty) {
-                                    return "Senha nao preenchida";
+                                  if (value.isEmpty && value.length <= 6) {
+                                    return "Senha nao preenchida ou menor do que 6 digitos";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (String value) {
+                                  senhaAntiga = value;
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 8),
+                              child: TextFormField(
+                                //controller: _controllerSenha,
+                                obscureText: true,
+                                keyboardType: TextInputType.text,
+                                style: TextStyle(fontSize: 20),
+                                decoration: InputDecoration(
+                                    errorStyle: TextStyle(color: Colors.white),
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(32, 16, 32, 16),
+                                    hintText: "Senha",
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(32))),
+                                validator: (String value) {
+                                  if (value.isEmpty && value.length <= 6) {
+                                    return "Senha nao preenchida ou menor do que 6 digitos";
                                   }
                                   ;
                                   return null;
@@ -168,7 +201,7 @@ class _AlteracaoState extends State<Alteracao> {
                                     errorStyle: TextStyle(color: Colors.white),
                                     contentPadding:
                                         EdgeInsets.fromLTRB(32, 16, 32, 16),
-                                    hintText: "_usuarioAtual.telefone",
+                                    hintText: _usuarioAtual.telefone,
                                     filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(

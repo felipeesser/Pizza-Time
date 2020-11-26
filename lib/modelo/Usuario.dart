@@ -5,7 +5,7 @@ class Usuario {
   String _telefone;
   // REVIEW - precisa da senha armazenada?
   String _senha;
-  List<String> idsEnderecos;
+  // List<String> idsEnderecos;
   // String _endereco;
   // String _numero;
   // String _complemento;
@@ -19,13 +19,13 @@ class Usuario {
     nome = data['nome'];
     email = data['email'];
     telefone = data['telefone'];
-    // null caso caso a chave não exista ou o valor da chave seja null em dados;
-    if (data['idsEnderecos'].runtimeType == null) {
-      idsEnderecos = null;
-    } else {
-      // resolve o retorno do banco de dados que não vem List, mas é um iteravel.
-      idsEnderecos = List<String>.from(data['idsEnderecos']);
-    }
+    // // null caso caso a chave não exista ou o valor da chave seja null em dados;
+    // if (data['idsEnderecos'].runtimeType == null) {
+    //   idsEnderecos = null;
+    // } else {
+    //   // resolve o retorno do banco de dados que não vem List, mas é um iteravel.
+    //   idsEnderecos = List<String>.from(data['idsEnderecos']);
+    // }
     // endereco = data['endereço'];
     // numero = data['numero'];
     // complemento = data['complemento'];
@@ -37,7 +37,7 @@ class Usuario {
       "nome": this.nome,
       "email": this.email,
       "telefone": this.telefone,
-      'idsEnderecos': idsEnderecos,
+      // 'idsEnderecos': idsEnderecos,
       // "endereco": this.endereco,
       // "numero": this.numero,
       // "complemento": this.complemento,
