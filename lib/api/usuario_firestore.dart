@@ -29,7 +29,6 @@ void update(Usuario usuario) async {
   }
   DocumentReference documento =
       Firestore.instance.collection(pathUsuarios).document(usuario.idUsuario);
-  print(usuario.toMap());
   await documento.updateData(usuario.toMap());
 }
 
