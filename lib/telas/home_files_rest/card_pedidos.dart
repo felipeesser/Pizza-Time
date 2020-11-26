@@ -154,10 +154,8 @@ class _CardPedidoState extends State<CardPedido> {
         ),
         onTap: () async {
           _carrinhoNotifier.carrinhoAtual = await pedidoFirebaseCrud.carrinhoFromPedido(widget.pedido);
-          // var aux = _pedidoNotifier.pedidoAtual;
           _pedidoNotifier.pedidoAtual = widget.pedido;
-          await Navigator.of(context).pushNamed(RevisarPedidoRestaurante.nomeTela);
-          // _pedidoNotifier.pedidoAtual = aux;
+          Navigator.of(context).pushNamed(RevisarPedidoRestaurante.nomeTela);
         },
       );
     }
