@@ -23,11 +23,6 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
   CarrinhoNotifier _carrinhoNotifier;
   ItemCarrinhoNotifier _itemCarrinhoNotifier;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);

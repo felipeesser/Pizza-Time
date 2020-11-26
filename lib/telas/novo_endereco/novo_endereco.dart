@@ -1,5 +1,3 @@
-// NOTE - essa rota foi desenvolvida para ser chamada a partir da rota finalizarPedido.
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -149,13 +147,13 @@ class _NovoEnderecoState extends State<NovoEndereco> {
   /// O endereço fornecido não deve ser armazenado por tempo indefinido no perfil
   /// do cliente.
   _salvarEndereco() async {
-    // verdadeiro se o formulario for válido, falso caso contrário.
     if (_formNovoEnderecoKey.currentState.validate()) {
       _formNovoEnderecoKey.currentState.save();
-      _novoEndereco = Endereco(rua: _rua, numero: _numero, complemento: _complemento);
-      // TODO - checar se utilizaremos provider para o usuario ou não;
+      _novoEndereco =
+          Endereco(rua: _rua, numero: _numero, complemento: _complemento);
       final usuarioAux = await FirebaseAuth.instance.currentUser();
-      enderecoFirebaseCrud.create(endereco: _novoEndereco, idUsuario: usuarioAux.uid);
+      enderecoFirebaseCrud.create(
+          endereco: _novoEndereco, idUsuario: usuarioAux.uid);
       return true;
     }
     return false;

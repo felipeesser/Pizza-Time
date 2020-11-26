@@ -10,7 +10,6 @@ class TabDetalhes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      // padding: EdgeInsets.symmetric(horizontal: 25),
       padding: EdgeInsets.all(25),
       child: Column(
         children: [

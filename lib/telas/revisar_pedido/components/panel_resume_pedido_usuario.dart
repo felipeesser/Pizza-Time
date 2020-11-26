@@ -16,12 +16,6 @@ class PanelResumePedidoUsuario extends StatefulWidget {
 class _PanelResumePedidoUsuarioState extends State<PanelResumePedidoUsuario> {
   CarrinhoNotifier _carrinhoNotifier;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
-  // }
-
   @override
   Widget build(BuildContext context) {
     _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
