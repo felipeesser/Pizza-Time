@@ -209,7 +209,7 @@ class _CadastroState extends State<Cadastro> {
                   padding: EdgeInsets.only(bottom: 8),
                   child: TextField(
                     controller: _controllerEndereco,
-                    obscureText: true,
+                    obscureText: false,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
@@ -227,8 +227,8 @@ class _CadastroState extends State<Cadastro> {
                       flex: 2,
                       child: TextField(
                         controller: _controllerNumero,
-                        obscureText: true,
-                        keyboardType: TextInputType.text,
+                        obscureText: false,
+                        keyboardType: TextInputType.number,
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
@@ -245,7 +245,7 @@ class _CadastroState extends State<Cadastro> {
                         padding: EdgeInsets.only(left: 4),
                         child: TextField(
                           controller: _controllerComplemento,
-                          obscureText: true,
+                          obscureText: false,
                           keyboardType: TextInputType.text,
                           style: TextStyle(fontSize: 20),
                           decoration: InputDecoration(
@@ -265,8 +265,8 @@ class _CadastroState extends State<Cadastro> {
                   padding: EdgeInsets.only(top: 8),
                   child: TextField(
                     controller: _controllerTelefone,
-                    obscureText: true,
-                    keyboardType: TextInputType.text,
+                    obscureText: false,
+                    keyboardType: TextInputType.number,
                     style: TextStyle(fontSize: 20),
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
