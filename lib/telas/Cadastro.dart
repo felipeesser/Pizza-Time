@@ -3,9 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/api/usuario_firestore.dart';
 import 'package:pizza_time/modelo/Restaurante.dart';
+import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/telas/Login.dart';
 import 'package:pizza_time/api/restaurante_firebase.dart'
     as RestauranteFirestoreCrud;
+import 'package:pizza_time/api/endereco_firebase.dart'
+    as enderecoFirestoreCrud;
 
 //import 'Home.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
@@ -52,12 +55,17 @@ class _CadastroState extends State<Cadastro> {
                   usuario.nome = nome;
                   usuario.email = email;
                   usuario.senha = senha;
+                  final novoEndereco = Endereco(
+                    rua: endereco,
+                    numero: numero,
+                    complemento: complemento
+                  );
                   // TODO - usuario não tem esses campos.
                   // usuario.endereco = endereco;
                   // usuario.numero = numero;
                   // usuario.complemento = complemento;
                   usuario.telefone = telefone;
-                  _cadastrarUsuario(usuario);
+                  _cadastrarUsuario(usuario, novoEndereco);
                 } else {
                   setState(() {
                     _mensagemErro = "Preencha o Telefone";
@@ -95,7 +103,7 @@ class _CadastroState extends State<Cadastro> {
     }
   }
 
-  _cadastrarUsuario(Usuario usuario) {
+  _cadastrarUsuario(Usuario usuario, Endereco endereco) {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     auth
@@ -108,6 +116,7 @@ class _CadastroState extends State<Cadastro> {
       usuario.idUsuario = firebaseUser.user.uid;
       print(usuario.idUsuario);
       create(usuario);
+      enderecoFirestoreCrud.create(endereco: endereco, idUsuario: usuario.idUsuario);
       var rest = await RestauranteFirestoreCrud.read();
       bool existeDono = false;
       //if (rest?.idDono.runtimeType == String) {
