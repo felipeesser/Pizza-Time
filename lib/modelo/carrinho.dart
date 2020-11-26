@@ -8,7 +8,7 @@ class Carrinho {
     itensCarrinho = List<ItemCarrinho>();
   }
 
-  int get length {
+  int get quantidadeItens {
     int soma = 0;
     for (var item in itensCarrinho) {
       soma += item.quantidade;
