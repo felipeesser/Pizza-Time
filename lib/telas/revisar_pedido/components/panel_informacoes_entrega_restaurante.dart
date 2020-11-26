@@ -128,12 +128,12 @@ class _PanelInformacoesEntregaRestauranteState
                     )
                     .toList(),
                 onChanged: (String opcao) {
-                  setState(() {
-                    _statusAtual = opcao;
-                  });
-                },
-                onSaved: (String opcao) {
-                  _statusSelecionado = opcao;
+                  if (opcao != _statusAtual) {
+                    setState(() {
+                      _pedidoNotifier.statusPedidoAtual = opcao;
+                      pedidoFirebaseCrud.update(_pedidoNotifier.pedidoAtual);
+                    });
+                  }
                 },
               ),
             ],
