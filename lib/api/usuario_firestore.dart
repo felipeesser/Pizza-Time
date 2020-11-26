@@ -23,12 +23,13 @@ Future<Usuario> read(DocumentReference documento) async {
 /// await update(usuario);
 /// ...
 /// ```
-void updade(Usuario usuario) async {
+void update(Usuario usuario) async {
   if (usuario == null) {
     return;
   }
   DocumentReference documento =
       Firestore.instance.collection(pathUsuarios).document(usuario.idUsuario);
+  print(usuario.toMap());
   await documento.updateData(usuario.toMap());
 }
 
