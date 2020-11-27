@@ -44,7 +44,8 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
       title: Text(
         item.item.nome,
         maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        softWrap: false,
+        overflow: TextOverflow.fade,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
       leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
