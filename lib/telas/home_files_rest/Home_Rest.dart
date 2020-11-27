@@ -65,7 +65,8 @@ class _Home_RestState extends State<Home_Rest> {
   Widget build(BuildContext context) {
     FuncionamentoNotifier hora =
         Provider.of<FuncionamentoNotifier>(context, listen: false);
-    PedidoNotifier _pedidoNotifier = Provider.of<PedidoNotifier>(context, listen: false);
+    PedidoNotifier _pedidoNotifier =
+        Provider.of<PedidoNotifier>(context, listen: false);
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
@@ -110,10 +111,6 @@ class _Home_RestState extends State<Home_Rest> {
             label: 'Pedidos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Config',
           ),
@@ -127,9 +124,7 @@ class _Home_RestState extends State<Home_Rest> {
   /// Consulta todos os pedidos do restaurante.
   Future<bool> _consultaFirebase() async {
     _pedidosRestaurante = await pedidoFirebaseCrud.pedidosFromRestaurante();
-    return _pedidosRestaurante != null
-        ? true
-        : false;
+    return _pedidosRestaurante != null ? true : false;
   }
 
   /// Constrói o widget apropriado dependendo do andamento da consulta aos dados.
@@ -176,7 +171,8 @@ class _Home_RestState extends State<Home_Rest> {
     Widget _conteudoCompleto() {
       return ListView.builder(
         itemCount: _pedidosRestaurante.length,
-        itemBuilder: (context, indice) => CardPedido(_pedidosRestaurante[indice]),
+        itemBuilder: (context, indice) =>
+            CardPedido(_pedidosRestaurante[indice]),
       );
     }
 

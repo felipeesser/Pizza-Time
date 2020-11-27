@@ -23,8 +23,8 @@ class _AlteracaoState extends State<Alteracao> {
   String emailAntigo;
   @override
   void initState() {
-    acesso = getUser();
     super.initState();
+    acesso = getUser();
   }
 
   Future<bool> getUser() async {
@@ -151,7 +151,7 @@ class _AlteracaoState extends State<Alteracao> {
                                         borderRadius:
                                             BorderRadius.circular(32))),
                                 validator: (String value) {
-                                  if (value.isEmpty && value.length <= 6) {
+                                  if (value.isEmpty || value.length <= 6) {
                                     return "Senha nao preenchida ou menor do que 6 digitos";
                                   }
                                   return null;
@@ -179,7 +179,7 @@ class _AlteracaoState extends State<Alteracao> {
                                         borderRadius:
                                             BorderRadius.circular(32))),
                                 validator: (String value) {
-                                  if (value.isEmpty && value.length <= 6) {
+                                  if (value.isEmpty || value.length <= 6) {
                                     return "Senha nao preenchida ou menor do que 6 digitos";
                                   }
                                   ;

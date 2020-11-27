@@ -7,8 +7,7 @@ import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/telas/Login.dart';
 import 'package:pizza_time/api/restaurante_firebase.dart'
     as RestauranteFirestoreCrud;
-import 'package:pizza_time/api/endereco_firebase.dart'
-    as enderecoFirestoreCrud;
+import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirestoreCrud;
 
 //import 'Home.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
@@ -56,10 +55,7 @@ class _CadastroState extends State<Cadastro> {
                   usuario.email = email;
                   usuario.senha = senha;
                   final novoEndereco = Endereco(
-                    rua: endereco,
-                    numero: numero,
-                    complemento: complemento
-                  );
+                      rua: endereco, numero: numero, complemento: complemento);
                   // TODO - usuario não tem esses campos.
                   // usuario.endereco = endereco;
                   // usuario.numero = numero;
@@ -116,21 +112,28 @@ class _CadastroState extends State<Cadastro> {
       usuario.idUsuario = firebaseUser.user.uid;
       print(usuario.idUsuario);
       create(usuario);
-      enderecoFirestoreCrud.create(endereco: endereco, idUsuario: usuario.idUsuario);
+      enderecoFirestoreCrud.create(
+          endereco: endereco, idUsuario: usuario.idUsuario);
       var rest = await RestauranteFirestoreCrud.read();
       bool existeDono = false;
       //if (rest?.idDono.runtimeType == String) {
       //existeDono = true;
       //}
+      Restaurante restaurante = await RestauranteFirestoreCrud.read();
+      if (restaurante == null) {
+        restaurante = Restaurante.fromMap(
+          {
+            'aberto': false,
+          },
+        );
+        print(restaurante.toMap());
+        RestauranteFirestoreCrud.create(restaurante);
+      }
       if (usuario.nome == 'dono' &&
           (await RestauranteFirestoreCrud.procuraDono())) {
-        print('111111111111111111111111111111111');
         //TODO ADICIONAR MAP FUNCIONAMENTO
-        Restaurante restaurante = Restaurante.fromMap({
-          'aberto': false,
-          'idDono': usuario.idUsuario,
-        });
-        RestauranteFirestoreCrud.create(restaurante);
+        RestauranteFirestoreCrud.update(
+            restaurante..idDono = usuario.idUsuario);
       }
       // db
       //     .collection("usuarios")
