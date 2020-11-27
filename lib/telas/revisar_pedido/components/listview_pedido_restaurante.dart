@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pizza_time/modelo/pedido.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pizza_time/modelo/item_carrinho.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
-import 'package:pizza_time/notifier/item_carrinho_notifier.dart';
 
 /// Apresenta, como lista, os itens do pedido do cliente para a visualização do restaurante.
 class ListViewPedidoRestaurante extends StatefulWidget {
