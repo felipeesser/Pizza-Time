@@ -54,35 +54,8 @@ class HomeDrawer extends StatelessWidget {
               Icons.shopping_cart,
               color: Theme.of(context).accentIconTheme.color,
             ),
-            subtitle: Text(
-              'Pedidos',
-              style: TextStyle(color: Colors.black),
-            ),
-            isThreeLine: true,
             onTap: () {
               Navigator.of(context).pushNamed(RevisarPedidoUsuario.nomeTela);
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Chat',
-              style: TextStyle(color: Colors.black),
-            ),
-            leading: Icon(
-              Icons.chat,
-              color: Theme.of(context).accentIconTheme.color,
-            ),
-            onTap: () async {
-              var foi = await RestauranteFiresStoreCrud.idDono();
-              var dono;
-              if (foi != null) {
-                dono = await UsuarioFireStoreCrud.read(
-                    Firestore.instance.document('/usuarios/${foi}'));
-              }
-              if (dono != null) {
-                Navigator.of(context)
-                    .pushNamed(Mensagens.nomeTela, arguments: dono);
-              }
             },
           ),
         ],

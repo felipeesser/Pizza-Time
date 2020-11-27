@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/modelo/carrinho.dart';
+import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/telas/Detalhes.dart';
 import 'package:pizza_time/telas/home_files/home_files_components/Pedidos_Feitos_Card.dart';
-import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
+import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
+import 'package:pizza_time/modelo/pedido.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pizza_time/telas/home_files_rest/card_pedidos.dart';
 
 class Pedidos_Feitos extends StatefulWidget {
   static final nomeTela = "/pedidos_feitos";
@@ -11,46 +16,51 @@ class Pedidos_Feitos extends StatefulWidget {
 }
 
 class _Pedidos_FeitosState extends State<Pedidos_Feitos> {
+  Future<bool> _consultouFirebase;
+  List<Pedido> _pedidosUsuario;
+  String _endereco;
+  String _pagamento;
+  Carrinho carrinho;
+  @override
+  initState() {
+    super.initState();
+    _consultouFirebase = _consultaFirebase();
+  }
+
+  Future<bool> _consultaFirebase() async {
+    var id = (await FirebaseAuth.instance.currentUser()).uid;
+    _pedidosUsuario = await pedidoFirebaseCrud.pedidosFromUsuario(id);
+    return _pedidosUsuario != null ? true : false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Pedidos feitos"),
-      ),
-      body: ListView(
-        children: <Widget>[
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(Detalhes.nomeTela);
-              },
-              child: Pedidos_Feitos_Card(
-                  "Alberto",
-                  "cartao",
-                  "Rua dos bobos 666",
-                  ["pizza doce", "pizza de carne seca"],
-                  ["1", "2"])),
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(Detalhes.nomeTela);
-              },
-              child: Pedidos_Feitos_Card(
-                  "Roberto",
-                  "dinheiro",
-                  "Rua dos bobos 6666",
-                  ["pizza doce", "pizza de carne seca"],
-                  ["2", "2"])),
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(Detalhes.nomeTela);
-              },
-              child: Pedidos_Feitos_Card(
-                  "Marreco",
-                  "cartao",
-                  "Rua dos bobos 66666",
-                  ["pizza doce", "pizza de carne seca"],
-                  ["1", "3"])),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Pedidos feitos"),
+        ),
+        body: FutureBuilder(
+            future: _consultouFirebase,
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  !snapshot.hasError) {
+                return ListView.builder(
+                    itemCount: _pedidosUsuario.length,
+                    itemBuilder: (context, indice) => GestureDetector(
+                          child: Pedidos_Feitos_Card(
+                              _pedidosUsuario.elementAt(indice)),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Detalhes.nomeTela);
+                          },
+                        ));
+              } else if (snapshot.hasError) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                return Text("Carregando...");
+              }
+            }));
   }
 }

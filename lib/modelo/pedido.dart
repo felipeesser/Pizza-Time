@@ -9,6 +9,7 @@ class Pedido {
   String statusPedido;
   // pagamento {'Dinheiro', 'Cartão de crédito', 'Cartão de débito'}
   String pagamento;
+  String valor;
   // idsItemQuantidade: {idItem1: quantidadeItem1, ..., idItemN: quantidadeItemN,}
   Map<String, int> idsItemQuantidade;
 
@@ -18,9 +19,11 @@ class Pedido {
       String statusPedido,
       String pagamento,
       String idEndereco,
+      String valor,
       Map<String, int> idsItemQuantidade}) {
     this.idPedido = idPedido;
     this.idUsuario = idUsuario;
+    this.valor = valor;
     this.statusPedido = statusPedido;
     this.pagamento = pagamento;
     this.idEndereco = idEndereco;
@@ -37,6 +40,7 @@ class Pedido {
     statusPedido = dados['statusPedido'];
     pagamento = dados['pagamento'];
     idEndereco = dados['idEndereco'];
+    valor = dados['valor'];
     // null caso caso a chave não exista ou o valor da chave seja null em dados;
     if (dados['idsItemQuantidade'].runtimeType == null) {
       idsItemQuantidade = null;
@@ -54,6 +58,7 @@ class Pedido {
       'statusPedido': statusPedido,
       'pagamento': pagamento,
       'idsItemQuantidade': idsItemQuantidade,
+      'valor': valor,
     };
   }
 
@@ -103,5 +108,6 @@ class Pedido {
         ifAbsent: () => i.quantidade,
       );
     }
+    valor = carrinho.precoTotal.toString();
   }
 }

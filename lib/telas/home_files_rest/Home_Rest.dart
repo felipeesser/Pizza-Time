@@ -7,7 +7,6 @@ import 'package:pizza_time/modelo/funcionamento.dart';
 import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
 import 'package:pizza_time/telas/AbaConversas.dart';
-import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
 import 'package:pizza_time/telas/home_files_rest/card_pedidos.dart';
 import 'package:provider/provider.dart';
 import 'Abertura.dart';
@@ -65,7 +64,8 @@ class _Home_RestState extends State<Home_Rest> {
   Widget build(BuildContext context) {
     FuncionamentoNotifier hora =
         Provider.of<FuncionamentoNotifier>(context, listen: false);
-    PedidoNotifier _pedidoNotifier = Provider.of<PedidoNotifier>(context, listen: false);
+    PedidoNotifier _pedidoNotifier =
+        Provider.of<PedidoNotifier>(context, listen: false);
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
@@ -110,10 +110,6 @@ class _Home_RestState extends State<Home_Rest> {
             label: 'Pedidos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Config',
           ),
@@ -127,9 +123,7 @@ class _Home_RestState extends State<Home_Rest> {
   /// Consulta todos os pedidos do restaurante.
   Future<bool> _consultaFirebase() async {
     _pedidosRestaurante = await pedidoFirebaseCrud.pedidosFromRestaurante();
-    return _pedidosRestaurante != null
-        ? true
-        : false;
+    return _pedidosRestaurante != null ? true : false;
   }
 
   /// Retorna o widget que será mostrado na tela
@@ -178,7 +172,8 @@ class _Home_RestState extends State<Home_Rest> {
     Widget _conteudoCompleto() {
       return ListView.builder(
         itemCount: _pedidosRestaurante.length,
-        itemBuilder: (context, indice) => CardPedido(_pedidosRestaurante[indice]),
+        itemBuilder: (context, indice) =>
+            CardPedido(_pedidosRestaurante[indice]),
       );
     }
 
