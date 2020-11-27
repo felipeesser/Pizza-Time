@@ -52,7 +52,7 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
                   ),
       ),
       subtitle: Text(
-        '    Qtd.: ${item.quantidade}',
+        'Qtd.: ${item.quantidade}',
         maxLines: 1,
         overflow: TextOverflow.fade,
         softWrap: false,
