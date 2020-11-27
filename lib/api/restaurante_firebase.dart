@@ -12,6 +12,8 @@ void create(Restaurante restaurante) async {
 
 Future<Restaurante> read() async {
   final snapshot = await Firestore.instance.document(pathRestaurante).get();
+  print(snapshot);
+  print(snapshot.data);
   return snapshot.data == null ? null : Restaurante.fromMap(snapshot.data);
 }
 
@@ -31,4 +33,9 @@ Future<String> idDono() async {
   } else {
     return '';
   }
+}
+
+void update(Restaurante restaurante) async {
+  DocumentReference documento = Firestore.instance.document(pathRestaurante);
+  await documento.updateData(restaurante.toMap());
 }
