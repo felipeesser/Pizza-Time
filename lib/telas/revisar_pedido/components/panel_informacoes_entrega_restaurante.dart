@@ -97,7 +97,7 @@ class _PanelInformacoesEntregaRestauranteState
       );
     }
 
-    /// Mostra as informações preechidas no momento do pedido.
+    /// Mostra o widget que deveria ser mostrado de início.
     Widget _conteudoCompleto() {
       return Table(
         columnWidths: {},
@@ -165,7 +165,7 @@ class _PanelInformacoesEntregaRestauranteState
       );
     }
 
-    // Decide o que será mostrado
+    /// Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();

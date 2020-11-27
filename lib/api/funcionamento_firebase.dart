@@ -4,6 +4,7 @@ EXEMPLO DE USO
 
 ```dart
 import '.../funcionamento_firebase.dart' as funcionamentoFirebaseCrud;
+import '.../funcionamento.dart';
 ...
 var funcionamento = Funcionamento.fromMap({
   '1': {'abertura': '1', 'fechamento': '2'},
@@ -38,18 +39,18 @@ print(
     '${lidoDeletado?.toMap() == null ? 'Não existe um registro de funcionamento no documento fornecido.' : lidoDeletado.toMap()}');
 ```
 */
-import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/modelo/funcionamento.dart';
+import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 
 const pathFuncionamentoRestaurante =
     '/restaurante/unico/funcionamento/diasHorarios';
 
-/// Armazena no banco de dados as informações contidas em [funcionamento].
+/// Armazena Firebase um novo documento o [funcionamento] do restaurante.
 ///
-/// O [funcionamento] fornecido será armazenado no restaurante.
+/// O [funcionamento] fornecido será armazenado no restaurante do Firebase.
 ///
 /// ```dart
 /// ...
@@ -62,13 +63,13 @@ void create(Funcionamento funcionamento) async {
   await novoDocumentoRestaurante.setData(funcionamento.toMap(), merge: false);
 }
 
-/// Retorna um objeto [Funcionamento] com os dados lidos do banco de dados.
+/// Retorna um objeto [Funcionamento] com o funcionamento do restaurante.
 ///
 /// Retorna null se o documento não existir.
 ///
 /// ```dart
 /// ...
-/// Pedido aux = await read();
+/// Pedido funcionamentoAtual = await read();
 /// ...
 /// ```
 Future<Funcionamento> read() async {
@@ -77,11 +78,11 @@ Future<Funcionamento> read() async {
   return snapshot.data == null ? null : Funcionamento.fromMap(snapshot.data);
 }
 
-/// Atualiza o [funcionamento] no firestore, com o valor atual do [funcionamento].
+/// Atualiza o [funcionamento] no Firebase, com o valor atual do [funcionamento].
 ///
 /// ```dart
 /// ...
-/// await update(horariosFuncionamento);
+/// update(horariosFuncionamento);
 /// ...
 /// ```
 void update(Funcionamento funcionamento) async {
@@ -90,11 +91,11 @@ void update(Funcionamento funcionamento) async {
   await documento.updateData(funcionamento.toMap());
 }
 
-/// Remove do firestore o [funcionamento] armazenado no restaurante.
+/// Remove do Firebase as informações sobre o [funcionamento] do restaurante.
 ///
 /// ```dart
 /// ...
-/// await delete();
+/// delete();
 /// ...
 /// ```
 void delete() async {
@@ -102,6 +103,8 @@ void delete() async {
       Firestore.instance.document(pathFuncionamentoRestaurante);
   await documento.delete();
 }
+
+// =============================================================================
 
 getFuncionamento(FuncionamentoNotifier funcionamentoNotifier) async {
   funcionamentoNotifier.funcionamentoAtual = await read();

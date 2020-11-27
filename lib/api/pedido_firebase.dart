@@ -4,8 +4,15 @@ EXEMPLO DE USO
 
 ```dart
 import '.../pedido_firebase.dart' as pedidoFirebaseCrud;
+import '.../pedido.dart';
 ...
-var pedido = Pedido(statusPedido: 'Na fila', pagamento: 'Dinheiro');
+var pedido = Pedido(
+  statusPedido: 'Na fila',
+  pagamento: 'Dinheiro',
+  valor: '21.00',
+  idEndereco: 'algumIdEndereco',
+  idUsuario: 'algumUuidUsuario',
+);
 // CREATE
 pedidoFirebaseCrud.create(pedido);
 print(pedido.toMap());
@@ -21,8 +28,6 @@ print(lidoCriado.toMap());
 pedidoFirebaseCrud.update(
   pedido
     ..statusPedido = 'Preparando'
-    ..idsItemQuantidade = {'aa': 2, 'bb': 3}
-    ..idEndereco = 'algumUuid'
 );
 
 // READ
@@ -37,20 +42,19 @@ var lidoDeletado = await pedidoFirebaseCrud.read(documento);
 print('${lidoDeletado?.toMap()==null ? 'Não existe um pedido no documento fornecido.': lidoDeletado.toMap()}');
 ```
 */
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:pizza_time/api/item_firebase.dart' as itemFirebaseCrud;
+import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/carrinho.dart';
 import 'package:pizza_time/modelo/item_carrinho.dart';
-import 'package:pizza_time/modelo/Item.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 
 const pathPedidosRestaurante = '/restaurante/unico/pedidos';
 const _pathPedidosUsuario = '/usuarios/$_replaceToken/pedidos';
 const _replaceToken = '-replaceToken';
 
-/// Armazena no banco de dados um novo documento com o [pedido] fornecido.
+/// Armazena no Firebase um novo documento com o [pedido] fornecido.
 ///
 /// O [pedido] fornecido será armazenado na coleção de pedidos do restaurante.
 ///
@@ -117,6 +121,8 @@ void delete(Pedido pedido) async {
   await documentoRestaurante.delete();
   await documentoUsuario.delete();
 }
+
+// =============================================================================
 
 /// Retorna a lista de todos os [Pedido] do restaurante.
 Future<List<Pedido>> pedidosFromRestaurante() async {
