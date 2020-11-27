@@ -1,3 +1,4 @@
+/// Item do cardápio do restaurante.
 class Item {
   String _idItem;
   String nome;
