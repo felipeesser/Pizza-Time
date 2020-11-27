@@ -7,7 +7,6 @@ import 'package:pizza_time/modelo/funcionamento.dart';
 import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
 import 'package:pizza_time/telas/AbaConversas.dart';
-import 'package:pizza_time/telas/home_files_rest/Home_Rest_Ped.dart';
 import 'package:pizza_time/telas/home_files_rest/card_pedidos.dart';
 import 'package:provider/provider.dart';
 import 'Abertura.dart';
