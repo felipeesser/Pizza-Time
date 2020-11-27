@@ -99,8 +99,9 @@ class _PanelInformacoesEntregaRestauranteState
 
     /// Mostra o widget que deveria ser mostrado de início.
     Widget _conteudoCompleto() {
-      return Table(
-        columnWidths: {},
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(bottom: 8),
@@ -114,55 +115,48 @@ class _PanelInformacoesEntregaRestauranteState
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-                padding: EdgeInsets.only(bottom: 16),
-                child: Text(
-                  'Status do pedido:',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-            ],
+          SizedBox(height: 16),
+          Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: Text(
+              'Status do pedido:',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
-          TableRow(
-            children: [
-              DropdownButtonFormField(
-                value: _pedidoNotifier.statusPedidoAtual,
-                hint: Text('Status atual do pedido'),
-                isExpanded: true,
-                items: PossiveisStatusPedido.values
-                    .map<DropdownMenuItem<String>>(
-                      (String s) => DropdownMenuItem(
-                        value: s,
-                        child: Text(
-                          s,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String opcao) {
-                  if (opcao != _statusAtual) {
-                    setState(() {
-                      _pedidoNotifier.statusPedidoAtual = opcao;
-                      pedidoFirebaseCrud.update(_pedidoNotifier.pedidoAtual);
-                    });
-                  }
-                },
-              ),
-            ],
+          DropdownButtonFormField(
+            value: _pedidoNotifier.statusPedidoAtual,
+            hint: Text('Status atual do pedido'),
+            isExpanded: true,
+            items: PossiveisStatusPedido.values
+                .map<DropdownMenuItem<String>>(
+                  (String s) => DropdownMenuItem(
+                    value: s,
+                    child: Text(
+                      s,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (String opcao) {
+              if (opcao != _statusAtual) {
+                setState(() {
+                  _pedidoNotifier.statusPedidoAtual = opcao;
+                  pedidoFirebaseCrud.update(_pedidoNotifier.pedidoAtual);
+                });
+              }
+            },
           ),
-          TableRow(children: [
-            SizedBox(height: 16),
-          ]),
-          TableRow(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: Text(
-                  'Endereço para entrega:',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
+          SizedBox(height: 16),
+          // Spacer(flex: 1,),
+          Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: Text(
+              'Endereço para entrega:',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
