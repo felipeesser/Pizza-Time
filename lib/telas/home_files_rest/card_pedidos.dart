@@ -43,7 +43,7 @@ class _CardPedidoState extends State<CardPedido> {
     return Container(
       child: FutureBuilder(
         future: _consultouFirebase,
-        builder: _futureBuilderCard,
+        builder: _futureBuilder,
       ),
       color: Colors.white,
     );
@@ -63,7 +63,7 @@ class _CardPedidoState extends State<CardPedido> {
   /// Retorna o widget que será mostrado na tela
   ///
   /// O widget que será mostrado depende do status da snapshot.
-  Widget _futureBuilderCard(
+  Widget _futureBuilder(
       BuildContext context, AsyncSnapshot<bool> snapshot) {
     /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
@@ -82,7 +82,7 @@ class _CardPedidoState extends State<CardPedido> {
       );
     }
 
-    /// Mostra aviso.
+    /// Mostra as informações preechidas no momento do pedido.
     Widget _algoDeuErrado() {
       return Align(
         alignment: Alignment.center,
@@ -101,7 +101,7 @@ class _CardPedidoState extends State<CardPedido> {
       );
     }
 
-    /// Mostra as informações preechidas no momento do pedido.
+    /// Mostra o widget que deveria ser mostrado de início.
     Widget _conteudoCompleto() {
       return GestureDetector(
         child: Card(
@@ -160,7 +160,7 @@ class _CardPedidoState extends State<CardPedido> {
       );
     }
 
-    // Decide o que será mostrado
+    /// Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();
