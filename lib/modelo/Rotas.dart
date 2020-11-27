@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+
+import 'package:pizza_time/telas/AbaConversas.dart';
+import 'package:pizza_time/telas/Cadastro.dart';
+import 'package:pizza_time/telas/Detalhes.dart';
+import 'package:pizza_time/telas/Login.dart';
+import 'package:pizza_time/telas/Mensagens.dart';
+import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
+import 'package:pizza_time/telas/home_files/Alteracao.dart';
+import 'package:pizza_time/telas/home_files/Home.dart';
 import 'package:pizza_time/telas/home_files/Info_Item.dart';
 import 'package:pizza_time/telas/home_files/Pedidos_Feitos.dart';
 import 'package:pizza_time/telas/home_files_rest/Abertura.dart';
-import 'package:pizza_time/telas/home_files/Alteracao.dart';
-import 'package:pizza_time/telas/Cadastro.dart';
-import 'package:pizza_time/telas/Detalhes.dart';
-import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
-import 'package:pizza_time/telas/home_files/Home.dart';
-import 'package:pizza_time/telas/Login.dart';
 import 'package:pizza_time/telas/home_files_rest/Home_Rest.dart';
 import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_restaurante.dart';
 import 'package:pizza_time/telas/revisar_pedido/revisar_pedido_usuario.dart';
-import 'package:pizza_time/telas/AbaConversas.dart';
-import 'package:pizza_time/telas/Mensagens.dart';
 
 import '../telas/home_files_rest/Adicionar.dart';
 
