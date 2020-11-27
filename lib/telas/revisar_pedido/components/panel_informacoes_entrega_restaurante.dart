@@ -163,12 +163,15 @@ class _PanelInformacoesEntregaRestauranteState
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-            ],
-          ),
-          TableRow(
-            children: [
-              Text('${_endereco.toString()}'),
-            ],
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              clipBehavior: Clip.hardEdge,
+              child: Text(
+                '${_endereco.toString()}',
+                softWrap: true,
+              ),
+            ),
           ),
         ],
       );
