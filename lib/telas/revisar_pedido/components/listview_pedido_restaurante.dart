@@ -43,16 +43,11 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      leading: Icon(Icons.image),
       subtitle: Text(
-        'Valor unitário: R\$ ${item.item.preco}'
-            '\n'
-            'Quantidade: ${item.quantidade}',
-        maxLines: 2,
-      ),
-      trailing: Text(
-        'R\$ ${item.total.toStringAsFixed(2)}',
-        textAlign: TextAlign.center,
+        '    Qtd.: ${item.quantidade}',
+        maxLines: 1,
+        overflow: TextOverflow.fade,
+        softWrap: false,
       ),
       onTap: null,
     );
