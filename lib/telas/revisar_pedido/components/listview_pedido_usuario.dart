@@ -46,6 +46,7 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
       leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
           ? Icon(Icons.image)
           : Image.network(

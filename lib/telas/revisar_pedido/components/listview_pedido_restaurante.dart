@@ -43,6 +43,7 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
         maxLines: 2,
         overflow: TextOverflow.fade,
       ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
       leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
           ? Icon(Icons.image)
           : Image.network(
