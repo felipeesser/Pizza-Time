@@ -4,7 +4,7 @@ import 'package:pizza_time/telas/home_files/Pedidos_Feitos.dart';
 import 'package:pizza_time/telas/home_files_rest/Abertura.dart';
 import 'package:pizza_time/telas/home_files/Alteracao.dart';
 import 'package:pizza_time/telas/Cadastro.dart';
-import 'package:pizza_time/telas/Detalhes.dart';
+import 'package:pizza_time/telas/home_files/Detalhes.dart';
 import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
 import 'package:pizza_time/telas/home_files/Home.dart';
 import 'package:pizza_time/telas/Login.dart';
