@@ -3,7 +3,7 @@ import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pizza_time/telas/home_files/Home.dart';
-import 'package:pizza_time/telas/Detalhes.dart';
+import 'package:pizza_time/telas/home_files/Detalhes.dart';
 import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
 
 import './components/listview_pedido_usuario.dart';
