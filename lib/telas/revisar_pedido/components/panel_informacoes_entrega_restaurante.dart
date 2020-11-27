@@ -102,9 +102,18 @@ class _PanelInformacoesEntregaRestauranteState
       return Table(
         columnWidths: {},
         children: [
-          TableRow(
-            children: [
-              Padding(
+          Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: Text(
+              'Nome do cliente:',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+          Text(
+            '${_usuario.nome}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   'Status do pedido:',
