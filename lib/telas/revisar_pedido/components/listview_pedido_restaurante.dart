@@ -42,12 +42,15 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
         overflow: TextOverflow.fade,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
-          ? Icon(Icons.image)
-          : Image.network(
-            item.item.imagem,
-            fit: BoxFit.contain,
-          ),
+      leading: Container(
+        width: 80,
+        child: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
+                ? Icon(Icons.image)
+                : Image.network(
+                    item.item.imagem,
+                    fit: BoxFit.cover,
+                  ),
+      ),
       subtitle: Text(
         '    Qtd.: ${item.quantidade}',
         maxLines: 1,

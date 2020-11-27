@@ -48,12 +48,15 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
         overflow: TextOverflow.fade,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
-          ? Icon(Icons.image)
-          : Image.network(
-              item.item.imagem,
-              fit: BoxFit.fitWidth,
-          ),
+      leading: Container(
+        width: 80,
+        child: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
+                ? Icon(Icons.image)
+                : Image.network(
+                    item.item.imagem,
+                    fit: BoxFit.cover,
+                  ),
+      ),
       subtitle: Text(
         'Valor: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
         '\n'
