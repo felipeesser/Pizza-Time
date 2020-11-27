@@ -39,9 +39,9 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
     return ListTile(
       dense: true,
       title: Text(
-        item.item.nome,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        '${item.item.nome}',
+        maxLines: 2,
+        overflow: TextOverflow.fade,
       ),
       subtitle: Text(
         '    Qtd.: ${item.quantidade}',
