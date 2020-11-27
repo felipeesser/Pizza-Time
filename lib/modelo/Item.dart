@@ -6,7 +6,7 @@ class Item {
   String imagem;
   String tipo;
 
-  Item({this.nome,  this.descricao, this.preco, this.imagem, this.tipo});
+  Item({this.nome, this.descricao, this.preco, this.imagem, this.tipo});
 
   Item.fromMap(Map<String, dynamic> dados) {
     fromMap(dados);
