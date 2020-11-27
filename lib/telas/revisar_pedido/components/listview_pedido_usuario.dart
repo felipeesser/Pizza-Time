@@ -55,9 +55,9 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
               fit: BoxFit.fitWidth,
           ),
       subtitle: Text(
-        'Valor unitário: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
-            '\n'
-            'Quantidade: ${item.quantidade}',
+        'Valor: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
+        '\n'
+        'Qtd.: ${item.quantidade}',
         maxLines: 2,
       ),
       trailing: Text(
