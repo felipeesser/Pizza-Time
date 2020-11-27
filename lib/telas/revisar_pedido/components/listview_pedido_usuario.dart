@@ -46,7 +46,12 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      leading: Icon(Icons.image),
+      leading: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
+          ? Icon(Icons.image)
+          : Image.network(
+              item.item.imagem,
+              fit: BoxFit.fitWidth,
+          ),
       subtitle: Text(
         'Valor unitário: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
             '\n'
