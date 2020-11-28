@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pizza_time/modelo/Item.dart';
-import 'package:pizza_time/modelo/carrinho.dart';
 import 'package:pizza_time/modelo/item_carrinho.dart';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
 import 'package:provider/provider.dart';

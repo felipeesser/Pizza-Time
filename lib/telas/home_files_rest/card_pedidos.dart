@@ -63,8 +63,7 @@ class _CardPedidoState extends State<CardPedido> {
   /// Retorna o widget que será mostrado na tela
   ///
   /// O widget que será mostrado depende do status da snapshot.
-  Widget _futureBuilder(
-      BuildContext context, AsyncSnapshot<bool> snapshot) {
+  Widget _futureBuilder(BuildContext context, AsyncSnapshot<bool> snapshot) {
     /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(
@@ -153,7 +152,8 @@ class _CardPedidoState extends State<CardPedido> {
           ),
         ),
         onTap: () async {
-          _carrinhoNotifier.carrinhoAtual = await pedidoFirebaseCrud.carrinhoFromPedido(widget.pedido);
+          _carrinhoNotifier.carrinhoAtual =
+              await pedidoFirebaseCrud.carrinhoFromPedido(widget.pedido);
           _pedidoNotifier.pedidoAtual = widget.pedido;
           Navigator.of(context).pushNamed(RevisarPedidoRestaurante.nomeTela);
         },

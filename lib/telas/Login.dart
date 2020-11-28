@@ -21,8 +21,6 @@ class _LoginState extends State<Login> {
   TextEditingController _controllerSenha = TextEditingController();
   String _mensagemErro = "";
 
-  
-
   _validarCampos() {
     //Recupera dados dos campos
     String email = _controllerEmail.text;
@@ -71,25 +69,6 @@ class _LoginState extends State<Login> {
       });
     });
   }
-
-  /*Future _verificarUsuarioLogado() async {
-
-    FirebaseAuth auth = FirebaseAuth.instance;
-    //auth.signOut();
-
-    FirebaseUser usuarioLogado = await auth.currentUser();
-
-    if( usuarioLogado != null ){
-      Navigator.pushReplacementNamed(context, "/home");
-    }
-
-  }
-
-  @override
-  void initState() {
-    _verificarUsuarioLogado();
-    super.initState();
-  }*/
 
   @override
   Widget build(BuildContext context) {

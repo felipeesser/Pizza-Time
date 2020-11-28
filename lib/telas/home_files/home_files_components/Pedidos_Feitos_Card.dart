@@ -7,7 +7,6 @@ import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
 import 'package:pizza_time/modelo/endereco.dart';
 import 'package:pizza_time/modelo/pedido.dart';
 import 'package:pizza_time/telas/home_files/Detalhes.dart';
-import 'package:pizza_time/telas/home_files/Pedidos_Feitos.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 
 class Pedidos_Feitos_Card extends StatelessWidget {

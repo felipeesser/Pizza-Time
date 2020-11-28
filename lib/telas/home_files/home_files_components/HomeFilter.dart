@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pizza_time/telas/home_files/Info_Item.dart';
-import 'dart:io';
 import 'package:pizza_time/notifier/ItemNotifier.dart';
 import 'package:provider/provider.dart';
 class HomeFilter extends StatefulWidget {
@@ -76,15 +73,6 @@ class _HomeFilterState extends State<HomeFilter> {
         alignment: Alignment.centerLeft,
         child: Row(
           children: <Widget>[
-            // TODO - remover codigo comentado
-            // Padding(
-            //     padding: EdgeInsets.only(right: 14, bottom: 3),
-            //     child: Icon(Icons.filter_list, size: 25, color: Color.fromRGBO(204, 41, 0, 1))
-            // ),
-            // Padding(
-            //     padding: EdgeInsets.only(bottom: 4),
-            //     child: Text("Filtro", style: TextStyle(color: Color.fromRGBO(89, 89, 89, 1), fontWeight:FontWeight.w100,fontSize: 16),)
-            // ),
             Align(
                 alignment: Alignment.centerLeft,
                 child: Icon(Icons.filter_list, size: 25, color: Color.fromRGBO(204, 41, 0, 1))

@@ -1,6 +1,3 @@
-
-import 'package:flutter/material.dart';
-
 class DiaSemana {
   String _dia;
   String _abertura;

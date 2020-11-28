@@ -3,12 +3,10 @@ import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pizza_time/telas/home_files/Home.dart';
-import 'package:pizza_time/telas/home_files/Detalhes.dart';
 import 'package:pizza_time/telas/finalizar_pedido/finalizar_pedido_route.dart';
 
 import './components/listview_pedido_usuario.dart';
 import './components/panel_resume_pedido_usuario.dart';
-
 
 /// Posiciona os widgets da tela onde o usuário revisa o carrinho do pedido.
 ///
@@ -20,7 +18,8 @@ class RevisarPedidoUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CarrinhoNotifier _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
+    final CarrinhoNotifier _carrinhoNotifier =
+        Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Revisar Pedido'),
