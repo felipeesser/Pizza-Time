@@ -13,8 +13,7 @@ class Pedido {
   // idsItemQuantidade: {idItem1: quantidadeItem1, ..., idItemN: quantidadeItemN,}
   Map<String, int> idsItemQuantidade;
 
-  Pedido(
-      {String idPedido,
+  Pedido({
       String idUsuario,
       String statusPedido,
       String pagamento,
@@ -95,7 +94,7 @@ class Pedido {
     _idEndereco ??= id;
   }
 
-  /// Preenche este pedido com os itens do [carrinho].
+  /// Preenche este pedido com os itens e o valor do [carrinho].
   ///
   /// Todos os itens que já presentes serão descartados e os novos serão
   /// adicionados.

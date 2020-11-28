@@ -34,7 +34,7 @@ class _Home_RestState extends State<Home_Rest> {
     _widgetOptions = <Widget>[
       FutureBuilder(
         future: _consultouFirebase,
-        builder: _futureBuilderListView,
+        builder: _futureBuilder,
       ),
       AbaConversas(),
       Adicionar(),
@@ -54,7 +54,7 @@ class _Home_RestState extends State<Home_Rest> {
   //   // ),
   //   FutureBuilder(
   //     future: _consultouFirebase,
-  //     builder: _futureBuilderListView,
+  //     builder: _futureBuilder,
   //   ),
   //   AbaConversas(),
   //   Adicionar(),
@@ -126,10 +126,12 @@ class _Home_RestState extends State<Home_Rest> {
     return _pedidosRestaurante != null ? true : false;
   }
 
-  /// Constrói o widget apropriado dependendo do andamento da consulta aos dados.
-  Widget _futureBuilderListView(
+  /// Retorna o widget que será mostrado na tela
+  ///
+  /// O widget que será mostrado depende do status da snapshot.
+  Widget _futureBuilder(
       BuildContext context, AsyncSnapshot<bool> snapshot) {
-    // Função para auxiliar na legibilidade
+    /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(
         alignment: Alignment.center,
@@ -146,7 +148,7 @@ class _Home_RestState extends State<Home_Rest> {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra aviso.
     Widget _algoDeuErrado() {
       return Align(
         alignment: Alignment.center,
@@ -166,7 +168,7 @@ class _Home_RestState extends State<Home_Rest> {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra o widget que deveria ser mostrado de início.
     Widget _conteudoCompleto() {
       return ListView.builder(
         itemCount: _pedidosRestaurante.length,
@@ -175,6 +177,7 @@ class _Home_RestState extends State<Home_Rest> {
       );
     }
 
+    /// Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();

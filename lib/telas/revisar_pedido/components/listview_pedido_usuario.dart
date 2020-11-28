@@ -23,11 +23,6 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
   CarrinhoNotifier _carrinhoNotifier;
   ItemCarrinhoNotifier _itemCarrinhoNotifier;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
@@ -49,13 +44,23 @@ class _ListViewPedidoUsuarioState extends State<ListViewPedidoUsuario> {
       title: Text(
         item.item.nome,
         maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        softWrap: false,
+        overflow: TextOverflow.fade,
       ),
-      leading: Icon(Icons.image),
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+      leading: Container(
+        width: 80,
+        child: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
+                ? Icon(Icons.image)
+                : Image.network(
+                    item.item.imagem,
+                    fit: BoxFit.cover,
+                  ),
+      ),
       subtitle: Text(
-        'Valor unitário: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
-            '\n'
-            'Quantidade: ${item.quantidade}',
+        'Valor: R\$ ${double.parse(item.item.preco).toStringAsFixed(2)}'
+        '\n'
+        'Qtd.: ${item.quantidade}',
         maxLines: 2,
       ),
       trailing: Text(

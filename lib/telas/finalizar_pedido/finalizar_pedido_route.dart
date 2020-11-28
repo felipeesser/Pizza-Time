@@ -1,19 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pizza_time/api/endereco_firebase.dart' as enderecoFirebaseCrud;
 import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
 import 'package:pizza_time/modelo/endereco.dart';
-import 'package:pizza_time/modelo/possiveis_formas_pagamento.dart';
 import 'package:pizza_time/modelo/pedido.dart';
+import 'package:pizza_time/modelo/possiveis_formas_pagamento.dart';
 import 'package:pizza_time/modelo/possiveis_status_pedido.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/telas/novo_endereco/novo_endereco.dart';
 
-// import './components/form_finalizar_pedido.dart';
-
-/// Posiciona os widgets da tela onde o usuário revisa seu pedido.
+/// Posiciona os widgets da tela onde o usuário revisa seu carrinho.
 ///
 /// ```dart
 /// Navigator.pushNamed(context, [FinalizarPedido.nomeTela]);
@@ -26,7 +24,6 @@ class FinalizarPedido extends StatefulWidget {
 }
 
 class _FinalizarPedidoState extends State<FinalizarPedido> {
-  // TODO - checar se utilizaremos provider para o usuario ou não;
   FirebaseUser _usuario;
   CarrinhoNotifier _carrinhoNotifier;
 
@@ -47,7 +44,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
     _futureEnderecosEntrega = _consultaEnderecos();
   }
 
-  /// Obtem a lista de endereços do usuario atual e o usuário atual caso necessário.
+  /// Obtem a lista de endereços do usuario atual.
   Future<List<Endereco>> _consultaEnderecos() async {
     var aux = enderecoFirebaseCrud.endrecosFromUsuario(_usuario == null
         ? await FirebaseAuth.instance.currentUser().then((value) {
@@ -72,11 +69,12 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
     );
   }
 
-  /// Constrói o widget apropriado dependendo do andamento da consulta aos
-  /// endereços
+  /// Retorna o widget que será mostrado na tela
+  ///
+  /// O widget que será mostrado depende do status da snapshot.
   Widget _futureBuilder(
       BuildContext context, AsyncSnapshot<List<Endereco>> snapshot) {
-    // Função para auxiliar na legibilidade
+    /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(
         alignment: Alignment.center,
@@ -93,7 +91,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra aviso.
     Widget _algoDeuErrado() {
       return Align(
         alignment: Alignment.center,
@@ -113,7 +111,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
       );
     }
 
-    // Função para auxiliar na legibilidade
+    /// Mostra o widget que deveria ser mostrado de início.
     Widget _mostraConteudoCompleto() {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -133,6 +131,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
       );
     }
 
+    /// Decide o que será mostrado
     if (snapshot.connectionState == ConnectionState.done) {
       if (snapshot.hasError) {
         return _algoDeuErrado();

@@ -16,7 +16,7 @@ Future<Usuario> read(DocumentReference documento) async {
   return snapshot.data == null ? null : Usuario.fromMap(snapshot.data);
 }
 
-/// Atualiza o [usuario] no firestore, com o valor atual do [usuario].
+/// Atualiza o [usuario] no Firebase, com o valor atual do [usuario].
 ///
 /// ```dart
 /// ...
@@ -47,6 +47,9 @@ Future<void> delete(String idUsuario) async {
   documento.delete();
 }
 
+// =============================================================================
+
+/// Retorna o documento com as informações do usuario com [idUsuario].
 DocumentReference documentoUsuario(String idUsuario) {
   return Firestore.instance.document('$pathUsuarios/$idUsuario');
 }

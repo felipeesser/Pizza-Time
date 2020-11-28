@@ -4,37 +4,38 @@ EXEMPLO DE USO
 
 ```dart
 import '.../endereco_firebase.dart' as enderecoFirebaseCrud;
+import '.../endereco.dart';
 ...
 var endereco = Endereco(rua: 'aaa', numero: '000', complemento: 'apartamento 0');
 String idUsuario = 'algumUuidUsuario';
 ...
 // CREATE
-enderecoFiresbaseCrud.create(endereco, idUsuario);
+enderecoFirebaseCrud.create(endereco, idUsuario);
 print(endereco.toMap());
 
 // READ
 var documento = Firestore.instance.document(
     '/usuarios/$idUsuario/enderecos/${endereco.idEndereco}'
 );
-var lidoCriado = await enderecoFiresbaseCrud.read(documento);
+var lidoCriado = await enderecoFirebaseCrud.read(documento);
 print(lidoCriado.toMap());
 
 // UPDATE
-enderecoFiresbaseCrud.update(
+enderecoFirebaseCrud.update(
   endereco
     ..rua = 'Rua dos bobos',
   idUsuario
 );
 
 // READ
-var lidoAtualizado = await enderecoFiresbaseCrud.read(documento);
+var lidoAtualizado = await enderecoFirebaseCrud.read(documento);
 print(lidoAtualizado.toMap());
 
 // DELETE
-enderecoFiresbaseCrud.delete(endereco, idUsuario);
+enderecoFirebaseCrud.delete(endereco, idUsuario);
 
 // READ
-var lidoDeletado = await enderecoFiresbaseCrud.read(documento);
+var lidoDeletado = await enderecoFirebaseCrud.read(documento);
 print('${lidoDeletado?.toMap()==null ? 'Não existe um endereco no documento fornecido.': lidoDeletado.toMap()}');
 ```
 */
@@ -47,14 +48,14 @@ import 'package:pizza_time/modelo/pedido.dart';
 const _pathEnderecos = '/usuarios/$_replaceToken/enderecos';
 const _replaceToken = '-replaceToken';
 
-/// Armazena no banco de dados um novo documento com o [endereco] fornecido.
+/// Armazena no Firebase um novo documento com o [endereco] fornecido.
 ///
 /// O [endereço] fornecido será armazenado na coleção de endereços do usuario
 /// definido com o [idUsuario] fornecido.
 ///
 /// ```dart
 /// ...
-/// await create(casa, usuario.idUsuario);
+/// create(casa, usuario.idUsuario);
 /// ...
 /// ```
 void create({Endereco endereco, String idUsuario}) async {
@@ -66,7 +67,7 @@ void create({Endereco endereco, String idUsuario}) async {
   await novoDocumento.setData(endereco.toMap(), merge: false);
 }
 
-/// Lê o [documento] e retorna um endereco com os dados lidos.
+/// Lê o [documento] e retorna um [Endereco] com os dados lidos.
 ///
 /// Retorna null se o documento não existir.
 ///
@@ -82,9 +83,11 @@ Future<Endereco> read(DocumentReference documento) async {
 
 /// Atualiza o [endereco] no firestore, com o valor atual do [endereco].
 ///
+/// Atualiza o [endereco] na coleção de endereços do usuario com [idUsuario].
+///
 /// ```dart
 /// ...
-/// await update(enderecoCasaVeraneio, usuario.idUsuario);
+/// update(enderecoCasaVeraneio, usuario.idUsuario);
 /// ...
 /// ```
 void update({Endereco endereco, String idUsuario}) async {
@@ -96,14 +99,14 @@ void update({Endereco endereco, String idUsuario}) async {
   await documento.updateData(endereco.toMap());
 }
 
-/// Remove um endereco de um usuario.
+/// Remove um [Endereco] de um usuario.
 ///
 /// Remove do firestore o endereco com [idEndereco] armazenado na coleção de
-/// endereços do usuario com idUsuario.
+/// endereços do usuario com [idUsuario].
 ///
 /// ```dart
 /// ...
-/// await delete(CasaEx.idEndereco, usuario.idUsuario);
+/// delete(CasaEx.idEndereco, usuario.idUsuario);
 /// ...
 /// ```
 void delete({String idEndereco, String idUsuario}) async {
@@ -112,7 +115,10 @@ void delete({String idEndereco, String idUsuario}) async {
   await documento.delete();
 }
 
-/// Retorna o documento onde o [idEndereco] de um dado [idusuario] está armazenado.
+// =============================================================================
+
+/// Retorna o documento onde um [Endereco] com o [idEndereco] que pertence a um
+/// usuario com [idusuario] está armazenado.
 ///
 ///```dart
 /// DocumentReference documento = _documentoEndereco(
@@ -125,7 +131,7 @@ DocumentReference _documentoEndereco({String idUsuario, String idEndereco}) {
       '${_pathEnderecos.replaceAll(_replaceToken, idUsuario)}/$idEndereco');
 }
 
-/// Retorna a colecao de enderecos do usuario com [idUsuario].
+/// Retorna a coleção de enderecos do usuario com [idUsuario].
 ///
 ///```dart
 /// CollectionReference enderecos = colecaoEnderecos(uuidUsuario);
@@ -136,13 +142,21 @@ CollectionReference _colecaoEnderecos(String idUsuario) {
   );
 }
 
-/// Retorna um [Endereco] a partir do [Pedido] fornecido.
+/// Retorna um [Endereco] a partir do [pedido] fornecido.
+///
+///```dart
+/// Endereco enderecoEntrega = await enderecoFromPedido(pedidoPizzas);
+///```
 Future<Endereco> enderecoFromPedido(Pedido pedido) => read(
       _documentoEndereco(
           idEndereco: pedido.idEndereco, idUsuario: pedido.idUsuario),
     );
 
-/// Retorna uma lista de [Endereco] que pertencem ao usuario com [iDusuario].
+/// Retorna a lista de [Endereco]s que pertencem ao usuario com [idUsuario].
+///
+///```dart
+/// List<Endereco> meusEnderecos = await endrecosFromUsuario(uuidUsuario);
+///```
 Future<List<Endereco>> endrecosFromUsuario(String idUsuario) async {
   List<Endereco> enderecos = [];
   final snapshots = await _colecaoEnderecos(idUsuario).getDocuments();

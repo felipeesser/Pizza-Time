@@ -59,7 +59,9 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         ),
         AspectRatio(
           aspectRatio: 16 / 9,
-          child: Image.network(
+          child: _itemCarrinhoNotifier.urlImagemItemAtual.runtimeType != String || _itemCarrinhoNotifier.urlImagemItemAtual.isEmpty
+          ? Icon(Icons.image)
+          : Image.network(
             _itemCarrinhoNotifier.urlImagemItemAtual,
             fit: BoxFit.fitWidth,
           ),
@@ -74,6 +76,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             softWrap: false,
           ),
         ),
+        SizedBox(height: 8),
         _buildEditorQuantidade(context),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -85,7 +88,7 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
             softWrap: false,
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
