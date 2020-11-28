@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
 import 'package:pizza_time/api/funcionamento_firebase.dart'
     as funcionamentoFireBaseCrud;
+import 'package:pizza_time/modelo/Restaurante.dart';
 import 'package:pizza_time/modelo/pedido.dart';
-import 'package:pizza_time/modelo/funcionamento.dart';
 import 'package:pizza_time/notifier/funcionamentoNotifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
-import 'package:pizza_time/telas/AbaConversas.dart';
 import 'package:pizza_time/telas/home_files_rest/card_pedidos.dart';
 import 'package:provider/provider.dart';
+import 'package:pizza_time/api/restaurante_firebase.dart'
+    as restauranteFireBaseCrud;
 import 'Abertura.dart';
 import 'Adicionar.dart';
 
@@ -20,6 +21,7 @@ class Home_Rest extends StatefulWidget {
 
 class _Home_RestState extends State<Home_Rest> {
   Future<bool> _consultouFirebase;
+  Restaurante _restaurante;
   List<Pedido> _pedidosRestaurante;
   List<Widget> _widgetOptions;
 
@@ -36,29 +38,10 @@ class _Home_RestState extends State<Home_Rest> {
         future: _consultouFirebase,
         builder: _futureBuilder,
       ),
-      AbaConversas(),
       Adicionar(),
     ];
   }
 
-  // List<Widget> _widgetOptions = <Widget>[
-  //   // ListView(
-  //   //   children: <Widget>[
-  //   //     Home_Rest_Ped("Alberto", "cartao", "Rua dos bobos 666",
-  //   //         ["pizza doce", "pizza de carne seca"], ["1", "2"]),
-  //   //     Home_Rest_Ped("Roberto", "dinheiro", "Rua dos bobos 6666",
-  //   //         ["pizza doce", "pizza de carne seca"], ["2", "2"]),
-  //   //     Home_Rest_Ped("Marreco", "cartao", "Rua dos bobos 66666",
-  //   //         ["pizza doce", "pizza de carne seca"], ["1", "3"]),
-  //   //   ],
-  //   // ),
-  //   FutureBuilder(
-  //     future: _consultouFirebase,
-  //     builder: _futureBuilder,
-  //   ),
-  //   AbaConversas(),
-  //   Adicionar(),
-  // ];
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -72,6 +55,13 @@ class _Home_RestState extends State<Home_Rest> {
       });
     }
 
+    String restauranteAberto() {
+      if (_restaurante == null) {
+        return 'Fechado';
+      }
+      return _restaurante.aberto ? 'Aberto' : 'Fechado';
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -81,9 +71,21 @@ class _Home_RestState extends State<Home_Rest> {
             Text('Status:'),
             Container(
                 padding: EdgeInsets.all(5),
-                child: Text(
-                  'Fechado',
-                  style: TextStyle(color: Colors.red),
+                child: GestureDetector(
+                  child: Text(
+                    restauranteAberto(),
+                    style: restauranteAberto() == 'Aberto'
+                        ? TextStyle(color: Colors.green)
+                        : TextStyle(color: Colors.red),
+                  ),
+                  onTap: () {
+                    if (_restaurante == null) {
+                      return;
+                    }
+                    restauranteFireBaseCrud
+                        .update(_restaurante..aberto = !_restaurante.aberto);
+                    setState(() {});
+                  },
                 ),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -122,15 +124,16 @@ class _Home_RestState extends State<Home_Rest> {
 
   /// Consulta todos os pedidos do restaurante.
   Future<bool> _consultaFirebase() async {
+    _restaurante = await restauranteFireBaseCrud.read();
     _pedidosRestaurante = await pedidoFirebaseCrud.pedidosFromRestaurante();
+    setState(() {});
     return _pedidosRestaurante != null ? true : false;
   }
 
   /// Retorna o widget que será mostrado na tela
   ///
   /// O widget que será mostrado depende do status da snapshot.
-  Widget _futureBuilder(
-      BuildContext context, AsyncSnapshot<bool> snapshot) {
+  Widget _futureBuilder(BuildContext context, AsyncSnapshot<bool> snapshot) {
     /// Mostra um circulo para sinalizar o carregamento.
     Widget _carregando() {
       return Align(

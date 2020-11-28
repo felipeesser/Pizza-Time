@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/DiaSemana.dart';
@@ -15,7 +14,6 @@ class Abertura extends StatefulWidget {
 }
 
 class _AberturaState extends State<Abertura> {
-
   List<DiaSemana> _dias;
 
   DiaSemana dropdownValue = null;
@@ -28,7 +26,6 @@ class _AberturaState extends State<Abertura> {
       setState(() {
         _timei = picked;
         if (dropdownValue != null)
-
           _dias.elementAt(_dias.indexOf(dropdownValue)).abertura =
               '${_timei.hour}:${_timei.minute}';
         else

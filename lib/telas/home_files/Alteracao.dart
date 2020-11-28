@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_time/modelo/Usuario.dart';
-import 'package:pizza_time/telas/revisar_pedido/components/tab_detalhes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pizza_time/api/usuario_firestore.dart' as fireBaseUsuarioCrud;
 
 const pathUsuarios = '/usuarios';
@@ -21,6 +18,7 @@ class _AlteracaoState extends State<Alteracao> {
   Usuario _usuarioAtual;
   String senhaAntiga;
   String emailAntigo;
+  AlertDialog alert;
   @override
   void initState() {
     super.initState();
@@ -37,17 +35,30 @@ class _AlteracaoState extends State<Alteracao> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  _salvarUsuario(context) async {
+  _salvarUsuario(BuildContext context) async {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
-    fireBaseUsuarioCrud.update(_usuarioAtual);
-    (await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: emailAntigo, password: senhaAntiga));
-    (await FirebaseAuth.instance.currentUser())
-      ..updatePassword(_usuarioAtual.senha)
-      ..updateEmail(_usuarioAtual.email);
+    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+    var credential = EmailAuthProvider.getCredential(
+        email: _user.email, password: senhaAntiga);
+    _user.reauthenticateWithCredential(credential).then((value) {
+      _user.updatePassword(_usuarioAtual.senha).then((value) {
+        _user.updateEmail(_usuarioAtual.email).then((value) {
+          fireBaseUsuarioCrud.update(_usuarioAtual);
+        });
+      });
+    }, onError: (erro) async {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+      return null;
+    });
+
     // print(_usuarioAtual.nome);
     // print(_usuarioAtual.idUsuario);
     // print(_usuarioAtual.email);
@@ -56,6 +67,14 @@ class _AlteracaoState extends State<Alteracao> {
 
   @override
   Widget build(BuildContext context) {
+    alert = AlertDialog(title: Text('Senha Inválida'), actions: [
+      FlatButton(
+        child: Text('ok'),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      )
+    ]);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -229,7 +248,7 @@ class _AlteracaoState extends State<Alteracao> {
                                   ),
                                   color: Colors.white,
                                   onPressed: () {
-                                    _salvarUsuario(_usuarioAtual);
+                                    _salvarUsuario(context);
                                   }),
                             ),
                           ],

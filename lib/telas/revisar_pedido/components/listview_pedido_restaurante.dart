@@ -44,7 +44,8 @@ class _ListViewPedidoRestauranteState extends State<ListViewPedidoRestaurante> {
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
       leading: Container(
         width: 80,
-        child: item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
+        child:
+            item.item.imagem.runtimeType != String || item.item.imagem.isEmpty
                 ? Icon(Icons.image)
                 : Image.network(
                     item.item.imagem,

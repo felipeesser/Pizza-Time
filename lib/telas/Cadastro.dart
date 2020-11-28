@@ -132,8 +132,9 @@ class _CadastroState extends State<Cadastro> {
       if (usuario.nome == 'dono' &&
           (await RestauranteFirestoreCrud.procuraDono())) {
         //TODO ADICIONAR MAP FUNCIONAMENTO
-        RestauranteFirestoreCrud.update(
-            restaurante..idDono = usuario.idUsuario);
+        restaurante.idDono = usuario.idUsuario;
+        restaurante.telefone = usuario.telefone;
+        RestauranteFirestoreCrud.update(restaurante);
       }
       // db
       //     .collection("usuarios")

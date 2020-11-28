@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_time/modelo/Restaurante.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/notifier/pedido_notifier.dart';
+import 'package:pizza_time/api/restaurante_firebase.dart'
+    as RestauranteFiresStoreCrud;
 
 class Detalhes extends StatefulWidget {
   static final nomeTela = "/detalhes";
@@ -20,8 +23,22 @@ void _chamada(String command) async {
 }
 
 class _DetalhesState extends State<Detalhes> {
+  Future<bool> acesso;
   CarrinhoNotifier _carrinhoNotifier;
   PedidoNotifier _pedidoNotifier;
+  Restaurante _restaurante;
+  @override
+  void initState() {
+    super.initState();
+    acesso = _consultaFirebase();
+  }
+
+  Future<bool> _consultaFirebase() async {
+    _restaurante = await RestauranteFiresStoreCrud.read();
+    setState(() {});
+    return _restaurante != null ? true : false;
+  }
+
   @override
   Widget build(BuildContext context) {
     _pedidoNotifier = Provider.of<PedidoNotifier>(context, listen: false);
@@ -103,9 +120,11 @@ class _DetalhesState extends State<Detalhes> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FlatButton(
-                  onPressed: () {
-                    _chamada('tel:21999999999');
-                  },
+                  onPressed: _restaurante == null
+                      ? () {}
+                      : () {
+                          _chamada('tel: ${_restaurante.telefone}');
+                        },
                   child: Text(
                     'Contato com o restaurante',
                     style: TextStyle(

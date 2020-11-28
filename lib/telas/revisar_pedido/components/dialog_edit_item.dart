@@ -59,12 +59,14 @@ class _DialogEditarItemState extends State<DialogEditarItem> {
         ),
         AspectRatio(
           aspectRatio: 16 / 9,
-          child: _itemCarrinhoNotifier.urlImagemItemAtual.runtimeType != String || _itemCarrinhoNotifier.urlImagemItemAtual.isEmpty
-          ? Icon(Icons.image)
-          : Image.network(
-            _itemCarrinhoNotifier.urlImagemItemAtual,
-            fit: BoxFit.fitWidth,
-          ),
+          child:
+              _itemCarrinhoNotifier.urlImagemItemAtual.runtimeType != String ||
+                      _itemCarrinhoNotifier.urlImagemItemAtual.isEmpty
+                  ? Icon(Icons.image)
+                  : Image.network(
+                      _itemCarrinhoNotifier.urlImagemItemAtual,
+                      fit: BoxFit.fitWidth,
+                    ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),

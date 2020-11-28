@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pizza_time/modelo/carrinho.dart';
-import 'package:pizza_time/notifier/CarrinhoNotifier.dart';
 import 'package:pizza_time/telas/home_files/Detalhes.dart';
 import 'package:pizza_time/telas/home_files/home_files_components/Pedidos_Feitos_Card.dart';
 import 'package:pizza_time/api/pedido_firebase.dart' as pedidoFirebaseCrud;
 import 'package:pizza_time/modelo/pedido.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pizza_time/telas/home_files_rest/card_pedidos.dart';
 
 class Pedidos_Feitos extends StatefulWidget {
   static final nomeTela = "/pedidos_feitos";
