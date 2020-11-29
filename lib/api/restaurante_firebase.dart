@@ -12,8 +12,6 @@ void create(Restaurante restaurante) async {
 
 Future<Restaurante> read() async {
   final snapshot = await Firestore.instance.document(pathRestaurante).get();
-  print(snapshot);
-  print(snapshot.data);
   return snapshot.data == null ? null : Restaurante.fromMap(snapshot.data);
 }
 
