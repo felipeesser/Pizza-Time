@@ -51,10 +51,6 @@ class _AdicionarState extends State<Adicionar> {
     } else {
       procura(_itematual, imagem: File(_imageFile.path));
     }
-    print(_itematual.nome);
-    print(_itematual.tipo);
-    print(_itematual.preco);
-    print(_itematual.descricao);
   }
 
   @override

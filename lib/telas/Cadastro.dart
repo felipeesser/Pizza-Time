@@ -49,7 +49,6 @@ class _CadastroState extends State<Cadastro> {
                   setState(() {
                     _mensagemErro = "";
                   });
-                  print('aaaaaaaaaaaaa');
                   Usuario usuario = Usuario();
                   usuario.nome = nome;
                   usuario.email = email;
@@ -107,18 +106,12 @@ class _CadastroState extends State<Cadastro> {
             email: usuario.email, password: usuario.senha)
         .then((firebaseUser) async {
       //Salvar dados do usuário
-      //Firestore db = Firestore.instance;
-      print(usuario.nome);
       usuario.idUsuario = firebaseUser.user.uid;
-      print(usuario.idUsuario);
       create(usuario);
       enderecoFirestoreCrud.create(
           endereco: endereco, idUsuario: usuario.idUsuario);
       var rest = await RestauranteFirestoreCrud.read();
       bool existeDono = false;
-      //if (rest?.idDono.runtimeType == String) {
-      //existeDono = true;
-      //}
       Restaurante restaurante = await RestauranteFirestoreCrud.read();
       if (restaurante == null) {
         restaurante = Restaurante.fromMap(
@@ -126,7 +119,6 @@ class _CadastroState extends State<Cadastro> {
             'aberto': false,
           },
         );
-        print(restaurante.toMap());
         RestauranteFirestoreCrud.create(restaurante);
       }
       if (usuario.nome == 'dono' &&
