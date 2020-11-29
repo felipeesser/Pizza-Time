@@ -22,7 +22,7 @@ class RevisarPedidoUsuario extends StatelessWidget {
         Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Revisar Pedido'),
+        title: Text('Revisar carrinho'),
       ),
       body: SafeArea(
         child: Padding(

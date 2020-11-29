@@ -58,11 +58,6 @@ class _AlteracaoState extends State<Alteracao> {
       );
       return null;
     });
-
-    // print(_usuarioAtual.nome);
-    // print(_usuarioAtual.idUsuario);
-    // print(_usuarioAtual.email);
-    // print(_usuarioAtual.telefone);
   }
 
   @override

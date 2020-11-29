@@ -114,7 +114,7 @@ class _CardPedidoState extends State<CardPedido> {
                   children: [
                     Expanded(
                       child: Text(
-                        'Nome: ${_usuario.nome}',
+                        '${_usuario.nome}',
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                       ),

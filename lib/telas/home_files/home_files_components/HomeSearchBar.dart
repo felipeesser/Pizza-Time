@@ -16,7 +16,6 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
       onSubmitted: (String str){
       setState((){
         itemNotifier.palavraAtual=str;
-        print(itemNotifier.palavraAtual);
       });
     },
       decoration: InputDecoration(

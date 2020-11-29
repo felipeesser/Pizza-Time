@@ -59,7 +59,7 @@ class _FinalizarPedidoState extends State<FinalizarPedido> {
   Widget build(BuildContext context) {
     _carrinhoNotifier = Provider.of<CarrinhoNotifier>(context);
     return Scaffold(
-      appBar: AppBar(title: Text(FinalizarPedido.nomeTela)),
+      appBar: AppBar(title: Text('Finalizar pedido')),
       body: SafeArea(
         child: FutureBuilder(
           future: _futureEnderecosEntrega,
